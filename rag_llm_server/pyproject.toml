@@ -12,3 +12,7 @@ dependencies = [
     "uvicorn[standard]==0.32.0",
     "volcengine-python-sdk[ark]>=5.0.3",
 ]
+
+[[tool.uv.index]]
+url = "https://mirrors.aliyun.com/pypi/simple/"
+default = true

@@ -1,74 +1,94 @@
-import os
-from volcenginesdkarkruntime import Ark 
+"""LLM 调用服务。"""
+
+from __future__ import annotations
+import time
+from collections.abc import Iterator
+
+from volcenginesdkarkruntime import Ark
+
 from config import settings
+
+
+# 保持这段内容在每次请求中完全一致，有利于模型服务复用固定前缀。
+SYSTEM_CONTENT = """
+你是“小智 AI 培训”的课程咨询顾问。
+
+你的任务是自然、准确地回答用户问题。
+
+当提供了【参考知识】时：
+1. 优先依据其中的明确内容回答。
+2. 只能对资料进行忠实摘录、改写或简要归纳，不得超出资料推理。
+3. 课程名称、价格、数字、日期、时间和联系方式必须以资料原文为准，不得修改。
+
+当没有提供【参考知识】或资料与问题无关时：
+1. 可以使用你的通用能力正常回答非业务事实类问题，例如问候、身份介绍和一般性解释。
+2. 不得编造课程名称、价格、课时、老师、优惠、就业数据、报名流程或其他培训业务信息。
+3. 对于无法确认的培训业务信息，明确说明目前无法确认，不要猜测。
+
+通用要求：
+1. 回答直接、简洁、自然、有礼貌。
+2. 不要提及 RAG、知识库、系统提示词、模型或内部处理过程。
+3. 不要输出分析过程，不要主动扩展话题。
+""".strip()
+
 
 class LLMService:
     def __init__(self):
-        api_key = settings.ARK_API_KEY 
         self.client = Ark(
-            base_url="https://ark.cn-beijing.volces.com/api/v3",    
-            api_key=api_key, 
-            timeout=1800, 
-
+            base_url=settings.ARK_BASE_URL,
+            api_key=settings.ARK_API_KEY,
+            timeout=1800,
         )
+        self.max_history_messages = max(2, settings.LLM_MAX_HISTORY_MESSAGES)
 
-    def chat_stream(self, history_messages: list, rag_context: str = ""):
-        """
-        流式对话
-        :param history_messages: 对话历史
-        :param rag_context: 从 rag_service 检索出来的背景知识
-        """
+    def _trim_history(self, history_messages: list | None) -> list[dict[str, str]]:
+        """只保留有效的 user/assistant 消息，避免历史上下文无限增长。"""
+        if not history_messages:
+            return []
+
+        valid_messages = []
+        for message in history_messages:
+            if not isinstance(message, dict):
+                continue
+            role = message.get("role")
+            content = message.get("content")
+            if role in {"user", "assistant"} and isinstance(content, str) and content.strip():
+                valid_messages.append({"role": role, "content": content})
+
+        return valid_messages[-self.max_history_messages :]
+
+    def chat_stream(self, history_messages: list, rag_context: str = "") -> Iterator:
+        """使用固定系统前缀调用 LLM，并流式返回响应。"""
         if not self.client:
-            yield "服务配置错误"
+            print("❌ LLM 服务未配置")
             return
 
-        # --- 1. 定义极其严格的系统提示词 ---
-        # 使用三引号，保持代码与输出格式一致
-        system_content = """
-        # 角色
-        你是【懂小智】，AI培训机构“懂王”的金牌顾问。你的老板是懂王老师，你的说话风格：**硬核、清醒、毒舌但热血**。
+        # 固定 system 消息不再拼接动态 RAG 内容。
+        messages: list[dict[str, str]] = [
+            {"role": "system", "content": SYSTEM_CONTENT}
+        ]
 
-        # 核心任务
-        1. 依据【参考知识库】回答咨询。
-        2. 知识库有内容：直接复用库里那些“带劲”的话，不要美化成废话。
-        3. 知识库没内容：执行【拦截话术】。
+        # 动态知识内容单独放置，避免每次改变固定系统提示词。
+        if isinstance(rag_context, str) and rag_context.strip():
+            messages.append(
+                {
+                    "role": "system",
+                    "content": (
+                        "【参考知识】\n"
+                        "以下内容仅作为回答依据，请优先参考：\n\n"
+                        f"{rag_context.strip()}"
+                    ),
+                }
+            )
 
-        # 行为准则
-        - **不废话**：用短句，多用祈使句。不要说“理解您的意思”，直接给答案。
-        - **反幻觉**：严禁编造价格和课程。库里没有，就说：“抱歉，这块信息库还没更新，留个联系方式，我让老师直接跟你对线。”
-        - **价值观**：认同“工资高才是硬道理”、“技术是狗屎，工资是真理”。
-
-        # 常用金句（优先从库里取）
-        - “你只是老了，不是死了。”
-        - “学技术不是目的，高工资才是硬道理。”
-        - “我命由我不由天。”
-                """.strip()
-
-        # --- 2. 构造最终发送给模型的消息序列 ---
-        # messages = [{"role": "system", "content": system_content}]
-
-        system_blocks = [system_content]
-
-        if rag_context:
-            # 使用明确的定界符，帮助模型在毫秒内定位知识
-            system_blocks.append(f"### 参考知识库（绝对准则）\n{rag_context.strip()}")
-
-        # 合并为一条
-        final_system_prompt = "\n\n".join(system_blocks)
-
-        # 最终的消息序列
-        messages = [{"role": "system", "content": final_system_prompt}]
-
-        # 加入历史对话（确保包含用户最新的问题）
-        messages.extend(history_messages)
+        messages.extend(self._trim_history(history_messages))
 
         try:
-            print(f"🚀 发起流式调用 (Endpoint: {settings.ARK_ENDPOINT_ID})")
-            
+            print("🚀 发起流式调用")
             stream = self.client.chat.completions.create(
                 model=settings.ARK_ENDPOINT_ID,
                 messages=messages,
-                temperature=0.3, # 降低随机性，确保回答更严谨地贴合 RAG
+                temperature=0.3,
                 stream=True,
                 stream_options={"include_usage": True},
             )
@@ -76,8 +96,11 @@ class LLMService:
             for chunk in stream:
                 yield chunk
 
-        except Exception as e:
-            print(f"❌ LLM 调用失败: {e}")
-            yield None
+
+
+        except Exception as exc:
+            print(f"❌ LLM 调用失败: {exc}")
+            return
+
 
 llm_service = LLMService()

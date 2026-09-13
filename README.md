@@ -1,105 +1,134 @@
-# 交互式AIGC场景 AIGC Demo
+# 交互式 AIGC RTC Demo
 
-此 Demo 为简化版本, 如您有 1.5.x 版本 UI 的诉求, 可切换至 1.5.1 分支。
-跑通阶段时, 无须关心代码实现，仅需按需完成 `Server/scenes/*.json` 的场景信息填充即可。
+这是一个基于火山引擎 RTC 的实时语音对话示例。项目由 React 前端和 Python（FastAPI）后端组成：浏览器采集音频并通过 RTC 加入房间，Python 服务负责签发 RTC Token、调用 RTC OpenAPI，以及将大模型流式回复转发给 RTC。
 
-## 简介
-- 在 AIGC 对话场景下，火山引擎 AIGC-RTC Server 云端服务，通过整合 RTC 音视频流处理，ASR 语音识别，大模型接口调用集成，以及 TTS 语音生成等能力，提供基于流式语音的端到端AIGC能力链路。
-- 用户只需调用基于标准的 OpenAPI 接口即可配置所需的 ASR、LLM、TTS 类型和参数。火山引擎云端计算服务负责边缘用户接入、云端资源调度、音视频流压缩、文本与语音转换处理以及数据订阅传输等环节。简化开发流程，让开发者更专注在对大模型核心能力的训练及调试，从而快速推进AIGC产品应用创新。     
-- 同时火山引擎 RTC拥有成熟的音频 3A 处理、视频处理等技术以及大规模音视频聊天能力，可支持 AIGC 产品更便捷的支持多模态交互、多人互动等场景能力，保持交互的自然性和高效性。 
+> 旧版 Node.js/Koa 后端目录 `Server/` 已移除，当前后端为 `rag_llm_server/`。前端仍须使用 Node.js 依赖进行开发和构建。
 
-## 【必看】环境准备
-**Node 版本: 16.0+**
+## 目录说明
 
-### 1. 运行环境
-需要准备两个 Terminal，分别启动服务端和前端页面。
-
-### 2. 服务开通
-开通 ASR、TTS、LLM、RTC 等服务，可参考 [开通服务](https://www.volcengine.com/docs/6348/1315561?s=g) 进行相关服务的授权与开通。
-
-### 3. 场景配置
-`Server/scenes/*.json`
-
-您可以自定义具体场景, 并按需根据模版填充 `SceneConfig`、`AccountConfig`、`RTCConfig`、`VoiceChat` 中需要的参数。
-
-Demo 中以 `Custom` 场景为例，您可以自行新增场景。
-
-注意：
-- `SceneConfig`：场景的信息，例如名称、头像等。
-- `AccountConfig`：场景下的账号信息，https://console.volcengine.com/iam/keymanage/ 获取 AK/SK。
-- `RTCConfig`：场景下的 RTC 配置。
-    - AppId、AppKey 可从 https://console.volcengine.com/rtc/aigc/listRTC 中获取。
-    - RoomId、UserId 可自定义也可不填，交由服务端生成。
-- `VoiceChat`: 场景下的 AIGC 配置。
-    - 可参考 https://www.volcengine.com/docs/6348/1558163 中参数描述，完整填写参数内容。
-    - 可通过 [快速跑通 Demo](https://console.volcengine.com/rtc/aigc/run?s=g) 快速获取参数, 跑通后点击右上角 `接入 API` 按钮复制相关代码贴到 JSON 配置文件中即可。
-## 快速开始
-请注意，服务端和 Web 端都需要启动, 启动步骤如下:
-### 服务端
-进到项目根目录
-#### 安装依赖
-```shell
-cd Server
-yarn
-```
-#### 运行项目
-```shell
-yarn dev
+```text
+rtc_basic/
+├─ src/                    # React + TypeScript 前端
+├─ public/                 # 前端静态资源
+├─ rag_llm_server/         # FastAPI 后端
+│  ├─ main.py              # HTTP API 与 RTC / LLM 回调
+│  ├─ config.py            # 环境变量配置
+│  ├─ services/            # Token、LLM、RAG 等服务
+│  ├─ pyproject.toml       # Python / uv 依赖定义（推荐使用）
+│  └─ requirements.txt     # 基础 pip 依赖清单
+├─ package.json            # 前端依赖与脚本
+└─ package-lock.json       # 前端依赖锁定文件
 ```
 
-### 前端页面
-进到项目根目录
-#### 安装依赖
-```shell
-yarn
+## 环境要求
+
+- Node.js 16 或更高版本（用于前端开发、构建）
+- Python 3.13 或更高版本（与 `rag_llm_server/pyproject.toml` 一致）
+- 建议安装 [uv](https://docs.astral.sh/uv/) 管理 Python 依赖；也可使用 pip
+- 已开通火山引擎 RTC、ASR、TTS 和方舟大模型等所需服务
+
+## 配置后端
+
+进入 `rag_llm_server`，创建 `.env` 文件。该文件包含密钥，已被 Git 忽略，请勿提交。
+
+```env
+# 火山引擎账号 AK/SK：用于调用 RTC OpenAPI
+VOLC_ACCESS_KEY=your_access_key
+VOLC_SECRET_KEY=your_secret_key
+
+# RTC 应用配置
+RTC_APP_ID=your_rtc_app_id
+RTC_APP_KEY=your_rtc_app_key
+
+# 方舟大模型配置
+ARK_ENDPOINT_ID=your_ark_endpoint_id
+ARK_API_KEY=your_ark_api_key
+ARK_BASE_URL=your_ark_base_url
+
+# RTC 服务可访问的回调根地址；线上环境必须使用公网 HTTPS 地址
+SERVER_URL=https://your-public-domain.example.com
+
+# 以下知识库配置可选；未配置 API Key 时会跳过 RAG 检索
+KNOWLEDGE_BASE_API_KEY=
+KNOWLEDGE_BASE_DOMAIN=api-knowledgebase.mlp.cn-beijing.volces.com
+KNOWLEDGE_BASE_PROJECT=default
+KNOWLEDGE_BASE_COLLECTION=rtc_ai
+KNOWLEDGE_BASE_LIMIT=1
+KNOWLEDGE_BASE_TIMEOUT=10
 ```
-#### 运行项目
+
+`SERVER_URL` 会作为 CustomLLM 回调地址的一部分。RTC 云端必须能访问它，因此不能在部署环境中填写仅本机可访问的 `localhost` 地址。
+
+## 启动后端（Python）
+
+推荐使用 uv：
+
 ```shell
-yarn dev
+cd rag_llm_server
+uv sync
+uv run python main.py
 ```
 
-### 常见问题
-| 问题 | 解决方案 |
-| :-- | :-- |
-| 如何使用第三方模型、Coze Bot | 模型相关配置代码对应目录 `src/config/scenes/` 下json 文件，填写对应官方模型/ Coze/ 第三方模型的参数后，可点击页面上的 "修改 AI 人设" 进行切换。 |
-| **启动智能体之后, 对话无反馈，或者一直停留在 "AI 准备中, 请稍侯"；在启用数字人的情况下，一直停留在“数字人准备中，请稍候”** | <li>可能因为控制台中相关权限没有正常授予，请参考[流程](https://www.volcengine.com/docs/6348/1315561?s=g)再次确认下是否完成相关操作。此问题的可能性较大，建议仔细对照是否已经将相应的权限开通。</li><li>参数传递可能有问题, 例如参数大小写、类型等问题，请再次确认下这类型问题是否存在。</li><li>相关资源可能未开通或者用量不足/欠费，请再次确认。</li><li>**请检查当前使用的模型 ID / 数字人 AppId / Token 等内容都是正确且可用的。**</li><li>数字人服务有并发限制，当达到并发限制时，同样会表现为一直停留在“数字人准备中”状态</li> |
-| **浏览器报了 `Uncaught (in promise) r: token_error` 错误** | 请检查您填在项目中的 RTC Token 是否合法，检测用于生成 Token 的 UserId、RoomId 以及 Token 本身是否与项目中填写的一致；或者 Token 可能过期, 可尝试重新生成下。 |
-| **[StartVoiceChat]Failed(Reason: The task has been started. Please do not call the startup task interface repeatedly.)** 报错 | 如果设置的 RoomId、UserId 为固定值，重复调用 startAgent 会导致出错，只需先调用 stopAgent 后再重新 startAgent 即可。 |
-| 为什么麦克风、摄像头开启失败？浏览器报了`TypeError: Cannot read properties of undefined (reading 'getUserMedia')` | 检查当前页面是否为[安全上下文](https://developer.mozilla.org/zh-CN/docs/Web/Security/Secure_Contexts)（简单来说，检查当前页面是否为 `localhost` 或者 是否为 https 协议）。浏览器[限制](https://developer.mozilla.org/zh-CN/docs/Web/Security/Secure_Contexts/features_restricted_to_secure_contexts) `getUserMedia` 只能在安全上下文中使用。 |
-| 为什么我的麦克风正常、摄像头也正常，但是设备没有正常工作? | 可能是设备权限未授予，详情可参考 [Web 排查设备权限获取失败问题](https://www.volcengine.com/docs/6348/1356355?s=g)。 |
-| 接口调用时, 返回 "Invalid 'Authorization' header, Pls check your authorization header" 错误 | `Server/app.js` 中的 AK/SK 不正确 |
-| 什么是 RTC | **R**eal **T**ime **C**ommunication, RTC 的概念可参考[官网文档](https://www.volcengine.com/docs/6348/66812?s=g)。 |
-| 不清楚什么是主账号，什么是子账号 | 可以参考[官方概念](https://www.volcengine.com/docs/6257/64963?hyperlink_open_type=lark.open_in_browser&s=g) 。|
-| 我有自己的服务端了, 我应该怎么让前端调用我的服务端呢 | 修改 `src/config/index.ts` 中的 `AIGC_PROXY_HOST` 请求域名和接口并在 `src/app/api.ts` 中修改接口参数配置 `APIS_CONFIG` |
+或使用 pip：
 
-如果有上述以外的问题，欢迎联系我们反馈。
+```shell
+cd rag_llm_server
+python -m venv .venv
+# Windows PowerShell
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+pip install "volcengine-python-sdk[ark]>=5.0.3"
+python main.py
+```
 
-### 相关文档
-- [场景介绍](https://www.volcengine.com/docs/6348/1310537?s=g)
-- [Demo 体验](https://www.volcengine.com/docs/6348/1310559?s=g)
-- [场景搭建方案](https://www.volcengine.com/docs/6348/1310560?s=g)
+服务默认监听 `0.0.0.0:3001`，并提供以下接口：
 
-## 更新日志
+| 接口 | 用途 |
+| --- | --- |
+| `POST /getScenes` | 返回前端场景与 RTC 进房信息 |
+| `POST /proxy?Action=StartVoiceChat` | 启动 RTC 语音对话任务 |
+| `POST /proxy?Action=StopVoiceChat` | 停止 RTC 语音对话任务 |
+| `POST /api/chat_callback` | 供 RTC 调用的 OpenAI 兼容 SSE 大模型回调 |
+| `POST /debug/chat` | 本地调试大模型与 RAG |
+| `GET /debug/rag?query=...` | 本地查看 RAG 检索结果 |
 
-### OpenAPI 更新
-参考 [OpenAPI 更新](https://www.volcengine.com/docs/6348/1544162) 中与 实时对话式 AI 相关的更新内容。
+## 启动前端
 
-### Demo 更新
+在项目根目录执行：
 
-#### [1.6.0]
-- 2025-09-30
-    - 更新数字人场景相关配置
-- 2025-07-08
-    - 更新 RTC Web SDK 版本至 4.66.20
-- 2025-06-26
-    - 修复进房有问题的 BUG
-- 2025-06-23
-    - 简化 Demo 使用, 配置归一化。
-    - 删除无用组件。
-    - 追加服务端 README。
-- 2025-06-18
-    - 更新 RTC Web SDK 版本至 4.66.16
-    - 更新 UI 和参数配置方式
-    - 更新 Readme 文档
-    - 追加 Node 服务的参数检测能力
-    - 追加 Node 服务的 Token 生成能力
+```shell
+npm ci
+npm run dev
+```
+
+开发服务会启动 React 页面。前端默认请求 `http://<当前页面主机名>:3001`，因此本地开发时请先启动 Python 后端；局域网访问时，也应让前端页面和 Python 服务使用同一台可访问的主机。
+
+构建生产静态资源：
+
+```shell
+npm run build
+```
+
+构建产物输出到 `build/`，可由 Nginx、CDN 或任意静态文件服务器托管。
+
+## 关于 `node_modules`
+
+`node_modules/` 只包含前端的本地依赖，不属于 Python 后端，也不应提交到 Git。它是以下操作所必需的：
+
+- `npm run dev`：启动前端开发环境
+- `npm run build`：构建前端静态文件
+- `npm test`、代码检查和格式化
+
+因此它可以在需要释放磁盘空间时删除，但删除后上述命令无法运行，直到重新执行 `npm ci` 或 `npm install`。已经构建并部署的静态文件在运行时不依赖本机的 `node_modules/`。
+
+## 常见排查
+
+- 浏览器无法使用麦克风或摄像头：请通过 `https` 或 `localhost` 访问，且确认已授予浏览器设备权限。
+- 页面停在“AI 准备中”：检查 RTC、ASR、TTS、方舟模型权限及 `.env` 中的 App ID、密钥和模型配置。
+- RTC 无法获得大模型回复：确认 `SERVER_URL` 是 RTC 可访问的公网地址，并检查 `/api/chat_callback` 的服务日志。
+- `token_error`：核对 RTC App ID、App Key、房间号、用户 ID 与 Token 是否来自同一配置。
+
+## 相关文档
+
+- [火山引擎 RTC 文档](https://www.volcengine.com/docs/6348/66812)
+- [RTC AIGC 场景文档](https://www.volcengine.com/docs/6348/1310537)

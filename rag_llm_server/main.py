@@ -1,3 +1,4 @@
+import asyncio
 import uuid
 import time
 import httpx
@@ -17,6 +18,7 @@ from fastapi.responses import JSONResponse
 from fastapi import Request
 from fastapi.responses import StreamingResponse  # <--- 必须导入这个
 import json
+from starlette.concurrency import iterate_in_threadpool
 from services.rag_service import rag_service  # <--- 新增这行
 
 # 在你的 settings.py 或 main.py 顶部
@@ -61,7 +63,7 @@ async def get_scenes(request: Request):
                         # --- 补全的核心字段 ---
                         "id": "Custom",  # 建议改为 Custom，通常前端会根据这个 ID 做特殊处理
                         "name": "自定义助手",
-                        "botName": "AiAgent",
+                        "botName": "ChatBot01",
                         "icon": "https://lf3-rtc-demo.volccdn.com/obj/rtc-aigc-assets/DoubaoAvatar.png",  # 补全图标
                         # --- 功能开关 ---
                         "isInterruptMode": True,  # 是否支持打断
@@ -75,7 +77,7 @@ async def get_scenes(request: Request):
                         "AppId": settings.RTC_APP_ID,
                         "RoomId": room_id,
                         "UserId": user_id,
-                        "Token": "0016933e1446a6de10173e1e306SQByMU4CyGJjaUidbGkKAENoYXRSb29tMDEJAEh1b3NoYW4wMQYAAABInWxpAQBInWxpAgBInWxpAwBInWxpBABInWxpBQBInWxpIADy1t0b88zOs1wU2YBbaU7L81CoTtBiu4Viw2hzb7rR/w==",
+                        "Token": settings.RTC_APP_KEY,
                     },
                     # 这里的配置主要是为了兼容前端透传，实际生效主要看 proxy
                     "VoiceChat": {},
@@ -107,7 +109,7 @@ async def proxy(request: Request):
 
     # --- 开始硬编码数据 ---
     # 注意：这里的 AppId, RoomId, UserId, Token 必须与你提供的 JSON 完全一致
-    target_app_id = "6933e1446a6de10173e1e306"
+    target_app_id = settings.RTC_APP_ID
     target_room_id = "ChatRoom01"
     target_user_id = "Huoshan01"
 
@@ -121,8 +123,8 @@ async def proxy(request: Request):
             "TaskId": "ChatTask01",
             "AgentConfig": {
                 "TargetUserId": [target_user_id],
-                "WelcomeMessage": "我是懂小智，你的专属课程顾问，有什么问题尽管问我吧，我比懂王更强",
-                "UserId": "AiAgent",
+                "WelcomeMessage": "我是小智，你的专属课程顾问，有什么问题尽管问我吧！",
+                "UserId": "ChatBot01",
                 "EnableConversationStateCallback": True, 
             },
             "Config": {
@@ -130,14 +132,14 @@ async def proxy(request: Request):
                     "Provider": "volcano",
                     "ProviderParams": {
                         "Mode": "smallmodel",
-                        "AppId": "7077298582",
+                        "AppId": "1168243193",
                         "Cluster": "volcengine_streaming_common",
                     },
                 },
                 "TTSConfig": {
                     "Provider": "volcano",
                     "ProviderParams": {
-                        "app": {"appid": "7077298582", "cluster": "volcano_tts"},
+                        "app": {"appid": "1168243193", "cluster": "volcano_tts"},
                         "audio": {
                             "voice_type": "BV001_streaming",
                             "speed_ratio": 1,
@@ -150,6 +152,8 @@ async def proxy(request: Request):
                     # 先用 Custom 模式测试你的回调地址
                     "Mode": "CustomLLM",
                     "Url": f"{settings.SERVER_URL}/api/chat_callback",
+                    # "Mode": "ArkV3",
+                    # "EndPointId": "ep-20260821161719-qj5nr",
                     "Method": "POST",
                     "ApiType": "https"
                     if str(settings.SERVER_URL).startswith("https")
@@ -207,51 +211,77 @@ async def proxy(request: Request):
 
 @app.post("/api/chat_callback")
 async def chat_callback(request: Request):
+    """RTC CustomLLM 的 OpenAI 兼容 SSE 回调接口。"""
     try:
         data = await request.json()
-    except:
-        return {"text": ""}
+    except Exception as exc:
+        print(f"⚠️ 无法解析 RTC LLM 请求: {exc}")
+        data = {}
 
-    print(f"======================== 流式请求", data)
+    print("======================== RTC 流式请求")
+    print(json.dumps(data, ensure_ascii=False))
 
-    messages = data.get("messages", [])
+    messages = data.get("messages")
 
-    # 校验逻辑 (保持不变)
-    if not messages or messages[-1].get("role") != "user":
-        print("⚠️ 忽略：非用户主动发言")
-        return {"text": ""}
-
-    # --- 定义 SSE 生成器 ---
     async def generate_sse():
-        # 1. 调用 LLM 的流式方法
-        # 注意：这里是同步生成器还是异步取决于 SDK，Ark SDK 默认是同步 iterator，
-        # 但在 FastAPI 的 async def 中，通常可以直接遍历
+        # 无效请求也保持 SSE 协议，避免返回普通 JSON 破坏 RTC 客户端解析。
+        if not isinstance(messages, list) or not messages:
+            print("⚠️ 忽略：messages 为空或格式不正确")
+            yield "data: [DONE]\n\n"
+            return
 
-        rag_content = await rag_service.retrieve(messages[-1].get("content", ""))
+        last_message = messages[-1]
+        if not isinstance(last_message, dict) or last_message.get("role") != "user":
+            print("⚠️ 忽略：最后一条消息不是用户消息")
+            yield "data: [DONE]\n\n"
+            return
 
-        stream_iterator = llm_service.chat_stream(messages, rag_content)
+        try:
+            question = last_message.get("content", "")
+            rag_content = await rag_service.retrieve(question)
+            stream_iterator = llm_service.chat_stream(messages, rag_content)
 
-        for chunk in stream_iterator:
-            if chunk:
-                # Ark SDK 的 chunk 是一个对象 (ChatCompletionChunk)
-                # 我们直接用 model_dump_json() 把它转成 JSON 字符串
-                # 这完全符合 RTC 要求的 OpenAI 兼容格式
-                chunk_json = chunk.model_dump_json()
+            # Ark SDK 的流式迭代器是同步的，在线程池中拉取下一个 chunk，
+            # 避免网络等待阻塞 FastAPI 的事件循环。
+            async for chunk in iterate_in_threadpool(stream_iterator):
+                if await request.is_disconnected():
+                    print("⚠️ RTC SSE 客户端已断开")
+                    return
 
-                # 2. 构造 SSE 协议格式： "data: {json数据}\n\n"
+                if chunk is None:
+                    continue
+
+                if hasattr(chunk, "model_dump_json"):
+                    chunk_json = chunk.model_dump_json()
+                elif isinstance(chunk, dict):
+                    chunk_json = json.dumps(
+                        chunk,
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    )
+                else:
+                    print(f"⚠️ 忽略无法序列化的 LLM chunk: {type(chunk).__name__}")
+                    continue
+
                 yield f"data: {chunk_json}\n\n"
 
-        # 3. 循环结束后，必须发送结束符 (RTC 要求的)
+        except asyncio.CancelledError:
+            print("⚠️ RTC SSE 请求被取消")
+            raise
+        except Exception as exc:
+            # 响应头已是 SSE；此处仅记录错误，仍按协议发送结束符。
+            print(f"❌ RTC SSE 处理失败: {type(exc).__name__}: {exc}")
+
         yield "data: [DONE]\n\n"
 
-    # --- 返回流式响应 ---
     return StreamingResponse(
         generate_sse(),
+        status_code=200,
         media_type="text/event-stream",  # <--- 必须是这个 Header
         headers={
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
-            # 如果存在跨域问题，可以加上 Access-Control-Allow-Origin
+            "X-Accel-Buffering": "no",
             "Access-Control-Allow-Origin": "*",
         },
     )
@@ -267,7 +297,7 @@ class ChatMessage(BaseModel):
 
 
 class DebugRequest(BaseModel):
-    history: Optional[List[ChatMessage]] = []
+    history: Optional[List[ChatMessage]] = None
     question: str
 
 
@@ -276,71 +306,75 @@ class DebugRequest(BaseModel):
 async def debug_chat(request: DebugRequest):
 
 
-    # 构造当前发送给 LLM 的消息列表
-    current_messages = []
-    for msg in request.history:
-        current_messages.append({"role": msg.role, "content": msg.content})
 
-    # 放入用户最新问题
-    current_messages.append({"role": "user", "content": request.question})
+    history = request.history or []
+    current_messages = [
+        {"role": msg.role, "content": msg.content}
+        for msg in history
+    ]
+    current_messages.append(
+        {"role": "user", "content": request.question}
+    )
 
-    async def generate_text():
-        full_ai_response = ""
-        total_usage = None
+    async def collect_answer():
 
-            # 1. 记录总开始时间
+        # 1、记录总时间开始
         start_t = time.time()
-        # 查询知识库
+
         rag_content = await rag_service.retrieve(request.question)
 
         rag_duration = time.time() - start_t
+        print(f"知识库查询耗时：{rag_duration}s")
 
-        print(f"DEBUG: 知识库查询耗时: {rag_duration:.2f}s")
-        # print(f"DEBUG: 知识库返回检索内容: {rag_content}")
 
-        # 2. 记录 LLM 调用开始时间
         llm_start_t = time.time()
 
-        # 调用 llm_service
-        stream = llm_service.chat_stream(current_messages, rag_content)
 
-        for chunk in stream:
-            if chunk and chunk.choices:
-                delta = chunk.choices[0].delta
-                if delta.content:
-                    content = delta.content
-                    full_ai_response += content  # 累积 AI 的回答
-                    yield content
-            # 记录 Token 消耗
-            if hasattr(chunk, "usage") and chunk.usage:
-                total_usage = chunk.usage
+        stream_iterator = llm_service.chat_stream(current_messages, rag_content)
 
-        # 3. 记录 LLM 调用耗时
-        llm_duration = time.time() - llm_start_t
-        print(f"DEBUG: LLM 调用耗时: {llm_duration:.2f}s")
+        parts = []
+        usage = None
 
-        if total_usage:
-            print(
-                f"🎫 Token 统计: Total={total_usage.total_tokens} (P:{total_usage.prompt_tokens}, C:{total_usage.completion_tokens})"
-            )
+        try:
+            async for chunk in iterate_in_threadpool(stream_iterator):
+                if chunk is None:
+                    continue
 
-        # --- 重点：在流结束后构造并打印 history 结构 ---
-        # 构造完整的 history 列表
-        new_history = []
-        # 添加旧历史
-        for m in request.history:
-            new_history.append({"role": m.role, "content": m.content})
-        # 添加最新的一轮对话
-        new_history.append({"role": "user", "content": request.question})
-        new_history.append({"role": "assistant", "content": full_ai_response})
+                if isinstance(chunk, dict):
+                    choices = chunk.get("choices") or []
+                    if choices:
+                        delta = choices[0].get("delta") or {}
+                        content = delta.get("content")
+                        if content:
+                            parts.append(content)
+                    if chunk.get("usage"):
+                        usage = chunk["usage"]
+                    continue
 
-        # 打印到控制台，方便你直接复制
-        print("\n" + "=" * 50)
-        print("🐞 调试完成！以下是可用于下次请求的 history 结构：")
-        print(json.dumps({"history": new_history}, ensure_ascii=False, indent=2))
-        print("=" * 50 + "\n")
+                choices = getattr(chunk, "choices", None) or []
+                if choices:
+                    delta = getattr(choices[0], "delta", None)
+                    content = getattr(delta, "content", None)
+                    if content:
+                        parts.append(content)
+                chunk_usage = getattr(chunk, "usage", None)
+                if chunk_usage:
+                    usage = chunk_usage.model_dump() if hasattr(chunk_usage, "model_dump") else chunk_usage
 
-    return StreamingResponse(generate_text(), media_type="text/plain")
+            llm_duration = time.time() - llm_start_t
+
+            print(f"大模型查询耗时：{llm_duration}s")
+
+        except asyncio.CancelledError:
+            raise
+        except Exception as exc:
+            print(f"❌ /debug/chat 失败: {exc}")
+
+        return {"text": "".join(parts), "usage": usage}
+
+
+
+    return await collect_answer()
 
 
 # ... 其他导入保持不变 ...

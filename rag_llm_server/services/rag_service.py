@@ -1,131 +1,178 @@
-import os
-import httpx
-from config import settings
-from services.utils import Signer
+"""火山引擎知识库检索服务。"""
+
+from __future__ import annotations
+
+import logging
 import json
+from typing import Any
+
+import httpx
+
+from config import settings
 
 
+logger = logging.getLogger(__name__)
 
-class RagService:
-    def __init__(self):
-        # 1. 加载基础鉴权配置
-        self.ak = settings.VOLC_AK
-        self.sk = settings.VOLC_SK
-        
-        # 2. 知识库特有配置
-        # 建议后续将这些变量加入 .env 和 config.py 中，这里暂时使用 os.getenv 读取
-        # 如果 .env 中未配置，将使用默认值
-        self.collection_name = os.getenv("KB_COLLECTION_NAME", "dw_ai")  # 知识库集合名称
-        self.project_name = os.getenv("KB_PROJECT_NAME", "default")      # 项目名称
-        self.account_id = os.getenv("VOLC_ACCOUNT_ID", "kb-2580e8a6357082fb")               # 火山引擎主账号ID (必填)
-        
-        # 知识库服务的固定配置
-        self.host = "api-knowledgebase.mlp.cn-beijing.volces.com"
-        self.region = "cn-north-1" # 示例代码中使用的是 cn-north-1
-        self.service = "air"       # 知识库服务的 Service 名通常为 air
 
-    async def retrieve(self, query: str) -> str:
-        """
-        根据用户问题检索知识库
-        :param query: 用户查询语句
-        :return: 整合后的上下文文本
-        """
-        # 基础校验
-        if not self.ak or not self.sk or not self.account_id:
-            print(f"⚠️ [RagService] 配置缺失: 请检查 VOLC_AK, VOLC_SK, VOLC_ACCOUNT_ID(当前: {self.account_id})")
+class RAGService:
+    """在调用 LLM 前，从指定知识库检索与问题相关的文本。"""
+
+    SEARCH_PATH = "/api/knowledge/collection/search_knowledge"
+    _TEXT_KEYS = (
+        "content",
+        "text",
+        "chunk_content",
+        "chunk_text",
+        "raw_text",
+        "paragraph",
+        "summary",
+    )
+    _RESULT_KEYS = (
+        "result_list",
+        "results",
+        "items",
+        "documents",
+        "document",
+        "chunks",
+        "chunk",
+        "chunk_info",
+        "records",
+        "data",
+        "result",
+    )
+
+    def __init__(self) -> None:
+        self.api_key = settings.KNOWLEDGE_BASE_API_KEY
+        self.project = settings.KNOWLEDGE_BASE_PROJECT
+        self.collection = settings.KNOWLEDGE_BASE_COLLECTION
+        self.limit = max(1, settings.KNOWLEDGE_BASE_LIMIT)
+        self.timeout = settings.KNOWLEDGE_BASE_TIMEOUT
+        self.base_url = self._normalise_base_url(settings.KNOWLEDGE_BASE_DOMAIN)
+
+    @staticmethod
+    def _normalise_base_url(domain: str) -> str:
+        """支持配置完整 URL，也支持文档中的纯域名写法。"""
+        domain = (domain or "").strip().rstrip("/")
+        if not domain:
             return ""
+        if domain.startswith(("http://", "https://")):
+            return domain
+        # 与知识库 API 示例一致；如需 HTTPS，可在环境变量中配置完整 https URL。
+        return f"http://{domain}"
 
-        path = "/api/knowledge/collection/search_knowledge"
-        
-        # 3. 构造请求体 (参考官方示例)
-        body = {
-            "project": self.project_name,
-            "name": self.collection_name,
+    def _build_payload(self, query: str) -> dict[str, Any]:
+        return {
+            "project": self.project,
+            "name": self.collection,
             "query": query,
-            "limit": 1, # 获取相关度最高的前3条
+            "limit": self.limit,
             "pre_processing": {
                 "need_instruction": True,
                 "return_token_usage": True,
-                "messages": [{"role": "user", "content": query}]
+                "messages": [
+                    {"role": "system", "content": ""},
+                    {"role": "user"},
+                ],
             },
+            "dense_weight": 0.5,
             "post_processing": {
-                "get_attachment_link": True
-            }
+                "get_attachment_link": True,
+                "rerank_only_chunk": False,
+                "rerank_switch": True,
+            },
         }
 
-        # 4. 构造 Header
-        # 注意：V-Account-Id 是知识库接口必须的
-        headers = {
-            "Host": self.host,
-            "Content-Type": "application/json",
-            "V-Account-Id": self.account_id 
-        }
+    async def retrieve(self, query: str) -> str:
+        """检索知识库并返回可直接作为 LLM 上下文的文本。
 
-        # 构造待签名的请求数据
-        request_data = {
-            "method": "POST",
-            "path": path,
-            "headers": headers,
-            "body": body,
-            "params": {}
-        }
-
-
-
-        try:
-            # 5. 计算签名 (复用 utils.py 中的 Signer)
-            # 知识库使用的是 air / cn-north-1
-            signer = Signer(request_data, service=self.service, region=self.region)
-            signer.add_authorization({
-                "accessKeyId": self.ak,
-                "secretKey": self.sk
-            })
-            
-            # 6. 发送异步请求
-            url = f"http://{self.host}{path}"
-            
-            async with httpx.AsyncClient() as client:
-                # request_data['headers'] 已经被 signer 修改，包含了 Authorization 字段
-                resp = await client.post(
-                    url, 
-                    headers=request_data["headers"], 
-                    json=body,
-                    timeout=10.0
-                )
-
-            # 6. 解析响应内容
-            if resp.status_code != 200:
-                print(f"❌ [RagService] 请求失败: {resp.status_code}, {resp.text}")
-                return ""
-
-            data = resp.json()
-            
-            # --- 核心提取逻辑 ---
-            # 1. 按照层级定位到 result_list
-            # 使用 .get() 级联获取，防止中间某个 Key 缺失导致报错
-            result_list = data.get("data", {}).get("result_list", [])
-            
-            # 2. 提取所有 item 中的 content
-            # 兼容多条数据：遍历列表，只取 content 字段不为空的部分
-            contents = [item.get("content", "") for item in result_list if item.get("content")]
-            
-            
-            if not contents:
-                print(f"⚠️ [RagService] 未检索到匹配的知识内容")
-                return ""
-
-            # 3. 将多条 content 拼接成一个完整的字符串返回
-            # 使用双换行符分隔不同的知识块，方便 LLM 区分
-            context_text = "\n\n".join(contents)
-            
-            print(f"✅ [RagService] 成功提取 {len(contents)} 条知识内容")
-            print(f"【传给LLM的,上下文内容】:\n{context_text}")
-            return context_text
-
-
-        except Exception as e:
-            print(f"❌ [RagService] 异常: {e}")
+        所有异常都会降级为空字符串：RAG 是增强能力，不应让 RTC 流式对话失败。
+        """
+        question = query.strip() if isinstance(query, str) else ""
+        if not question:
             return ""
 
-# 实例化单例
-rag_service = RagService()
+        if not self.api_key:
+            logger.warning("知识库未配置 KNOWLEDGE_BASE_API_KEY，已跳过检索")
+            return ""
+        if not self.base_url or not self.collection:
+            logger.error("知识库域名或集合名称未配置，已跳过检索")
+            return ""
+
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
+            "Authorization": f"Bearer {self.api_key}",
+        }
+        url = f"{self.base_url}{self.SEARCH_PATH}"
+
+        try:
+            print("\n========== RAG 知识库检索开始 ==========")
+            print(f"请求地址: {url}")
+            print(f"用户问题: {question}")
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                response = await client.post(url, headers=headers, json=self._build_payload(question))
+                # 先打印响应信息，再检查 HTTP 状态；这样即使请求失败也能定位原因。
+                print(f"HTTP 状态码: {response.status_code}")
+                print(f"响应对象: {response!r}")
+                print("响应原始内容:")
+                print(response.text)
+                response.raise_for_status()
+                payload = response.json()
+                print("响应 JSON 内容:")
+                print(json.dumps(payload, ensure_ascii=False, indent=2))
+        except (httpx.HTTPError, ValueError) as exc:
+            logger.warning("知识库检索失败：%s", exc)
+            print("========== RAG 知识库检索结束（失败）==========\n")
+            return ""
+
+        if not isinstance(payload, dict):
+            logger.warning("知识库返回格式错误：期望 JSON 对象")
+            return ""
+
+        # 火山引擎 API 的业务错误通常仍会返回 HTTP 200。
+        code = payload.get("code")
+        if code not in (None, 0, "0"):
+            logger.warning("知识库返回业务错误，code=%s, message=%s", code, payload.get("message"))
+            return ""
+
+        context = self._extract_context(payload)
+        logger.info("知识库检索完成：%d 个字符", len(context))
+        print("提取后传给 LLM 的知识库内容:")
+        print(context or "（未提取到可用正文）")
+        print("========== RAG 知识库检索结束 ==========" + "\n")
+        return context
+
+    @classmethod
+    def _extract_context(cls, payload: dict[str, Any]) -> str:
+        """兼容知识库 API 不同版本的结果字段，提取并去重正文。"""
+        texts: list[str] = []
+        seen: set[str] = set()
+
+        def append(value: Any) -> None:
+            if isinstance(value, str):
+                text = value.strip()
+                if text and text not in seen:
+                    seen.add(text)
+                    texts.append(text)
+
+        def walk(value: Any) -> None:
+            if isinstance(value, list):
+                for item in value:
+                    walk(item)
+                return
+            if not isinstance(value, dict):
+                return
+
+            # 优先读取命中项的正文，避免把标题、文件名、URL 等元数据拼入上下文。
+            for key in cls._TEXT_KEYS:
+                append(value.get(key))
+            for key in cls._RESULT_KEYS:
+                child = value.get(key)
+                if isinstance(child, (dict, list)):
+                    walk(child)
+
+        walk(payload.get("data", payload))
+        return "\n\n".join(texts)
+
+
+rag_service = RAGService()
