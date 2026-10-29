@@ -8,7 +8,7 @@ export const ReversoContext = 'https://www.volcengine.com/docs/6348/68918';
 export const UserAgreement = 'https://www.volcengine.com/docs/6348/128955';
 
 /**
- * @note 请求的 API Proxy Server(对应此 Demo 中包含的 Node server) 地址。
+ * @note Python FastAPI 后端（rag_llm_server）的请求地址。
  *       动态使用当前页面的主机名，支持局域网访问
  */
 export const AIGC_PROXY_HOST = `http://${window.location.hostname}:3001`;

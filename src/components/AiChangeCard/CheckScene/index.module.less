@@ -12,10 +12,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: #737a87;
+  color: var(--color-text-secondary);
   font-size: 14px;
   line-height: 22px;
-  border: 1px solid#DDE2E9;
+  border: 1px solidvar(--color-border);
   margin-bottom: 16px;
 
   .content {
@@ -48,12 +48,12 @@
 
 .active {
   border: 1px solid transparent;
-  background: linear-gradient(77.86deg, #f1f9ff -3.23%, #edf3ff 51.11%, #faf4ff 98.65%) padding-box,
-    linear-gradient(77.86deg, #3b91ff -3.23%, #0d5eff 51.11%, #c069ff 98.65%) border-box;
+  background: linear-gradient(77.86deg, #321c26 -3.23%, #2b1b25 51.11%, #281c27 98.65%) padding-box,
+    linear-gradient(77.86deg, #f15b71 -3.23%, #bf3c56 51.11%, #e6a0ac 98.65%) border-box;
 
   .content {
     .checked-text {
-      background: linear-gradient(90deg, #004fff 38.86%, #9865ff 100%);
+      background: linear-gradient(90deg, #f15b71 38.86%, #f9a4ae 100%);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -77,7 +77,7 @@
   font-weight: 500;
   line-height: 18px;
   transform: translate(20%, -50%);
-  background: rgba(134, 123, 227, 1);
+  background: var(--color-accent-strong);
   padding: 0px 6px 0px 6px;
   border-radius: 20px 20px 20px 0px;
   color: white;

@@ -25,7 +25,7 @@ function InvokeButton(props: IInvokeButtonProps) {
           <img src={PhoneSVG} className={style.icon} alt="phone" />
         )}
       </div>
-      <div className={style.text}>{loading ? '连接中' : '通话'}</div>
+      <div className={style.text}>{loading ? '连接中' : '开始对话'}</div>
     </div>
   );
 }

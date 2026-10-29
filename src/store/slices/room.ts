@@ -28,6 +28,7 @@ export type LocalUser = Omit<IUser, 'audioStats'> & {
 };
 
 export interface Msg {
+  id?: string;
   value: string;
   time: string;
   user: string;
@@ -281,6 +282,19 @@ export const roomSlice = createSlice({
     clearHistoryMsg: (state) => {
       state.msgHistory = [];
     },
+    addTextMessage: (state, { payload }: { payload: { id: string; text: string; user: string } }) => {
+      state.msgHistory.push({
+        id: payload.id,
+        value: payload.text,
+        user: payload.user,
+        time: new Date().toString(),
+        definite: true,
+        paragraph: true,
+      });
+    },
+    removeTextMessage: (state, { payload }: { payload: string }) => {
+      state.msgHistory = state.msgHistory.filter((message) => message.id !== payload);
+    },
     setHistoryMsg: (state, { payload }) => {
       const { paragraph, definite } = payload;
       const lastMsg = state.msgHistory.at(-1)! || {};
@@ -379,6 +393,8 @@ export const {
   updateAITalkState,
   updateAIThinkState,
   setHistoryMsg,
+  addTextMessage,
+  removeTextMessage,
   clearHistoryMsg,
   clearCurrentMsg,
   setInterruptMsg,

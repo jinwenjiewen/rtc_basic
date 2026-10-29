@@ -8,6 +8,7 @@ import { RootState } from '@/store';
 import UserTag from '../UserTag';
 import { useDeviceState, useScene } from '@/lib/useCommon';
 import style from './index.module.less';
+import AiAvatarImage from '@/components/AiAvatarImage';
 
 interface IAiAvatarCardProps {
   showStatus: boolean;
@@ -29,7 +30,7 @@ function AiAvatarCard(props: IAiAvatarCardProps) {
   return (
     <div className={`${style.card} ${className} ${isFullScreen ? style.fullScreen : ''}`}>
       <div className={style.avatar}>
-        <img id="avatar-card" src={icon} alt="Avatar" />
+        <AiAvatarImage id="avatar-card" src={icon} />
         {showStatus ? (
           isAITalking ? (
             <div className={style.aiStatus}>

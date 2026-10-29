@@ -22,7 +22,7 @@ function AudioLoading(props: IAudioLoadingProps) {
             className={`${style.dot} ${loading ? style.dotter : ''}`}
             style={{
               animationDelay: `${index * 0.3}s`,
-              backgroundColor: color || 'rgba(148, 116, 255, 1)',
+              backgroundColor: color || 'var(--color-accent)',
             }}
           />
         ))}

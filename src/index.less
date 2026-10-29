@@ -9,12 +9,19 @@ body {
   margin: 0;
   overflow: hidden;
   width: 100% !important;
-  background: linear-gradient(
-    109.22deg,
-    rgba(116, 37, 255, 0.05) 0.27%,
-    rgba(39, 88, 255, 0.05) 51.39%,
-    rgba(0, 102, 255, 0.05) 99.54%
-  );
+  color: var(--color-text);
+  font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: radial-gradient(ellipse at 12% 0%, #301622 0%, transparent 50%), var(--color-page);
+
+  ::selection {
+    color: var(--color-text);
+    background: #803448;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
 
   img {
     user-drag: none;

@@ -22,14 +22,15 @@
     border-radius: 50%;
     width: 128px;
     height: 128px;
-    background: linear-gradient(180deg, #c3e4ff 0%, #98d6fe 100%);
+    background: linear-gradient(180deg, #653044 0%, #3a202e 100%);
+    box-shadow: 0 0 0 10px #f15b7108, 0 0 80px #b52f462b;
   }
 
   .title {
     font-weight: 500;
     font-size: 24px;
     line-height: 32px;
-    color: #1d2129;
+    color: var(--color-text);
   }
 
   .desc {
@@ -37,14 +38,14 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 22px;
-    color: #737a87;
+    color: var(--color-text-secondary);
   }
 
   .exceededTitle {
     font-weight: 500;
     font-size: 24px;
     line-height: 32px;
-    background: linear-gradient(77.86deg, #3b91ff -3.23%, #0d5eff 51.11%, #c069ff 98.65%);
+    background: linear-gradient(77.86deg, #f15b71 -3.23%, #bf3c56 51.11%, #e6a0ac 98.65%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -59,6 +60,6 @@
     flex-wrap: wrap;
     gap: 8px;
     justify-content: center;
-    width: max-content;
+    max-width: 100%;
   }
 }

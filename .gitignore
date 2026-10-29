@@ -36,8 +36,6 @@ yarn-debug.log*
 yarn-error.log*
 .eslintcache
 
-/Server/node_modules
-/Server/log
 /log
 yarn.lock
 .eslintcache

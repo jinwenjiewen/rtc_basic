@@ -22,6 +22,10 @@ function MobileToolBar(props: React.HTMLAttributes<HTMLDivElement>) {
   const [open, setOpen] = useState(false);
   const [subTitleStatus, setSubTitleStatus] = useState(isShowSubtitle);
 
+  useEffect(() => {
+    setSubTitleStatus(isShowSubtitle);
+  }, [isShowSubtitle]);
+
   const { isScreenMode } = useScene();
   const { isVideoPublished, isScreenPublished } = useDeviceState();
 

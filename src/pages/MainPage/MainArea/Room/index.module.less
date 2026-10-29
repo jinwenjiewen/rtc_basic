@@ -10,27 +10,26 @@
     border-radius: 16px;
     padding: 32px;
     box-sizing: border-box;
+    background: var(--gradient-panel);
   
     .conversation,
     .fullScreen,
     .mobileConversation {
-      width: 100%;
-      position: relative;
-      height: 100%;
-      /**
-           * 100% 为容器高度
-           * 128px 为上层 DouBao Card Height
-           * 24px 为 margin top
-           * 36px * 2 为容器 padding
-           * 128 + 24 + 36 * 2 = 224px
-           */
-      max-height: calc(100% - 224px - 8px);
+      width: auto;
+      position: absolute;
+      top: 80px;
+      right: 32px;
+      bottom: 232px;
+      left: 32px;
+      height: auto;
+      max-height: none;
       display: flex;
       flex-direction: column;
       padding-bottom: 12px;
       overflow-x: hidden;
       overflow-y: auto;
-      margin-top: 48px;
+      margin-top: 0;
+      z-index: 1;
   
       .sentence {
         position: relative;
@@ -47,7 +46,11 @@
         gap: 8px;
   
         .content {
-          width: max-content;
+          min-width: 0;
+          max-width: 100%;
+          white-space: pre-wrap;
+          overflow-wrap: anywhere;
+          line-height: 1.7;
         }
       }
   
@@ -56,19 +59,20 @@
         border: 0px solid;
         padding: 8px 12px 8px 12px;
         border-radius: 12px;
-        background: #f1f3f5;
+        background: var(--color-accent-soft);
+        color: var(--color-text);
         margin-bottom: 12px;
       }
       .robot {
         font-family: PingFang SC;
-        color: #0c0d0e;
+        color: var(--color-text);
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0.003em;
         border: 1px solid transparent;
         border-radius: 12px;
-        background: linear-gradient(77.86deg, #fff -3.23%, #fff 51.11%, #fff 98.65%) padding-box,
-          linear-gradient(77.86deg, #e5f2ff -3.23%, #d9e5ff 51.11%, #f6e2ff 98.65%) border-box;
+        background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
+          linear-gradient(77.86deg, #633144 -3.23%, #82384d 51.11%, #4b2737 98.65%) border-box;
         margin-bottom: 12px;
       }
   
@@ -82,7 +86,7 @@
         }
   
         .dot {
-          background-color: rgba(193, 163, 237, 1);
+          background-color: var(--color-accent);
           width: 8px;
           height: 8px;
         }
@@ -92,7 +96,7 @@
         font-family: PingFang SC;
         font-size: 16px;
         font-weight: 500;
-        color: rgba(27, 30, 61, 0.6);
+        color: var(--color-text-secondary);
         text-align: center;
         display: flex;
         flex-direction: row;
@@ -112,7 +116,7 @@
         align-items: center;
         font-size: 12px;
         line-height: 20px;
-        color: #737a87;
+        color: var(--color-text-secondary);
         margin-bottom: 4px;
   
         .avatar {
@@ -142,7 +146,7 @@
         background: rgba(0, 0, 0, 0.25);
       }
       .robot {
-        background: rgba(0, 12, 71, 0.5);
+        background: rgba(50, 28, 38, 0.92);
       }
     }
   
@@ -166,6 +170,8 @@
       right: 0px;
       margin-right: 36px;
       bottom: 36px;
+      width: auto;
+      z-index: 2;
     }
   
     .controller {
@@ -174,6 +180,7 @@
       bottom: 36px;
       margin-left: 50%;
       transform: translateX(-50%);
+      z-index: 2;
     }
   
     .declare {
@@ -190,7 +197,7 @@
   .text {
     width: 100%;
     text-align: center;
-    color: rgba(148, 116, 255, 1);
+    color: var(--color-accent);
     font-size: 14px;
     font-weight: 500;
     line-height: 22px;
@@ -199,7 +206,7 @@
   .closed {
     width: 100%;
     text-align: center;
-    color: #737a87;
+    color: var(--color-text-secondary);
     font-size: 14px;
     font-weight: 400;
     line-height: 19.6px;
@@ -225,6 +232,10 @@
   
     .btn {
       cursor: pointer;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      filter: brightness(0.85);
     }
   
     .btn:hover {
@@ -240,17 +251,19 @@
     margin-right: 0 !important;
     justify-content: space-around;
     align-items: center;
-    bottom: 64px !important;
+    bottom: 148px !important;
+    left: 16px;
+    right: 16px;
     gap: 0;
   
     img {
-      width: 84px;
-      height: 84px;
+      width: 48px;
+      height: 48px;
     }
   }
   
   .interruptContainer {
-    color: #635bff;
+    color: var(--color-accent);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -262,7 +275,7 @@
     display: inline-block;
     width: 8px;
     height: 8px;
-    background-color: #635bff;
+    background-color: var(--color-accent);
     border-radius: 2px;
   }
   
@@ -271,7 +284,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background: rgba(99, 91, 255, 0.1);
+    background: var(--color-accent-soft);
     border-radius: 4px;
     width: max-content;
     height: 26px;
@@ -325,7 +338,7 @@
       justify-content: center;
       align-items: center;
       font-size: 12px;
-      color: #737a87;
+      color: var(--color-text-secondary);
       border-bottom-left-radius: inherit;
       border-bottom-right-radius: inherit;
       text-align: center;
@@ -358,7 +371,7 @@
   
   .visionDescriptionArea {
     width: 100%;
-    background: linear-gradient(77.86deg, #f1f9ff -3.23%, #edf3ff 51.11%, #faf4ff 98.65%);
+    background: linear-gradient(77.86deg, #321c26 -3.23%, #2b1b25 51.11%, #281c27 98.65%);
     padding: 10px 0;
     text-align: center;
     border-bottom-left-radius: inherit;
@@ -366,10 +379,10 @@
     box-sizing: border-box;
     font-size: 12px;
     line-height: 20px;
-    color: #737a87;
+    color: var(--color-text-secondary);
   
     .visionTitleText {
-      color: #42464e;
+      color: var(--color-text-secondary);
       font-weight: 500;
     }
   }
@@ -383,22 +396,22 @@
   }
   
   .mobile {
-    background: 
-    /* 图层1 (最上层): 背景图片 */
-    /* url(...) [position] / [size] [repeat] */ url('../../../../assets/img/mobileBg.png')
-        center center / cover no-repeat,
-      /* 图层2 (下层): 渐变背景 */ linear-gradient(167.98deg, #f5f7ff 0%, #faf3ff 100%);
+    background: var(--gradient-panel);
   
     .controller {
-      bottom: 156px;
+      bottom: 212px;
     }
     border-radius: 0;
   }
   
   .mobileConversation {
     display: flex;
-    max-height: calc(100% - 324px) !important;
-    margin-top: 64px !important;
+    top: 72px !important;
+    bottom: 276px !important;
+    left: 16px !important;
+    right: 16px !important;
+    max-height: none !important;
+    margin-top: 0 !important;
   
     .sentence {
       margin-left: 0 !important;
@@ -427,4 +440,15 @@
       align-self: flex-end;
     }
   }
-  
+
+  @media (max-height: 540px) {
+    .mobile {
+      .controller {
+        display: none;
+      }
+
+      .mobileConversation {
+        bottom: 208px !important;
+      }
+    }
+  }

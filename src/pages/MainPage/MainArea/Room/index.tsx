@@ -8,6 +8,7 @@ import Conversation from './Conversation';
 import ToolBar from './ToolBar';
 import CameraArea from './CameraArea';
 import AudioController from './AudioController';
+import TextComposer from './TextComposer';
 import { isMobile } from '@/utils/utils';
 import style from './index.module.less';
 import AiAvatarCard from '@/components/AiAvatarCard';
@@ -39,6 +40,7 @@ function Room() {
       )}
       {isMobile() ? null : <CameraArea />}
       <Conversation className={style.conversation} showSubtitle={isShowSubtitle} />
+      <TextComposer />
       <ToolBar className={style.toolBar} />
       <AudioController className={style.controller} />
       <div className={style.declare}>AI生成内容由大模型生成，不能完全保障真实</div>

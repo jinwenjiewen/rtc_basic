@@ -401,7 +401,7 @@ export class RTCClient {
     message?: string;
   }) => {
     if (this.audioBotEnabled) {
-      this.engine.sendUserBinaryMessage(
+      return this.engine.sendUserBinaryMessage(
         agentName,
         string2tlv(
           JSON.stringify({
@@ -412,7 +412,6 @@ export class RTCClient {
           'ctrl'
         )
       );
-      return;
     }
     console.warn('Interrupt failed, bot not enabled.');
   };

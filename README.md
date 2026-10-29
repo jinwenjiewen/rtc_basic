@@ -4,7 +4,7 @@
 - 用户只需调用基于标准的 OpenAPI 接口即可配置所需的 ASR、LLM、TTS 类型和参数。火山引擎云端计算服务负责边缘用户接入、云端资源调度、音视频流压缩、文本与语音转换处理以及数据订阅传输等环节。简化开发流程，让开发者更专注在对大模型核心能力的训练及调试，从而快速推进AIGC产品应用创新。     
 - 同时火山引擎 RTC拥有成熟的音频 3A 处理、视频处理等技术以及大规模音视频聊天能力，可支持 AIGC 产品更便捷的支持多模态交互、多人互动等场景能力，保持交互的自然性和高效性。 
 
-> 当前后端为 `rag_llm_server/`。前端仍须使用 Node.js 依赖进行开发和构建。
+> 项目后端统一使用 `rag_llm_server/` 中的 Python FastAPI 服务。Node.js 和根目录的 `node_modules/` 用于前端开发、测试和构建。
 
 ## 目录说明
 
@@ -71,6 +71,8 @@ uv sync
 uv run python main.py
 ```
 
+也可以在项目根目录运行 `npm run server:start`，该命令会进入 `rag_llm_server/` 并通过 uv 启动同一个 Python 服务，需要已安装 uv。
+
 或使用 pip：
 
 ```shell
@@ -112,6 +114,19 @@ npm run build
 ```
 
 构建产物输出到 `build/`，可由 Nginx、CDN 或任意静态文件服务器托管。
+
+## 语音与文字交流
+
+页面使用暗月红主题。点击“开始对话”加入现有 RTC 会话后，可以继续语音交流，也可以在底部输入框中发送文字；关闭麦克风后仍可输入文字。
+
+- 点击“发送”或按 Enter 发送，Shift + Enter 换行；中文输入法选词时的回车不会发送。
+- 每次最多输入 199 字，前端按 RTC 协议为没有句末标点的消息补上句号。
+- 文字复用当前会话的 `ExternalTextToLLM` 指令，AI 回复仍通过现有语音和字幕通道返回；发送文字时会自动打开字幕。
+- 发送失败会保留输入，方便重试。此功能不需要修改 Python 后端、模型或知识库配置。
+
+协议说明：[火山引擎：传入文本直接提问](https://docs.volcengine.com/docs/real_time_communication/Directquestionsinincomingtext?lang=zh)。
+
+运行文字交互测试：`npm test -- --watchAll=false --runInBand`。
 
 ## 关于 `node_modules`
 

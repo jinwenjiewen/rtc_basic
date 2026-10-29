@@ -9,6 +9,7 @@ import CheckScene from './CheckScene';
 import { SceneConfig, updateScene } from '@/store/slices/room';
 import { useScene } from '@/lib/useCommon';
 import style from './index.module.less';
+import AiAvatarImage from '@/components/AiAvatarImage';
 
 function AIChangeCard() {
   const { scene, sceneConfigMap } = useSelector((state: RootState) => state.room);
@@ -23,13 +24,13 @@ function AIChangeCard() {
   return (
     <div className={style.card}>
       <div className={style.avatar}>
-        <img id="avatar-card" src={icon} alt="Avatar" />
+        <AiAvatarImage id="avatar-card" src={icon} />
       </div>
       <div className={style.title}>
         <div>Hi，欢迎体验实时对话式 AI</div>
         <div className={style.desc}>
           {isVision ? <>支持豆包 Vision 模型和 深度思考模型，</> : ''}
-          超多对话场景等你开启
+          语音畅聊，或输入文字开启对话
         </div>
       </div>
       <div className={style.sceneContainer}>

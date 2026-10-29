@@ -6,7 +6,7 @@
 import { memo, useState } from 'react';
 import { Drawer } from '@arco-design/web-react';
 import { useDeviceState, useLeave, useScene } from '@/lib/useCommon';
-import { isMobile } from '@/utils/utils';
+import { useIsMobile } from '@/utils/utils';
 import Menu from '../../Menu';
 
 import style from './index.module.less';
@@ -21,6 +21,7 @@ import ScreenOffSVG from '@/assets/img/ScreenOff.svg';
 function ToolBar(props: React.HTMLAttributes<HTMLDivElement>) {
   const { className, ...rest } = props;
   const [open, setOpen] = useState(false);
+  const isMobile = useIsMobile();
   const { isVision, isScreenMode } = useScene();
   const leaveRoom = useLeave();
   const {
@@ -33,14 +34,14 @@ function ToolBar(props: React.HTMLAttributes<HTMLDivElement>) {
   } = useDeviceState();
 
   return (
-    <div className={`${className} ${style.btns} ${isMobile() ? style.column : ''}`} {...rest}>
+    <div className={`${className} ${style.btns} ${isMobile ? style.column : ''}`} {...rest}>
       <img
         src={isAudioPublished ? MicOpenSVG : MicCloseSVG}
         onClick={() => switchMic(true)}
         className={style.btn}
         alt="mic"
       />
-      {!isVision ? null : isScreenMode && !isMobile() ? (
+      {!isVision ? null : isScreenMode && !isMobile ? (
         <img
           src={isScreenPublished ? 'new-screen-off.svg' : 'new-screen-on.svg'}
           onClick={() => switchScreenCapture()}
@@ -64,7 +65,7 @@ function ToolBar(props: React.HTMLAttributes<HTMLDivElement>) {
         />
       )}
       <img src={LeaveRoomSVG} onClick={leaveRoom} className={style.btn} alt="leave" />
-      {isMobile() ? (
+      {isMobile ? (
         <Drawer
           title="设置"
           visible={open}

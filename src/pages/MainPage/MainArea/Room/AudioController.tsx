@@ -47,9 +47,9 @@ function AudioController(props: React.HTMLAttributes<HTMLDivElement>) {
           <div className={style.closed}>请开始说话</div>
         )
       ) : (
-        <div className={style.closed}>你已关闭麦克风</div>
+        <div className={style.closed}>麦克风已关闭，可以输入文字交流</div>
       )}
-      <AudioLoading loading={isLoading} color={isAudioPublished ? undefined : '#EAEDF1'} />
+      <AudioLoading loading={isLoading} color={isAudioPublished ? undefined : 'var(--color-border)'} />
     </div>
   );
 }

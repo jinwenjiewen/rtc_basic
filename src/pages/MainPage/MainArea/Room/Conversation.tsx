@@ -13,6 +13,7 @@ import { useScene } from '@/lib/useCommon';
 import USER_AVATAR from '@/assets/img/userAvatar.png';
 import styles from './index.module.less';
 import AIAvatarReadying from '@/components/AIAvatarLoading';
+import AiAvatarImage from '@/components/AiAvatarImage';
 
 const lines: (string | React.ReactNode)[] = [];
 
@@ -39,7 +40,7 @@ function Conversation(props: React.HTMLAttributes<HTMLDivElement> & { showSubtit
     if (container) {
       container.scrollTop = container.scrollHeight - container.clientHeight;
     }
-  }, [msgHistory.length]);
+  }, [msgHistory]);
 
   return (
     <div
@@ -80,7 +81,7 @@ function Conversation(props: React.HTMLAttributes<HTMLDivElement> & { showSubtit
             {!isMobile() && (
               <div className={styles.msgName}>
                 <div className={styles.avatar}>
-                  <img src={isUserMsg ? USER_AVATAR : icon} alt="Avatar" />
+                  {isUserMsg ? <img src={USER_AVATAR} alt="我的头像" /> : <AiAvatarImage src={icon} />}
                 </div>
                 {isUserMsg ? '我' : scene}
               </div>
