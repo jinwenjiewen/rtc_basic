@@ -5,19 +5,25 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
+import LoginPage from './pages/LoginPage';
+import { AuthProvider } from './auth/AuthProvider';
+import ProtectedRoute from './auth/ProtectedRoute';
 import '@arco-design/web-react/dist/css/arco.css';
 
 function App() {
   console.warn('运行问题可参考 README 内容进行排查');
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route index element={<MainPage />} />
-          <Route path="/*" element={<MainPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route index element={<MainPage />} />
+            <Route path="*" element={<MainPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

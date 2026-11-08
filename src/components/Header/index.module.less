@@ -16,7 +16,7 @@
 
   :global {
     .arco-popover-content-top {
-      padding: 0px;
+      padding: 0;
     }
   }
 }
@@ -35,6 +35,7 @@
     img {
       height: 24px;
     }
+
     .arco-popover-content {
       padding: 0;
     }
@@ -51,7 +52,6 @@
 
 .header-logo-text {
   background: linear-gradient(90deg, #f15b71 38.86%, #f9a4ae 100%);
-  -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   font-size: 16px;
@@ -62,6 +62,7 @@
   color: #fff;
   display: flex;
   align-items: center;
+
   :global {
     span {
       height: 24px;
@@ -82,18 +83,22 @@
   :global {
     .ant-popover-arrow {
       left: 16px;
+
       .ant-popover-arrow-content {
-        &:before {
+        &::before {
           background: var(--color-surface);
         }
       }
     }
+
     .ant-popover-content {
       margin-left: 12px;
     }
+
     .ant-popover-inner {
       margin-right: 12px;
     }
+
     .ant-popover-inner-content {
       padding: 0;
       background: var(--color-surface);
@@ -113,6 +118,7 @@
         font-size: 13px;
         font-weight: 400;
         line-height: 20px;
+
         &:hover {
           color: var(--color-accent);
         }
@@ -132,6 +138,49 @@
   color: var(--color-text);
   margin-right: 24px;
   cursor: pointer;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-right: 20px;
+  padding-left: 18px;
+  border-left: 1px solid var(--color-border);
+
+  :global(.arco-btn-text) {
+    color: var(--color-text-secondary);
+  }
+
+  :global(.arco-btn-text:hover) {
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+  }
+}
+
+.accountName {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 135px;
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .account {
+    gap: 0;
+    margin-right: 8px;
+    padding-left: 8px;
+    border: 0;
+  }
+
+  .accountName {
+    display: none;
+  }
 }
 
 @media (max-width: 400px) {

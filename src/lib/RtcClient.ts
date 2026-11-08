@@ -69,6 +69,8 @@ export interface BasicBody {
 export class RTCClient {
   engine!: IRTCEngine;
 
+  private engineActive = false;
+
   basicInfo!: BasicBody;
 
   private _audioCaptureDevice?: string;
@@ -81,6 +83,7 @@ export class RTCClient {
 
   createEngine = async () => {
     this.engine = VERTC.createEngine(this.basicInfo.app_id);
+    this.engineActive = true;
     try {
       const AIAnsExtension = new RTCAIAnsExtension();
       await this.engine.registerExtension(AIAnsExtension);
@@ -127,8 +130,11 @@ export class RTCClient {
   };
 
   joinRoom = () => {
-    console.log(' ------ userJoinRoom\n', `roomId: ${this.basicInfo.room_id}\n`, `uid: ${this.basicInfo.user_id}`);
-    console.log(' ------ joinRoom\n', `token: ${this.basicInfo.token}\n`, `roomId: ${this.basicInfo.room_id}\n`, `uid: ${this.basicInfo.user_id}`);
+    console.log(
+      ' ------ userJoinRoom\n',
+      `roomId: ${this.basicInfo.room_id}\n`,
+      `uid: ${this.basicInfo.user_id}`
+    );
     return this.engine.joinRoom(
       this.basicInfo.token!,
       `${this.basicInfo.room_id!}`,
@@ -148,11 +154,31 @@ export class RTCClient {
     );
   };
 
-  leaveRoom = () => {
+  leaveRoom = async () => {
+    if (!this.engineActive) return;
+    const engine = this.engine;
+    this.engineActive = false;
     this.audioBotEnabled = false;
-    this.engine.leaveRoom().catch();
-    VERTC.destroyEngine(this.engine);
-    this._audioCaptureDevice = undefined;
+    try {
+      await engine.leaveRoom();
+    } catch {
+      // A failed join still needs to release its engine; leaving may reject.
+      console.warn('RTC 房间已断开，正在释放连接。');
+    } finally {
+      VERTC.destroyEngine(engine);
+      if (this.engine === engine) this._audioCaptureDevice = undefined;
+    }
+  };
+
+  release = async () => {
+    if (!this.engineActive) return;
+    const engine = this.engine;
+    await Promise.allSettled([
+      engine.stopAudioCapture(),
+      engine.stopScreenCapture(),
+      engine.stopVideoCapture(),
+    ]);
+    if (this.engine === engine) await this.leaveRoom();
   };
 
   checkPermission(): Promise<{
@@ -329,16 +355,17 @@ export class RTCClient {
     );
   };
 
-  setRemoteVideoPlayer = (userId: string, renderDom?: string | HTMLElement, renderMode = VideoRenderMode.RENDER_MODE_HIDDEN) => {
-    return this.engine.setRemoteVideoPlayer(
-      StreamIndex.STREAM_INDEX_MAIN,
-      {
-        renderDom,
-        userId,
-        renderMode,
-      }
-    );
-  }
+  setRemoteVideoPlayer = (
+    userId: string,
+    renderDom?: string | HTMLElement,
+    renderMode = VideoRenderMode.RENDER_MODE_HIDDEN
+  ) => {
+    return this.engine.setRemoteVideoPlayer(StreamIndex.STREAM_INDEX_MAIN, {
+      renderDom,
+      userId,
+      renderMode,
+    });
+  };
 
   /**
    * @brief 移除播放器

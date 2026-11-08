@@ -10,6 +10,7 @@ module.exports = {
   jest: {
     configure: {
       moduleNameMapper: {
+        '^.+\\.module\\.less$': 'identity-obj-proxy',
         '^@/(.*)$': '<rootDir>/src/$1',
       },
     },

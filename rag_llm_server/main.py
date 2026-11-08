@@ -3,14 +3,20 @@ import uuid
 import time
 import httpx
 import uvicorn
-from fastapi import FastAPI, Request
+from contextlib import asynccontextmanager
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, Any
+from sqlalchemy.exc import SQLAlchemyError
+from starlette.concurrency import run_in_threadpool
 
 from config import settings
+from auth import AuthContext, clear_cookies, get_current_auth, require_rtc_callback, router as auth_router
+from database import get_engine, initialize_database
 from services.llm_service import llm_service
-from services.token_build import AccessToken, PRIVILEGES
+from services.intention import intention_service, TEXT_RESPONSE_INSTRUCTION
+from services.rtc_config import RTCConfigurationError, callback_url, rtc_credentials, rtc_identity
 from services.utils import Signer  # 确保 utils.py 已移动到 services 目录
 
 from fastapi.responses import JSONResponse
@@ -26,32 +32,52 @@ from dotenv import load_dotenv
 
 load_dotenv()  # 必须先执行这一行，后面的 settings 才能读到值
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await run_in_threadpool(initialize_database)
+    try:
+        yield
+    finally:
+        await intention_service.close()
+        get_engine().dispose()
+
+
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.AUTH_ALLOWED_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type", "Authorization", "X-CSRF-Token", "X-RTC-Callback-Token"],
 )
+app.include_router(auth_router)
+
+
+@app.exception_handler(HTTPException)
+async def handle_http_error(request: Request, exc: HTTPException):
+    response = JSONResponse({"detail": exc.detail}, status_code=exc.status_code, headers=exc.headers)
+    if exc.status_code == 401 and request.url.path in {"/api/auth/refresh", "/api/auth/logout"}:
+        clear_cookies(response)
+    return response
+
+
+@app.exception_handler(SQLAlchemyError)
+async def handle_database_error(request: Request, exc: SQLAlchemyError):
+    # Never include connection URLs, SQL parameters or credentials in HTTP errors.
+    print(f"数据库请求失败: {type(exc).__name__}")
+    return JSONResponse({"detail": "账号服务暂时不可用，请稍后重试。"}, status_code=503)
+
+
+@app.exception_handler(RTCConfigurationError)
+async def handle_rtc_config_error(request: Request, exc: RTCConfigurationError):
+    return JSONResponse({"detail": str(exc)}, status_code=503)
 
 
 # --- 1. 获取场景 (前端展示用) ---
 @app.post("/getScenes")
-async def get_scenes(request: Request):
-    # 生成随机 ID
-    room_id = "ChatRoom01"
-    user_id = "Huoshan01"
-
-    # 签发 RTC Token
-    token_builder = AccessToken(
-        settings.RTC_APP_ID, settings.RTC_APP_KEY, room_id, user_id
-    )
-    token_builder.add_privilege(PRIVILEGES["PrivSubscribeStream"], 0)
-    token_builder.add_privilege(PRIVILEGES["PrivPublishStream"], 0)
-    token_builder.expire_time(int(time.time()) + 3600 * 24)
-    token = token_builder.serialize()
+async def get_scenes(request: Request, auth: AuthContext = Depends(get_current_auth)):
+    rtc = rtc_credentials(auth)
 
     # 构造返回结构
     return {
@@ -73,12 +99,7 @@ async def get_scenes(request: Request):
                         "isAvatarScene": None,
                         "avatarBgUrl": None,
                     },
-                    "rtc": {
-                        "AppId": settings.RTC_APP_ID,
-                        "RoomId": room_id,
-                        "UserId": user_id,
-                        "Token": settings.RTC_APP_KEY,
-                    },
+                    "rtc": rtc,
                     # 这里的配置主要是为了兼容前端透传，实际生效主要看 proxy
                     "VoiceChat": {},
                 }
@@ -93,34 +114,25 @@ async def get_scenes(request: Request):
 
 
 @app.post("/proxy")
-async def proxy(request: Request):
-    """
-    完全硬编码的代理接口，用于测试链路是否畅通
-    """
+async def proxy(request: Request, auth: AuthContext = Depends(get_current_auth)):
+    """Only expose voice-chat actions for the authenticated login's RTC room."""
     action = request.query_params.get("Action")
     version = request.query_params.get("Version", "2024-12-01")
+    if action not in {"StartVoiceChat", "StopVoiceChat"}:
+        raise HTTPException(400, "不支持的语音操作。")
 
-    # 打印前端实际传过来的数据，方便观察
-    try:
-        incoming_body = await request.json()
-        print(f"DEBUG: 收到前端请求 {action}, Body: {incoming_body}")
-    except:
-        pass
-
-    # --- 开始硬编码数据 ---
-    # 注意：这里的 AppId, RoomId, UserId, Token 必须与你提供的 JSON 完全一致
+    # 客户端进房与云端任务始终使用同一份 RTC 身份。
     target_app_id = settings.RTC_APP_ID
-    target_room_id = "ChatRoom01"
-    target_user_id = "Huoshan01"
+    target_room_id, target_user_id, target_task_id = rtc_identity(auth)
 
     request_body = {}
 
-    print(f"RTCCCCC  callback {settings.SERVER_URL}/api/chat_callback")
     if action == "StartVoiceChat":
+        llm_callback = callback_url()
         request_body = {
             "AppId": target_app_id,
             "RoomId": target_room_id,
-            "TaskId": "ChatTask01",
+            "TaskId": target_task_id,
             "AgentConfig": {
                 "TargetUserId": [target_user_id],
                 "WelcomeMessage": "我是小智，你的专属课程顾问，有什么问题尽管问我吧！",
@@ -149,15 +161,10 @@ async def proxy(request: Request):
                     },
                 },
                 "LLMConfig": {
-                    # 先用 Custom 模式测试你的回调地址
                     "Mode": "CustomLLM",
-                    "Url": f"{settings.SERVER_URL}/api/chat_callback",
-                    # "Mode": "ArkV3",
-                    # "EndPointId": "ep-20260821161719-qj5nr",
+                    "Url": llm_callback,
                     "Method": "POST",
-                    "ApiType": "https"
-                    if str(settings.SERVER_URL).startswith("https")
-                    else "http",
+                    "ApiType": "https",
                 },
                 "InterruptMode": 0,
             },
@@ -166,11 +173,8 @@ async def proxy(request: Request):
         request_body = {
             "AppId": target_app_id,
             "RoomId": target_room_id,
-            "TaskId": "ChatTask01",
+            "TaskId": target_task_id,
         }
-    else:
-        # 其他 Action 直接返回前端传的内容
-        request_body = incoming_body
 
     # --- 签名与发送 ---
     host = "rtc.volcengineapi.com"
@@ -209,7 +213,7 @@ async def proxy(request: Request):
 # ... 其他代码 ...
 
 
-@app.post("/api/chat_callback")
+@app.post("/api/chat_callback", dependencies=[Depends(require_rtc_callback)])
 async def chat_callback(request: Request):
     """RTC CustomLLM 的 OpenAI 兼容 SSE 回调接口。"""
     try:
@@ -236,10 +240,17 @@ async def chat_callback(request: Request):
             yield "data: [DONE]\n\n"
             return
 
+        question = last_message.get("content", "")
+        if not isinstance(question, str) or not question.strip():
+            yield "data: [DONE]\n\n"
+            return
+
         try:
-            question = last_message.get("content", "")
-            rag_content = await rag_service.retrieve(question)
-            stream_iterator = llm_service.chat_stream(messages, rag_content)
+            intention = await intention_service.analyze(question, messages[:-1])
+            rag_content = await rag_service.retrieve(intention.rewritten_query)
+            stream_iterator = llm_service.chat_stream(
+                messages, rag_content, response_instruction=TEXT_RESPONSE_INSTRUCTION
+            )
 
             # Ark SDK 的流式迭代器是同步的，在线程池中拉取下一个 chunk，
             # 避免网络等待阻塞 FastAPI 的事件循环。
@@ -282,7 +293,6 @@ async def chat_callback(request: Request):
             "Cache-Control": "no-cache",
             "Connection": "keep-alive",
             "X-Accel-Buffering": "no",
-            "Access-Control-Allow-Origin": "*",
         },
     )
 
@@ -302,7 +312,7 @@ class DebugRequest(BaseModel):
 
 
 # 2. 调试接口
-@app.post("/debug/chat")
+@app.post("/debug/chat", dependencies=[Depends(get_current_auth)])
 async def debug_chat(request: DebugRequest):
 
 
@@ -321,16 +331,23 @@ async def debug_chat(request: DebugRequest):
         # 1、记录总时间开始
         start_t = time.time()
 
-        rag_content = await rag_service.retrieve(request.question)
+        intention = await intention_service.analyze(request.question, current_messages[:-1])
+        intention_duration = time.time() - start_t
+        print(f"意图识别及改写耗时：{intention_duration}s")
 
-        rag_duration = time.time() - start_t
+        rag_start_t = time.time()
+        rag_content = await rag_service.retrieve(intention.rewritten_query)
+
+        rag_duration = time.time() - rag_start_t
         print(f"知识库查询耗时：{rag_duration}s")
 
 
         llm_start_t = time.time()
 
 
-        stream_iterator = llm_service.chat_stream(current_messages, rag_content)
+        stream_iterator = llm_service.chat_stream(
+            current_messages, rag_content, response_instruction=TEXT_RESPONSE_INSTRUCTION
+        )
 
         parts = []
         usage = None
@@ -370,11 +387,19 @@ async def debug_chat(request: DebugRequest):
         except Exception as exc:
             print(f"❌ /debug/chat 失败: {exc}")
 
-        return {"text": "".join(parts), "usage": usage}
+        return {"text": "".join(parts), "usage": usage, "intention": intention.model_dump()}
 
 
 
     return await collect_answer()
+
+
+@app.post("/debug/intention", dependencies=[Depends(get_current_auth)])
+async def debug_intention(request: DebugRequest):
+    """只调用小模型，查看 query 改写和期望/实际回复形式。"""
+    history = [{"role": msg.role, "content": msg.content} for msg in request.history or []]
+    result = await intention_service.analyze(request.question, history)
+    return result.model_dump()
 
 
 # ... 其他导入保持不变 ...
@@ -382,7 +407,7 @@ from services.rag_service import rag_service  # 确保已导入 rag_service
 
 
 # --- 新增：知识库调试接口 ---
-@app.get("/debug/rag")
+@app.get("/debug/rag", dependencies=[Depends(get_current_auth)])
 async def debug_rag(query: str):
     """
     调试接口：直接返回知识库检索到的原始文本内容
@@ -411,11 +436,12 @@ async def debug_rag(query: str):
 if __name__ == "__main__":
     import uvicorn
 
-    print(f"🚀 Server running at {settings.SERVER_URL}")
+    print("🚀 Local API: http://127.0.0.1:3001")
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
         port=3001,
+        access_log=False,  # 回调 URL 含服务凭证，避免写入默认访问日志。
         reload=True,
         reload_dirs=[".", "services"],
         # 依然建议排除缓存文件，防止编译行为触发重启

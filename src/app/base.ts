@@ -4,7 +4,7 @@
  */
 
 import { Message } from '@arco-design/web-react';
-import { AIGC_PROXY_HOST } from '@/config';
+import { authenticatedFetch } from '@/auth/api';
 import type { RequestResponse, ApiConfig, ApiNames, Apis } from './type';
 
 type Headers = Record<string, string>;
@@ -30,10 +30,10 @@ export const requestGetMethod = ({
   headers?: Record<string, string>;
 }) => {
   return async (params: Record<string, any> = {}) => {
-    const url = `${AIGC_PROXY_HOST}?Action=${action}&${Object.keys(params)
-      .map((key) => `${key}=${params[key]}`)
+    const url = `?Action=${encodeURIComponent(action)}&${Object.keys(params)
+      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
       .join('&')}`;
-    const res = await fetch(url, {
+    const res = await authenticatedFetch(url, {
       headers: {
         ...headers,
       },
@@ -57,7 +57,7 @@ export const requestPostMethod = ({
   headers?: Headers;
 }) => {
   return async <T>(params: T) => {
-    const res = await fetch(`${AIGC_PROXY_HOST}${apiPath}?Action=${action}`, {
+    const res = await authenticatedFetch(`${apiPath}?Action=${encodeURIComponent(action)}`, {
       method: 'post',
       headers: {
         'content-type': 'application/json',
@@ -76,11 +76,11 @@ export const requestPostMethod = ({
 export const resultHandler = (res: RequestResponse) => {
   const { Result, ResponseMetadata } = res || {};
   // Record request id for debug.
-  if (ResponseMetadata.Action === 'StartVoiceChat') {
+  if (ResponseMetadata?.Action === 'StartVoiceChat') {
     const requestId = ResponseMetadata.RequestId;
     requestId && sessionStorage.setItem('RequestID', requestId);
   }
-  if (ResponseMetadata.Error) {
+  if (ResponseMetadata?.Error) {
     Message.error(
       `[${ResponseMetadata?.Action}]call failed(reason: ${ResponseMetadata.Error?.Message})`
     );

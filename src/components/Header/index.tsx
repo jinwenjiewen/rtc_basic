@@ -9,6 +9,7 @@ import NetworkIndicator from '@/components/NetworkIndicator';
 import { useIsMobile } from '@/utils/utils';
 import Logo from '@/assets/img/Logo.svg';
 import styles from './index.module.less';
+import AccountMenu from './AccountMenu';
 
 const Disclaimer = 'https://www.volcengine.com/docs/6348/68916';
 const ReversoContext = 'https://www.volcengine.com/docs/6348/68918';
@@ -72,29 +73,32 @@ function Header(props: HeaderProps) {
         <NetworkIndicator />
       </div>
       {children}
-      {useIsMobile() ? null : (
-        <div className={styles['header-right']}>
-          <div
-            className={styles['header-right-text']}
-            onClick={() =>
-              window.open('https://www.volcengine.com/product/veRTC/ConversationalAI', '_blank')
-            }
-          >
-            官网链接
-          </div>
-          <div
-            className={styles['header-right-text']}
-            onClick={() =>
-              window.open(
-                'https://www.volcengine.com/contact/product?t=%E5%AF%B9%E8%AF%9D%E5%BC%8Fai&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2',
-                '_blank'
-              )
-            }
-          >
-            联系我们
-          </div>
-        </div>
-      )}
+      <div className={styles['header-right']}>
+        {useIsMobile() ? null : (
+          <>
+            <div
+              className={styles['header-right-text']}
+              onClick={() =>
+                window.open('https://www.volcengine.com/product/veRTC/ConversationalAI', '_blank')
+              }
+            >
+              官网链接
+            </div>
+            <div
+              className={styles['header-right-text']}
+              onClick={() =>
+                window.open(
+                  'https://www.volcengine.com/contact/product?t=%E5%AF%B9%E8%AF%9D%E5%BC%8Fai&source=%E4%BA%A7%E5%93%81%E5%92%A8%E8%AF%A2',
+                  '_blank'
+                )
+              }
+            >
+              联系我们
+            </div>
+          </>
+        )}
+        <AccountMenu />
+      </div>
     </div>
   );
 }

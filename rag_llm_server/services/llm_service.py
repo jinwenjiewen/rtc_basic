@@ -57,7 +57,9 @@ class LLMService:
 
         return valid_messages[-self.max_history_messages :]
 
-    def chat_stream(self, history_messages: list, rag_context: str = "") -> Iterator:
+    def chat_stream(
+        self, history_messages: list, rag_context: str = "", response_instruction: str = ""
+    ) -> Iterator:
         """使用固定系统前缀调用 LLM，并流式返回响应。"""
         if not self.client:
             print("❌ LLM 服务未配置")
@@ -67,6 +69,9 @@ class LLMService:
         messages: list[dict[str, str]] = [
             {"role": "system", "content": SYSTEM_CONTENT}
         ]
+
+        if response_instruction:
+            messages.append({"role": "system", "content": response_instruction})
 
         # 动态知识内容单独放置，避免每次改变固定系统提示词。
         if isinstance(rag_context, str) and rag_context.strip():

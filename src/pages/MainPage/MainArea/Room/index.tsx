@@ -21,7 +21,14 @@ import { useScene } from '@/lib/useCommon';
 function Room() {
   const room = useSelector((state: RootState) => state.room);
   const { isShowSubtitle, scene, isFullScreen } = room;
-  const { isAvatarScene } = useScene();
+  const { isAvatarScene, isVision, isScreenMode } = useScene();
+  const hasCameraPreview =
+    isFullScreen ||
+    isAvatarScene ||
+    isVision ||
+    isScreenMode ||
+    room.localUser.publishVideo ||
+    room.localUser.publishScreen;
   return (
     <div className={`${style.wrapper} ${isMobile() ? style.mobile : ''}`}>
       {isMobile() ? <div className={style.mobilePlayer} id="mobile-local-player" /> : null}
@@ -38,8 +45,15 @@ function Room() {
           className={isShowSubtitle ? style.subtitleAiAvatar : ''}
         />
       )}
-      {isMobile() ? null : <CameraArea />}
-      <Conversation className={style.conversation} showSubtitle={isShowSubtitle} />
+      {isMobile() ? null : (
+        <CameraArea
+          className={isShowSubtitle && !hasCameraPreview ? style.hiddenCameraPreview : ''}
+        />
+      )}
+      <Conversation
+        className={`${style.conversation} ${hasCameraPreview ? style.withCameraPreview : ''}`}
+        showSubtitle={isShowSubtitle}
+      />
       <TextComposer />
       <ToolBar className={style.toolBar} />
       <AudioController className={style.controller} />

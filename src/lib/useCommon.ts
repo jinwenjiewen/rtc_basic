@@ -15,6 +15,9 @@ import {
   localLeaveRoom,
   updateAIGCState,
   updateLocalUser,
+  updateRTCConfig,
+  updateFullScreen,
+  RTCConfig,
 } from '@/store/slices/room';
 
 import useRtcListeners from '@/lib/listenerHooks';
@@ -26,6 +29,7 @@ import {
   setDevicePermissions,
 } from '@/store/slices/device';
 import logger from '@/utils/logger';
+import Apis from '@/app/index';
 
 export const ABORT_VISIBILITY_CHANGE = 'abortVisibilityChange';
 export interface FormProps {
@@ -37,12 +41,12 @@ export interface FormProps {
 export const useScene = () => {
   const { scene, sceneConfigMap } = useSelector((state: RootState) => state.room);
   return sceneConfigMap[scene] || {};
-}
+};
 
 export const useRTC = () => {
   const { scene, rtcConfigMap } = useSelector((state: RootState) => state.room);
   return rtcConfigMap[scene] || {};
-}
+};
 
 export const useDeviceState = () => {
   const dispatch = useDispatch();
@@ -162,10 +166,7 @@ export const useGetDevicePermission = () => {
   return permission;
 };
 
-export const useJoin = (): [
-  boolean,
-  () => Promise<void | boolean>
-] => {
+export const useJoin = (): [boolean, () => Promise<void | boolean>] => {
   const devicePermissions = useSelector((state: RootState) => state.device.devicePermissions);
   const room = useSelector((state: RootState) => state.room);
 
@@ -174,6 +175,7 @@ export const useJoin = (): [
   const { id } = useScene();
   const { switchMic } = useDeviceState();
   const [joining, setJoining] = useState(false);
+  const joiningRef = useRef(false);
   const listeners = useRtcListeners();
 
   const handleAIGCModeStart = async () => {
@@ -188,63 +190,66 @@ export const useJoin = (): [
   };
 
   async function disPatchJoin(): Promise<boolean | undefined> {
-    if (joining) {
-      return;
-    }
-
-    const isSupported = await VERTC.isSupported();
-    if (!isSupported) {
-      Modal.error({
-        title: '不支持 RTC',
-        content: '您的浏览器可能不支持 RTC 功能，请尝试更换浏览器或升级浏览器后再重试。',
-      });
-      return;
-    }
-
+    if (joiningRef.current) return;
+    joiningRef.current = true;
     setJoining(true);
+    try {
+      const isSupported = await VERTC.isSupported();
+      if (!isSupported) throw new Error('当前浏览器不支持 RTC，请升级浏览器后重试。');
 
-    /** 1. Create RTC Engine */
-    await RtcClient.createEngine();
+      // Re-fetch credentials on each join instead of reusing a token from an old page load.
+      const { scenes } = await Apis.Basic.getScenes();
+      const configs = (scenes as { scene: { id: string }; rtc: RTCConfig }[]).reduce<
+        Record<string, RTCConfig>
+      >((all, scene) => ({ ...all, [scene.scene.id]: scene.rtc }), {});
+      if (!configs[id]) throw new Error('未能获取当前场景的进房信息，请刷新页面重试。');
+      dispatch(updateRTCConfig(configs));
 
-    /** 2.1 Set events callbacks */
-    RtcClient.addEventListeners(listeners);
-
-    /** 2.2 RTC starting to join room */
-    await RtcClient.joinRoom();
-    /** 3. Set users' devices info */
-    const mediaDevices = await RtcClient.getDevices({
-      audio: true,
-      video: false,
-    });
-
-    dispatch(
-      localJoinRoom({
-        roomId: RtcClient.basicInfo.room_id,
-        user: {
-          username: RtcClient.basicInfo.user_id,
-          userId: RtcClient.basicInfo.user_id,
-        },
-      })
-    );
-    dispatch(
-      updateSelectedDevice({
-        selectedMicrophone: mediaDevices.audioInputs[0]?.deviceId,
-        selectedCamera: mediaDevices.videoInputs[0]?.deviceId,
-      })
-    );
-    dispatch(updateMediaInputs(mediaDevices));
-
-    setJoining(false);
-
-    if (devicePermissions.audio) {
-      try {
-        await switchMic();
-      } catch (e) {
-        logger.debug('No permission for mic');
+      await RtcClient.createEngine();
+      RtcClient.addEventListeners(listeners);
+      await RtcClient.joinRoom();
+      const mediaDevices = await RtcClient.getDevices({ audio: true, video: false });
+      dispatch(
+        updateSelectedDevice({
+          selectedMicrophone: mediaDevices.audioInputs[0]?.deviceId,
+          selectedCamera: mediaDevices.videoInputs[0]?.deviceId,
+        })
+      );
+      dispatch(updateMediaInputs(mediaDevices));
+      if (devicePermissions.audio) {
+        try {
+          await switchMic();
+        } catch {
+          logger.debug('No permission for mic');
+        }
       }
-    }
 
-    handleAIGCModeStart();
+      await handleAIGCModeStart();
+      dispatch(
+        localJoinRoom({
+          roomId: RtcClient.basicInfo.room_id,
+          user: { username: RtcClient.basicInfo.user_id, userId: RtcClient.basicInfo.user_id },
+        })
+      );
+      return true;
+    } catch (error) {
+      if (RtcClient.getAgentEnabled()) await RtcClient.stopAgent(id).catch(() => {});
+      await RtcClient.release().catch(() => {});
+      dispatch(localLeaveRoom());
+      dispatch(updateAIGCState({ isAIGCEnable: false }));
+      dispatch(updateFullScreen({ isFullScreen: false }));
+      const reason = error instanceof Error ? error.message : String(error);
+      Modal.error({
+        title: '连接失败',
+        content: reason.includes('token_error')
+          ? 'RTC 进房凭证校验失败，请核对 Token 的房间号、用户 ID 和有效期后重试。'
+          : reason || '暂时无法连接，请稍后重试。',
+      });
+      return false;
+    } finally {
+      joiningRef.current = false;
+      setJoining(false);
+    }
   }
 
   return [joining, disPatchJoin];
@@ -257,13 +262,12 @@ export const useLeave = () => {
   idRef.current = id;
 
   return async function () {
-    await Promise.all([
-      RtcClient.stopAudioCapture,
-      RtcClient.stopScreenCapture,
-      RtcClient.stopVideoCapture,
-    ]);
-    await RtcClient.stopAgent(idRef.current);
-    await RtcClient.leaveRoom();
+    try {
+      await RtcClient.stopAgent(idRef.current);
+    } catch (error) {
+      console.warn('停止云端语音任务失败', error);
+    }
+    await RtcClient.release();
     dispatch(clearHistoryMsg());
     dispatch(clearCurrentMsg());
     dispatch(localLeaveRoom());

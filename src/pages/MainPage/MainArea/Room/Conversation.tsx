@@ -75,34 +75,28 @@ function Conversation(props: React.HTMLAttributes<HTMLDivElement> & { showSubtit
         return (
           <div
             key={`msg-container-${index}`}
-            className={styles.mobileLine}
-            style={{ justifyContent: isUserMsg && isMobile() ? 'flex-end' : '' }}
+            className={`${styles.messageLine} ${isUserMsg ? styles.userLine : styles.robotLine}`}
           >
-            {!isMobile() && (
-              <div className={styles.msgName}>
-                <div className={styles.avatar}>
-                  {isUserMsg ? <img src={USER_AVATAR} alt="我的头像" /> : <AiAvatarImage src={icon} />}
+            <div className={styles.avatar}>
+              {isUserMsg ? <img src={USER_AVATAR} alt="我的头像" /> : <AiAvatarImage src={icon} />}
+            </div>
+            <div className={styles.messageBody}>
+              <div className={styles.msgName}>{isUserMsg ? '我' : scene}</div>
+              <div className={`${styles.sentence} ${isUserMsg ? styles.user : styles.robot}`}>
+                <div className={styles.content}>
+                  {value}
+                  <div className={styles['loading-wrapper']}>
+                    {isAIReady &&
+                    (isUserTextLoading(user) || isAITextLoading(user)) &&
+                    index === msgHistory.length - 1 ? (
+                      <Loading gap={3} className={styles.loading} dotClassName={styles.dot} />
+                    ) : (
+                      ''
+                    )}
+                  </div>
                 </div>
-                {isUserMsg ? '我' : scene}
+                {!isUserMsg && isInterrupted ? <Tag className={styles.interruptTag}>已打断</Tag> : ''}
               </div>
-            )}
-            <div
-              className={`${styles.sentence} ${isUserMsg ? styles.user : styles.robot}`}
-              key={`msg-${index}`}
-            >
-              <div className={styles.content}>
-                {value}
-                <div className={styles['loading-wrapper']}>
-                  {isAIReady &&
-                  (isUserTextLoading(user) || isAITextLoading(user)) &&
-                  index === msgHistory.length - 1 ? (
-                    <Loading gap={3} className={styles.loading} dotClassName={styles.dot} />
-                  ) : (
-                    ''
-                  )}
-                </div>
-              </div>
-              {!isUserMsg && isInterrupted ? <Tag className={styles.interruptTag}>已打断</Tag> : ''}
             </div>
           </div>
         );

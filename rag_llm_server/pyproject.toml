@@ -11,6 +11,11 @@ dependencies = [
     "python-dotenv==1.0.1",
     "uvicorn[standard]==0.32.0",
     "volcengine-python-sdk[ark]>=5.0.3",
+    "sqlalchemy>=2.0.36,<2.1",
+    "psycopg[binary]>=3.2,<4",
+    "alembic>=1.14,<2",
+    "PyJWT>=2.10,<3",
+    "pwdlib[argon2]>=0.2,<1",
 ]
 
 [[tool.uv.index]]

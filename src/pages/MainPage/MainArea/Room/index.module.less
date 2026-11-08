@@ -4,6 +4,8 @@
  */
 
  .wrapper {
+    --camera-preview-width: 264px;
+
     position: relative;
     width: 100%;
     height: 100%;
@@ -30,6 +32,56 @@
       overflow-y: auto;
       margin-top: 0;
       z-index: 1;
+
+      .messageLine {
+        display: flex;
+        flex-shrink: 0;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+        margin-bottom: 16px;
+      }
+
+      .userLine {
+        flex-direction: row-reverse;
+
+        .messageBody {
+          align-items: flex-end;
+        }
+
+        .msgName {
+          text-align: right;
+        }
+      }
+
+      .robotLine {
+        flex-direction: row;
+      }
+
+      .messageBody {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 0;
+        max-width: min(76%, 720px);
+      }
+
+      .avatar {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        margin-top: 24px;
+        overflow: hidden;
+        border-radius: 50%;
+        background: var(--color-surface-raised);
+
+        img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
   
       .sentence {
         position: relative;
@@ -40,10 +92,11 @@
         align-items: center;
         width: max-content;
         white-space: normal;
-        max-width: 70%;
+        max-width: 100%;
+        box-sizing: border-box;
         padding: 12px 16px;
-        margin-left: 32px;
         gap: 8px;
+        font-size: 14px;
   
         .content {
           min-width: 0;
@@ -57,11 +110,9 @@
       .user {
         width: max-content;
         border: 0px solid;
-        padding: 8px 12px 8px 12px;
-        border-radius: 12px;
+        border-radius: 12px 4px 12px 12px;
         background: var(--color-accent-soft);
         color: var(--color-text);
-        margin-bottom: 12px;
       }
       .robot {
         font-family: PingFang SC;
@@ -70,10 +121,9 @@
         font-weight: 500;
         letter-spacing: 0.003em;
         border: 1px solid transparent;
-        border-radius: 12px;
+        border-radius: 4px 12px 12px 12px;
         background: linear-gradient(var(--color-surface), var(--color-surface)) padding-box,
           linear-gradient(77.86deg, #633144 -3.23%, #82384d 51.11%, #4b2737 98.65%) border-box;
-        margin-bottom: 12px;
       }
   
       .loading-wrapper {
@@ -111,24 +161,12 @@
       }
   
       .msgName {
-        display: flex;
-        gap: 8px;
-        align-items: center;
+        max-width: 100%;
+        overflow-wrap: anywhere;
         font-size: 12px;
         line-height: 20px;
         color: var(--color-text-secondary);
         margin-bottom: 4px;
-  
-        .avatar {
-          border-radius: 50%;
-          width: 24px;
-          height: 24px;
-  
-          img {
-            width: 100%;
-            height: 100%;
-          }
-        }
       }
     }
   
@@ -148,6 +186,14 @@
       .robot {
         background: rgba(50, 28, 38, 0.92);
       }
+    }
+
+    .withCameraPreview {
+      right: calc(var(--camera-preview-width) + 32px);
+    }
+
+    .hiddenCameraPreview {
+      display: none;
     }
   
     .conversation::-webkit-scrollbar {
@@ -309,7 +355,7 @@
     position: absolute;
     top: 16px;
     right: 16px;
-    width: 264px;
+    width: var(--camera-preview-width, 264px);
     border-radius: 8px;
     background: var(--line-color-border-2, rgba(234, 237, 241, 1));
     display: flex;
@@ -412,15 +458,6 @@
     right: 16px !important;
     max-height: none !important;
     margin-top: 0 !important;
-  
-    .sentence {
-      margin-left: 0 !important;
-      max-width: 85% !important;
-    }
-
-    .mobileLine {
-      display: flex;
-    }
   }
   
   .mobilePlayer {
@@ -431,13 +468,36 @@
     left: 0;
   }
   
-  @media (max-width: 767px) {
-    .mobileLine {
-      display: flex;
-      justify-content: flex-start;
+  @media (min-width: 767px) and (max-width: 1100px) {
+    .wrapper {
+      --camera-preview-width: 160px;
+
+      .camera-player,
+      .camera-placeholder,
+      .fullScreenAiAvatar {
+        height: 120px;
+      }
     }
-    .user {
-      align-self: flex-end;
+  }
+
+  @media (max-width: 767px) {
+    .wrapper .conversation {
+      .messageLine {
+        gap: 8px;
+      }
+
+      .messageBody {
+        max-width: calc(100% - 52px);
+      }
+
+      .avatar {
+        width: 28px;
+        height: 28px;
+      }
+
+      .sentence {
+        padding: 10px 12px;
+      }
     }
   }
 

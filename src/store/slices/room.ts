@@ -168,6 +168,7 @@ export const roomSlice = createSlice({
   name: 'room',
   initialState,
   reducers: {
+    resetRoom: () => initialState,
     localJoinRoom: (
       state,
       {
@@ -282,7 +283,10 @@ export const roomSlice = createSlice({
     clearHistoryMsg: (state) => {
       state.msgHistory = [];
     },
-    addTextMessage: (state, { payload }: { payload: { id: string; text: string; user: string } }) => {
+    addTextMessage: (
+      state,
+      { payload }: { payload: { id: string; text: string; user: string } }
+    ) => {
       state.msgHistory.push({
         id: payload.id,
         value: payload.text,
@@ -379,6 +383,7 @@ export const roomSlice = createSlice({
 });
 
 export const {
+  resetRoom,
   localJoinRoom,
   localLeaveRoom,
   remoteUserJoin,
