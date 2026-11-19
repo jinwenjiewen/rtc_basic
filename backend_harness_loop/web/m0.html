@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="m0-client-key" content="__M0_CLIENT_KEY__" />
+    <meta name="runtime-mode" content="__RUNTIME_MODE__" />
+    <title>M0 · RTC 真实客户端验证</title>
+    <link rel="stylesheet" href="/m0/assets/m0.css" />
+    <script src="/m0/assets/rtc.js" defer></script>
+    <script src="/m0/assets/measurements.js" defer></script>
+    <script src="/m0/assets/m0.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <span id="runtime-label" class="eyebrow">backend_harness_loop / M0</span>
+        <h1>RTC 真实客户端验证</h1>
+        <p id="runtime-description">
+          按顺序验证收音、回复和打断。这里播放固定合成回复，用来检查 RTC 链路；尚未接入正式 Agent
+          Loop。
+        </p>
+        <p id="text-entry" hidden><a href="/m1/text">打开文字对话</a>，无需开启 RTC 或麦克风即可验证同一套 Agent Loop。</p>
+      </header>
+
+      <section id="model-panel" class="panel" hidden>
+        <label for="model-profile">本次会话使用的主模型</label>
+        <select id="model-profile"></select>
+        <p id="agent-status" class="muted">模型在加入时固定；切换型号需要先结束当前会话。</p>
+      </section>
+
+      <section class="status-panel" aria-label="会话状态">
+        <div>
+          <span class="label">当前状态</span><strong id="connection-state">尚未连接</strong>
+        </div>
+        <div><span class="label">麦克风</span><strong id="mic-state">关闭</strong></div>
+        <div><span class="label">自动播放</span><strong id="play-state">待验证</strong></div>
+        <div><span class="label">会话有效期</span><strong id="expires-at">—</strong></div>
+      </section>
+      <p id="notice" class="notice" role="status" aria-live="polite">
+        建议戴耳机并将系统音量调到合适大小。加入时不会自动开启麦克风。
+      </p>
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <section class="steps" aria-label="验证步骤">
+        <article class="step">
+          <span class="step-number">1</span>
+          <div>
+            <h2>加入验证房间</h2>
+            <p>创建独立测试会话，等待 AI 进入。此时只接收音频。</p>
+          </div>
+          <button id="join" type="button">加入房间</button>
+        </article>
+        <article class="step">
+          <span class="step-number">2</span>
+          <div>
+            <h2>先验证文字 → 声音</h2>
+            <p id="text-test-description">
+              发送固定文字“请开始语音验证。”，等待回复。合成回复分 8 段，每段约隔 1
+              秒输出，方便测试打断。
+            </p>
+          </div>
+          <button id="text-test" type="button" disabled>发送固定文字</button>
+        </article>
+        <article class="step">
+          <span class="step-number">3</span>
+          <div>
+            <h2>打开麦克风，说一句话</h2>
+            <p>
+              点击后允许浏览器使用麦克风，再说“你好，请开始语音验证”。对照下方临时字幕，确认自己的话被正确识别。
+            </p>
+          </div>
+          <button id="mic" type="button" disabled>开启麦克风</button>
+        </article>
+        <article class="step">
+          <span class="step-number">4</span>
+          <div>
+            <h2>回复过程中打断</h2>
+            <p>在 AI 仍有声音时点击“打断回复”，听是否及时停音。可重新发送固定文字再试。</p>
+          </div>
+          <button id="interrupt" type="button" disabled>打断回复</button>
+        </article>
+      </section>
+
+      <section class="panel" aria-labelledby="measurement-title">
+        <h2 id="measurement-title">SDK 延迟采样</h2>
+        <p>
+          开启麦克风后点击开始，页面会先等待上一轮AI处理/回复结束、AI连续安静1秒和你保持安静500ms。
+          看到“请现在说一句话”后再开口。每轮说完保持安静等回复，页面会自动等待并武装下一轮，共3轮。等待阶段不计采样或30秒超时；失败会记一次尝试，不会无限补样。
+        </p>
+        <div class="button-row">
+          <button id="speech-sample" type="button" disabled>语音首音采样（3轮）</button>
+          <button id="cancel-sample" class="secondary" type="button" disabled>取消本批采样</button>
+          <button id="retry-measurements" class="secondary" type="button" hidden>
+            重试同步样本
+          </button>
+        </div>
+        <p id="sample-state" role="status" aria-live="polite">
+          尚未采样。开启麦克风后，等待 SDK 连续报告 AI 静音。
+        </p>
+        <p id="batch-state" class="muted">语音批次：未开始</p>
+        <div class="measurement-grid">
+          <div>
+            <strong>语音终点 → 首个回复音量</strong>
+            <p id="speech-summary">0 / 3 个不同轮次，P50 / P95 待采样</p>
+          </div>
+          <div>
+            <strong>打断指令 → 持续近似无声</strong>
+            <p id="interrupt-summary">0 / 3 个不同轮次，P50 / P95 待采样</p>
+          </div>
+        </div>
+        <p id="measurement-counts" class="muted">无效 0 · 未匹配 0 · 重复 0 · 未结束 0</p>
+        <p class="muted">
+          语音终点采用本地最后一个 &gt;25 的音量样本，需持续静音至少 500ms
+          确认；回复取连续两个高量样本中的第一个。打断只在 AI 有声时采样，静音需连续 3
+          次低量且保持至少 1 秒，期间恢复有声会重新计时。每类至少 3 个不同
+          RoundID，并由服务端匹配；SDK 解码首帧和 playing 事件不作为回复首音。这里是 SDK
+          估计，未测声卡/人耳时延；小样本经验分位数不能证明生产 SLO。
+        </p>
+        <ol id="measurement-log" class="event-log" aria-label="采样记录"></ol>
+      </section>
+
+      <section class="panel" aria-labelledby="confirm-title">
+        <h2 id="confirm-title">由你确认听到的结果</h2>
+        <p id="confirm-description">只有你实际听到、说过并核对后再点。SDK 事件、字幕和音量变化不会自动把 M0 判为通过。</p>
+        <div class="button-row">
+          <button id="heard" class="secondary" type="button" disabled>听到回复</button>
+          <button id="speech-correct" class="secondary" type="button" disabled>语音输入正确</button>
+          <button id="stopped-audio" class="secondary" type="button" disabled>打断后已停音</button>
+          <button id="resume" class="secondary" type="button" hidden>恢复声音</button>
+        </div>
+        <p id="confirm-state" class="muted">人工确认：尚未记录</p>
+      </section>
+
+      <div class="details-grid">
+        <section class="panel" aria-labelledby="metrics-title">
+          <h2 id="metrics-title">链路观测</h2>
+          <dl class="metrics">
+            <div>
+              <dt>SDK 首帧解码</dt>
+              <dd id="first-frame">待观测</dd>
+            </div>
+            <div>
+              <dt>麦克风音量</dt>
+              <dd id="local-level">0 / 255</dd>
+            </div>
+            <div>
+              <dt>AI 音量</dt>
+              <dd id="remote-level">0 / 255</dd>
+            </div>
+            <div>
+              <dt>SDK 停音估计</dt>
+              <dd id="silence-estimate">待打断</dd>
+            </div>
+            <div>
+              <dt>服务端 LLM 轮次</dt>
+              <dd id="server-rounds">—</dd>
+            </div>
+            <div>
+              <dt>跨通道匹配轮次</dt>
+              <dd id="matched-rounds">—</dd>
+            </div>
+            <div>
+              <dt>服务端 RTC 错误</dt>
+              <dd id="rts-errors">—</dd>
+            </div>
+          </dl>
+          <p class="muted">
+            音量每约 100ms 采样；连续 3 次 ≤25 记作 SDK 状态近似无声，定量停音还需保持 1 秒。SDK
+            解码、播放器状态和停音估计均不等于人耳首音或实际停音延迟。
+          </p>
+        </section>
+        <section class="panel" aria-labelledby="subtitle-title">
+          <h2 id="subtitle-title">临时字幕</h2>
+          <p class="muted">
+            仅在本页内存中显示最近字幕，不上传字幕原文。结束会话或刷新页面后清空。
+          </p>
+          <ol id="subtitles" class="subtitles">
+            <li class="empty">等待字幕…</li>
+          </ol>
+        </section>
+      </div>
+
+      <section class="panel" aria-labelledby="events-title">
+        <h2 id="events-title">最近状态</h2>
+        <ol id="event-log" class="event-log" aria-live="polite"></ol>
+      </section>
+      <footer>
+        <p>
+          结束时会立即关闭本地采集和 RTC 连接，并请求停止云端任务。若云端结果未知，请点击重试停止。
+        </p>
+        <button id="stop" class="danger" type="button" disabled>结束并释放会话</button>
+      </footer>
+    </main>
+  </body>
+</html>

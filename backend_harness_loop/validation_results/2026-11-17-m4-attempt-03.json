@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "date": "2026-11-17",
+  "evidence_type": "react_production_build",
+  "status": "failed",
+  "cause": "ESLint rejected new snake_case local variables, one sequential stream-reader await and two import positions.",
+  "resolution": "Rename local variables to camelCase while retaining API JSON names; document the necessary ordered reader await; reorder imports.",
+  "checks_disabled": false,
+  "budgets_changed": false,
+  "secrets_included": false
+}

@@ -4,6 +4,7 @@
  */
 
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { isMobile } from '@/utils/utils';
 import InvokeButton from '@/pages/MainPage/MainArea/Antechamber/InvokeButton';
 import { useJoin, useScene } from '@/lib/useCommon';
@@ -14,7 +15,7 @@ import style from './index.module.less';
 function Antechamber() {
   const dispatch = useDispatch();
   const [joining, dispatchJoin] = useJoin();
-  const { isScreenMode, isAvatarScene } = useScene();
+  const { isScreenMode, isAvatarScene, runtimeMode, rtcAvailable } = useScene();
 
   const handleJoinRoom = () => {
     dispatch(updateFullScreen({ isFullScreen: !isMobile() && !isScreenMode && !isAvatarScene })); // 初始化
@@ -30,9 +31,10 @@ function Antechamber() {
   return (
     <div className={`${style.wrapper} ${isMobile() ? style.mobile : ''}`}>
       <AIChangeCard />
-      <InvokeButton onClick={handleJoinRoom} loading={joining} className={style['invoke-btn']} />
+      {runtimeMode === 'agent_loop' && !rtcAvailable ? <p role="status">语音暂不可用，<Link to="/chat">开始文字对话</Link></p> :
+        <InvokeButton onClick={handleJoinRoom} loading={joining} className={style['invoke-btn']} />}
       {isMobile() ? null : (
-        <div className={style.description}>Powered by 豆包大模型和火山引擎视频云 RTC</div>
+        <div className={style.description}>支持文字与实时语音对话</div>
       )}
     </div>
   );

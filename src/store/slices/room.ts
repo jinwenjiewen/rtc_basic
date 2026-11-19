@@ -38,6 +38,8 @@ export interface Msg {
 }
 
 export interface SceneConfig {
+  runtimeMode?: 'agent_loop';
+  rtcAvailable?: boolean;
   id: string;
   icon?: string;
   name?: string;

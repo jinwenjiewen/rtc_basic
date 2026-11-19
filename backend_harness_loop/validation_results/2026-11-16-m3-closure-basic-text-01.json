@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "milestone": "M3",
+  "kind": "basic_real_business_smoke",
+  "recorded_at_utc": "2026-11-16T14:08:04.032125+00:00",
+  "transport": "text",
+  "scope": "User requested basic smoke before M4; full prompt/deep testing deferred.",
+  "first_output_deadline_ms": 9000,
+  "pricing_policy": "defer_to_checkout",
+  "entry_configured": false,
+  "microphone_asr_tested": false,
+  "human_audio_confirmation": false,
+  "production_slo_claim": false,
+  "automatic_retries": 0,
+  "budgets_increased": false,
+  "rounds": [
+    {
+      "profile_id": "deepseek_v4_flash",
+      "purpose": "real_catalog",
+      "turn_sha256": "38a5f503df96147f6203aaf1f67a2863a9d10c2a33dcd947afe6e75578b825ab",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "930311ab51dc5d9c72355edc09b59aacce1aef39f3269a44d859d8a013fc12d9",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 3961.934,
+          "final_call_ms": 709.12
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 574.285,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "real_first_within_default": true,
+        "model_calls_bounded": true,
+        "native_calls_bounded": true,
+        "no_fabricated_completion": true,
+        "no_invented_link": true,
+        "real_knowledge_used": true,
+        "course_from_actual_material": true,
+        "completed": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_flash",
+      "purpose": "no_quote_enrollment",
+      "turn_sha256": "2e27227d6b7e0de9255128bda3f3761351e6af5528ac378ced508d1efccdbd9c",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "cf0d35ded3e816d6272d65aa6f467a530768196e32ac168a5a59f33a5d7ebc21",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 2550.397,
+          "final_call_ms": 490.333
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 189.229,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "real_first_within_default": true,
+        "model_calls_bounded": true,
+        "native_calls_bounded": true,
+        "no_fabricated_completion": true,
+        "no_invented_link": true,
+        "no_numeric_price_or_discount": true,
+        "enrollment_guidance": true,
+        "completed": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_flash",
+      "purpose": "refund_and_withdraw_intent",
+      "turn_sha256": "860ff31b2f1fab50cb8a209ba8f6c55e95c020a1532153975f02466f4b107cda",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "9bf81f8500c5e8456d8b2034f820c19b5b7d9f564eb1447b73eca922274f0bb9",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 3264.822,
+          "final_call_ms": 972.387
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 276.585,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "real_first_within_default": true,
+        "model_calls_bounded": true,
+        "native_calls_bounded": true,
+        "no_fabricated_completion": true,
+        "no_invented_link": true,
+        "real_knowledge_used": true,
+        "refund_days_retained": true,
+        "refund_progress_condition_retained": true,
+        "completed": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_pro",
+      "purpose": "real_catalog",
+      "turn_sha256": "e780c32137b0e206e0b9edef76fced2c756b5fc4d1961c25294a876893c4a04e",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "7122eb3adce1875792e5639345b0f49cd489487826c2d9967b5b33812920ea64",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 4669.959,
+          "final_call_ms": 1220.542
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 190.643,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "real_first_within_default": true,
+        "model_calls_bounded": true,
+        "native_calls_bounded": true,
+        "no_fabricated_completion": true,
+        "no_invented_link": true,
+        "real_knowledge_used": true,
+        "course_from_actual_material": true,
+        "completed": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_pro",
+      "purpose": "no_quote_enrollment",
+      "turn_sha256": "0ee2f3021c1c350c63576c85130e4119c480d0384cedfa74296cb983c1a85097",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "72a7117ea2c52f9c1809bdb45e73ce860031049010535bc8ac58ce606bd2ac0d",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 4404.026,
+          "final_call_ms": 1359.837
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 366.97,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "real_first_within_default": true,
+        "model_calls_bounded": true,
+        "native_calls_bounded": true,
+        "no_fabricated_completion": true,
+        "no_invented_link": true,
+        "no_numeric_price_or_discount": true,
+        "enrollment_guidance": true,
+        "completed": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_pro",
+      "purpose": "refund_and_withdraw_intent",
+      "turn_sha256": "961227766ff95ce267924cdb631d8a903d451490c213f84f26676f3ee8ebef5c",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "67fa96401d8bae9ee2a4860ebfc7cb3599414fc6d4e703601b55a3b46c0b566a",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 5339.341,
+          "final_call_ms": 1234.759
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 493.65,
+            "name": "knowledge_search",
+            "status": "success"
+          },
+          {
+            "elapsed_ms": 335.203,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "real_first_within_default": true,
+        "model_calls_bounded": true,
+        "native_calls_bounded": true,
+        "no_fabricated_completion": true,
+        "no_invented_link": true,
+        "real_knowledge_used": true,
+        "refund_days_retained": true,
+        "refund_progress_condition_retained": true,
+        "completed": true
+      },
+      "passed": true
+    }
+  ],
+  "cleanup": [
+    {
+      "stop_confirmed": true,
+      "database_closed": true,
+      "passed": true
+    },
+    {
+      "stop_confirmed": true,
+      "database_closed": true,
+      "passed": true
+    }
+  ],
+  "interrupts": [],
+  "passed": true
+}

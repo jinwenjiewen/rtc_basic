@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "date": "2026-11-17",
+  "evidence_type": "react_production_build_and_typescript",
+  "status": "failed",
+  "cause": "The new afterEach callback returned Jest.clearAllMocks()'s Jest object; the explicit @jest/globals hook requires void.",
+  "resolution": "Use a block callback with no return value; run TypeScript before rebuilding.",
+  "checks_disabled": false,
+  "budgets_changed": false,
+  "secrets_included": false
+}

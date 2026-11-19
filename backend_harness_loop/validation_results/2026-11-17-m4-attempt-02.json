@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "date": "2026-11-17",
+  "evidence_type": "react_jest_scripted",
+  "command": "npm test -- --watchAll=false --runInBand",
+  "suites": {"passed": 3, "failed": 2},
+  "tests": {"passed": 18, "failed": 2},
+  "failures": [
+    {"scope": "useCommon.test.tsx", "cause": "Existing stopAgent mock returned undefined; unconditional failed-join lease cleanup now awaits its Promise.", "resolution": "Initialize the async stopAgent mock, keeping real cleanup unconditional."},
+    {"scope": "agent/api.test.ts", "cause": "Jest Babel hoisting rejected a module-factory reference to imported jest.", "resolution": "Require Jest inside the mock factory, matching existing repository tests."}
+  ],
+  "real_model_calls": false,
+  "real_rtc_calls": false,
+  "budgets_changed": false,
+  "secrets_included": false
+}

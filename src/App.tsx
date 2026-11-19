@@ -6,6 +6,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import LoginPage from './pages/LoginPage';
+import ChatPage from './pages/ChatPage';
 import { AuthProvider } from './auth/AuthProvider';
 import ProtectedRoute from './auth/ProtectedRoute';
 import '@arco-design/web-react/dist/css/arco.css';
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route element={<ProtectedRoute />}>
+            <Route path="/chat" element={<ChatPage />} />
             <Route index element={<MainPage />} />
             <Route path="*" element={<MainPage />} />
           </Route>

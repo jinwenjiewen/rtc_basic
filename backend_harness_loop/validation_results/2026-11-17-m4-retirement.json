@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "report_date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "recorded_at_utc": "2026-11-17T15:22:23.685874+00:00",
+  "scope": "Current Windows workspace legacy business service retirement and independent local product cutover",
+  "authorization": "User explicitly requested legacy service retirement after confirming Pro/Flash product basic acceptance.",
+  "status": "legacy_service_retired_local_product_active",
+  "legacy_service_retired": true,
+  "production_deployment_performed": false,
+  "production_slo_passed": false,
+  "inventory_before": {
+    "legacy_listeners": 0,
+    "legacy_business_processes": 0,
+    "legacy_windows_services": 0,
+    "legacy_scheduled_tasks": 0,
+    "legacy_run_registry_entries": 0,
+    "legacy_startup_entries": 0,
+    "active_product_runtime_sessions": 0,
+    "known_rtc_tasks_all_stopped": true
+  },
+  "actions": {
+    "legacy_main_script_and_asgi_default_start_blocked": true,
+    "block_exit_code": 2,
+    "block_before_sdk_database_imports": true,
+    "daily_legacy_npm_command_removed": true,
+    "frontend_proxy_and_legacy_fallback_removed": true,
+    "standalone_account_rtc_voice_configuration_written_to_ignored_files": true,
+    "product_rejects_legacy_source": true,
+    "idle_product_instance_restarted_using_standard_npm_command": true,
+    "unrelated_processes_or_autoruns_modified": false,
+    "legacy_code_or_credentials_deleted": false,
+    "account_database_recreated_or_migrated": false,
+    "passwords_reset": false
+  },
+  "configuration_equivalence": {
+    "auth": true,
+    "rtc_effective_credentials_and_budgets": true,
+    "asr_tts": true,
+    "original_credential_file_unchanged": true,
+    "first_output_deadline_ms": 9000,
+    "automatic_model_retries_added": 0,
+    "profile_fallback": false,
+    "budgets_increased": false
+  },
+  "data_preservation": {
+    "postgresql_user_count_before": 1,
+    "postgresql_user_count_after": 1,
+    "postgresql_users_unchanged": true,
+    "postgresql_user_fingerprint_before": "f0b0602aebd872f918b37d898668a5cefceb0a6f87224a441b84daf2e85e0035",
+    "postgresql_user_fingerprint_after": "f0b0602aebd872f918b37d898668a5cefceb0a6f87224a441b84daf2e85e0035",
+    "canonical_runtime_backup_logically_equal_at_cutover": true,
+    "original_runtime_records_unchanged": true,
+    "original_runtime_logical_sha256": "fb0317f74dfda39b38498e2211910c6381298db061af043841acc956cb649a37",
+    "rtc_recovery_ledger_copy_equal_at_cutover": true,
+    "original_rtc_recovery_ledger_retained": true,
+    "historical_validation_reports_preserved": true,
+    "original_readme_preserved": true,
+    "original_readme_sha256": "49c05349b8bf8c72cddef63b2f970daf97a2425a341bb62420db22ecce04fae3"
+  },
+  "validation": {
+    "python": {
+      "passed": 468,
+      "failed": 0,
+      "seconds": 42.501
+    },
+    "node": {
+      "passed": 34,
+      "failed": 0
+    },
+    "react": {
+      "passed": 27,
+      "failed": 0
+    },
+    "typescript": "passed",
+    "production_build": "passed_with_existing_warnings",
+    "legacy_script_block_verified": true,
+    "legacy_asgi_import_block": "passed_in_automated_tests",
+    "new_command_contains_retired_directory": false,
+    "old_port_3001_listeners": 0,
+    "product_health": true,
+    "rtc_available": true,
+    "public_instance_matched": true,
+    "public_login_blocked": true,
+    "react_assets": [
+      {
+        "http_status": 200,
+        "content_type": "application/javascript",
+        "sha256": "ae7ea131e2c876a9b6904b2d5abaf3b8a656c8777d59c76cee7b8f52eaa7b5c0"
+      }
+    ],
+    "real_http_report": "2026-11-17-m4-retirement-text-01.json",
+    "real_http_sha256": "0c2dc23775e3e5cdc631f7aa048a1e917d17dd88e1d2c2af52b8810769397f6e",
+    "real_http_passed": true,
+    "real_model_rounds_passed": 3,
+    "real_model_first_output_ms": [
+      7973.73,
+      3838.631,
+      3459.206
+    ],
+    "real_rtc_sampling_added": false,
+    "retained_human_rtc_evidence": "2026-11-17-m4-browser-01.json",
+    "git_diff_check": "passed",
+    "uv_lock_check": "passed"
+  },
+  "cleanup": {
+    "active_runtime_sessions": 0,
+    "known_rtc_tasks_all_stopped": true,
+    "probe_login_logged_out": true,
+    "old_service_kept_stopped": true,
+    "new_local_service_left_running": true,
+    "restricted_callback_tunnel_left_running": true
+  },
+  "recovery": {
+    "legacy_code_and_ignored_config_retained": true,
+    "requires_explicit_process_environment": "RTC_LEGACY_RECOVERY=1",
+    "automatic_fallback": false,
+    "production_rollback_rehearsed": false
+  },
+  "log_sha256": {
+    "python": "047d499c6a60cc47398673e34b535f6c51efaff6c15bc2fcbb889734fa02e6cf",
+    "node": "f0959380415a1cc378280dd122cd47203b7c9fa2ed3a00e27d2818fccab1a097",
+    "react": "f74ca46aefc2225bdee8ef804699f8b9d5b092f9054db2b98bc00d9b821dd62f",
+    "build": "40f68607aaa7ef1a31f67c7bc209d9dba691c82d8eddbe2e5789db43b1cfcaf8"
+  },
+  "failure_preservation": {
+    "new_retirement_test_or_model_failures": 0,
+    "prior_m0_through_m4_failure_records_unchanged": true,
+    "original_nine_second_budget_kept": true,
+    "initial_formatting_issue": {
+      "issue": "git diff --check found one trailing blank line in the removed frontend API mapping.",
+      "resolution": "Removed the blank line; final diff check passed.",
+      "test_or_model_budget_changed": false
+    }
+  },
+  "secret_scan": {
+    "status": "passed",
+    "reports_scanned": 15,
+    "report_matches": 0,
+    "changed_docs_and_sources_scanned": 10,
+    "source_matches": 0,
+    "frontend_js_assets_scanned": 1,
+    "frontend_js_matches": 0
+  },
+  "passed": true
+}

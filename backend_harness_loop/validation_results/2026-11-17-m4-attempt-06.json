@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "date": "2026-11-17",
+  "evidence_type": "real_browser_react_load",
+  "status": "failed",
+  "cause": "Windows MIME registry caused FileResponse to serve React .js as text/plain. The preserved nosniff header correctly blocked execution, yielding a blank page.",
+  "observed_script_http_status": 200,
+  "observed_script_content_type": "text/plain; charset=utf-8",
+  "resolution": "Explicit JavaScript, CSS, JSON and SVG media types for product assets; keep nosniff and add a browser-asset regression assertion.",
+  "prior_real_http_report": "2026-11-17-m4-real-01.json",
+  "prior_http_scope_limit": "The real HTTP account/model/knowledge checks passed, but a successful /chat HTML response alone did not verify browser rendering.",
+  "security_headers_weakened": false,
+  "budgets_changed": false,
+  "secrets_included": false
+}

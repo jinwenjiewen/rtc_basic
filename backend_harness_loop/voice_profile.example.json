@@ -1,0 +1,13 @@
+{
+  "ASRConfig": {
+    "Provider": "volcano",
+    "ProviderParams": {"Mode": "smallmodel", "AppId": "YOUR_ASR_APP_ID", "Cluster": "volcengine_streaming_common"}
+  },
+  "TTSConfig": {
+    "Provider": "volcano",
+    "ProviderParams": {
+      "app": {"appid": "YOUR_TTS_APP_ID", "cluster": "volcano_tts"},
+      "audio": {"voice_type": "YOUR_VOICE", "speed_ratio": 1, "pitch_ratio": 1, "volume_ratio": 1}
+    }
+  }
+}

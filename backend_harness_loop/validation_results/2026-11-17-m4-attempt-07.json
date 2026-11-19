@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "date": "2026-11-17",
+  "evidence_type": "react_component_scripted",
+  "suites": {"passed": 5, "failed": 1},
+  "tests": {"passed": 22, "failed": 2},
+  "cause": "This repository's Jest DOM environment has no window.crypto; new component setup failed before rendering, followed by cleanup errors.",
+  "resolution": "Use the project's existing uuid package for round identifiers and its deterministic test mock; guard failed-setup cleanup. This also avoids requiring the newer secure-context-only randomUUID browser method.",
+  "budgets_changed": false,
+  "secrets_included": false
+}

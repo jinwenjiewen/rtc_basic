@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "report_date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "recorded_at_utc": "2026-11-17T14:53:47.839586+00:00",
+  "status": "product_react_login_text_and_rtc_basic_accepted",
+  "current_slice_complete": true,
+  "m4_complete": false,
+  "all_attempts_passed": false,
+  "production_slo_passed": false,
+  "acceptance_basis": "User confirmed formal RTC recognition/audio and additional Pro test, then requested project closure; simple run-through scope retained.",
+  "implemented": [
+    "Same-origin React hosting and protected /chat with final-only SSE, exact-round interrupt, pinned profile, new-dialog and route-exit cleanup.",
+    "Existing PostgreSQL users, login sessions and throttles reused; no schema migrations, account resets or administrator overwrite.",
+    "Cookie/CSRF/Origin login, me, refresh rotation and logout; refresh reuse revokes login.",
+    "Persistent runtime owner mapping by account and login session; foreign account or other login denied.",
+    "Logout cancels local model/tools/maintenance before bounded cloud cleanup; callback checks server run and active owner.",
+    "Formal RTC API and SDK lifecycle wired, dynamic isolated tokens only; shared validation token excluded.",
+    "Developer nonce routes and universal proxy excluded from product app; explicit asset MIME keeps nosniff.",
+    "Formal browser scene requests without arguments serialize {}, with regression coverage; callback-tunnel Host does not publish login/frontend routes."
+  ],
+  "configuration": {
+    "first_output_deadline_ms": 9000,
+    "max_model_calls": 4,
+    "max_native_calls": 8,
+    "turn_wall_seconds": 30,
+    "tool_timeout_ms": 1500,
+    "context_input_cap_estimate": 24576,
+    "background_maintenance_seconds": 5,
+    "session_profile_pinned": true,
+    "model_retries_added": 0,
+    "profile_fallback": false,
+    "budgets_increased": false,
+    "pricing_policy": "defer_to_checkout; no prices or discount numbers; no actual checkout or contact entry",
+    "order_or_payment_tools": false,
+    "worker_count": 1,
+    "per_transport_max_active_sessions": 4,
+    "per_transport_max_sessions": 128,
+    "session_absolute_lease_seconds": 600,
+    "heartbeat_idle_seconds": 60,
+    "browser_heartbeat_seconds": 20,
+    "external_auth_recheck_interval_seconds": 2,
+    "postgres_connect_query_pool_wait_seconds": 3,
+    "postgres_lock_wait_seconds": 2
+  },
+  "code_validation": {
+    "python_full_suite": {
+      "passed": 462,
+      "failed": 0,
+      "seconds": 46.512
+    },
+    "targeted_product_after_final_asset_change": {
+      "passed": 11,
+      "failed": 0
+    },
+    "node_developer_pages": {
+      "passed": 34,
+      "failed": 0
+    },
+    "react_jest": {
+      "passed": 25,
+      "failed": 0,
+      "suites": 6
+    },
+    "typescript_no_emit": "passed",
+    "react_production_build": "passed_with_warnings",
+    "uv_lock_check": "passed",
+    "git_diff_check": "passed",
+    "build_warnings": [
+      "Large bundle includes existing RTC/UI dependencies.",
+      "Browserslist data is outdated; Node deprecation notice."
+    ],
+    "log_sha256": {
+      "python_full_suite": "b1b29251fe5fd1bd082f3313cef0c7905921e9522660f4faf2a2ab250bdba6d7",
+      "product_after_asset_fix": "022689fdba8a7e81dca52c4bc8d826b790d3827fec06553720dfbdb01b027274",
+      "react": "6377f72ebd3c6f7207f4f3c55f3f746050750405951875dce53b1c7c6c95862d",
+      "node": "955f8d04bbf3543d45b874c00f9b67cde96b9652aba70357cce5d58822d7315d",
+      "react_build": "bd85ec39da2eb9a236569b328cb0b91616848e9d2e5d9097ecf0294d6fc90a72",
+      "product_after_host_guard": "63f24900f84d69d5c108c08a4c78e2b59e631a6a369324468bbc66bdbfbc78f1"
+    },
+    "targeted_product_after_final_host_guard": {
+      "passed": 11,
+      "failed": 0
+    }
+  },
+  "scripted_evidence": {
+    "backend": "Isolated SQLite test accounts, actual runtime/controller/store, scripted models; includes simulated RTC credential and callback boundary, no real cloud task.",
+    "react": "Component/SSE/ownership-lifecycle tests with mocked HTTP/model events; not real-browser authenticated E2E."
+  },
+  "real_evidence": {
+    "report": "2026-11-17-m4-real-01.json",
+    "sha256": "4348ac8bc4957082c4cf465eca21932f81749e9e6fd79f6e3929859839cc578b",
+    "account_database": "existing PostgreSQL",
+    "login_refresh_csrf_logout_checks_passed": true,
+    "text_rounds_attempted": 3,
+    "text_rounds_passed": 3,
+    "profiles": [
+      "deepseek_v4_flash",
+      "deepseek_v4_pro"
+    ],
+    "model_first_output_ms": [
+      6421.235,
+      3621.849,
+      4109.385
+    ],
+    "http_first_text_ms": [
+      6443.908,
+      3643.972,
+      4133.745
+    ],
+    "real_knowledge": true,
+    "budgets_unchanged": true,
+    "real_rtc_tested": true
+  },
+  "real_browser": {
+    "report": "2026-11-17-m4-browser-01.json",
+    "sha256": "914ff6964fdb2a8cb11c1ceea76b9519f2c7185230103bd4dc02e75326d41922",
+    "login_user_performed": true,
+    "authenticated_text_e2e_tested": true,
+    "rtc_sdk_join_and_final_subtitle_tested": true,
+    "rtc_runs_started": 3,
+    "rtc_admitted_rounds": 8,
+    "rtc_completed_rounds": 7,
+    "rtc_cancelled_rounds": 1,
+    "rtc_failed_rounds": 0,
+    "max_completed_rtc_model_first_output_ms": 8767.199,
+    "user_confirmations": [
+      {
+        "scope": "Microphone recognition and audible answer in formal React RTC",
+        "result": "识别和声音都正常"
+      },
+      {
+        "scope": "Additional Pro RTC test",
+        "result": "deepseek pro也测试了没问题"
+      }
+    ],
+    "passed": true,
+    "cancelled_rounds_excluded_from_first_output_success_counts": true,
+    "production_slo_passed": false
+  },
+  "web_after_fix": {
+    "service_identity": true,
+    "login_html": true,
+    "js_assets": [
+      {
+        "status": 200,
+        "content_type": "application/javascript",
+        "nosniff": true,
+        "sha256": "fe0bd42994afa32708866d327a50e68948a4a68b6ce75a31416f8306831a53f5"
+      }
+    ],
+    "rtc_available": true,
+    "public_instance_matched": true,
+    "public_login_blocked": true,
+    "runtime_sessions_all_closed": true
+  },
+  "secret_scan": {
+    "status": "passed",
+    "reports_scanned": 12,
+    "report_matches": 0,
+    "sources_scanned": 10,
+    "source_matches": 0,
+    "frontend_js_assets_scanned": 1,
+    "frontend_js_matches": 0
+  },
+  "preserved_failures": [
+    {
+      "report": "2026-11-17-m4-attempt-01.json",
+      "sha256": "a741408ce7363199f76f8874f8923fc4495834c91135f6c5a980399f51c23324",
+      "evidence_type": "scripted_model_and_isolated_sqlite_auth"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-02.json",
+      "sha256": "c747669c96e92e3bbbc011e17d1b6f95d8a4e2e0dcd0dbb48e1dc8642d669197",
+      "evidence_type": "react_jest_scripted"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-03.json",
+      "sha256": "47f9db71d5719ba9b6e7530d20eefc456b4e22102fa1cf345620e5a07a96096e",
+      "evidence_type": "react_production_build"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-04.json",
+      "sha256": "f93ea5598a85205b4249779c2d71edfad413535fea9221143141a5a027540b2a",
+      "evidence_type": "react_production_build"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-05.json",
+      "sha256": "6aa07bd66bfcb84d038f80399a54f3bbc67047848fde072edb18f8d6c2b3cfa1",
+      "evidence_type": "react_production_build_and_typescript"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-06.json",
+      "sha256": "15d2673469bc09798427c8358f9bf6c624aefbf536e1022e5e25cbcca549cef1",
+      "evidence_type": "real_browser_react_load"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-07.json",
+      "sha256": "c7ad3bed145cc8a76dd6117a85f5705029f87093f77ddd9f496a6f1cca9d2789",
+      "evidence_type": "react_component_scripted"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-08.json",
+      "sha256": "062c70a2021a9907bc11724a6344bb02e46b82bb8a53b9ac6ba55ff160082964",
+      "evidence_type": "real_browser_formal_scene_load"
+    }
+  ],
+  "prior_evidence_preserved": {
+    "m0_m1_m2_m3_reports": "unchanged; no failure reclassification",
+    "m3_closure": "2026-11-16-m3-closure.json",
+    "m4_text_login_checkpoint": {
+      "report": "2026-11-17-m4-text-login.json",
+      "sha256": "eaf23128bf02b2588bf5ac43f8c58510a2e4259bca2d8bac78761a87c4c54589",
+      "note": "Original bytes before AppKey/browser/RTC completion; not rewritten."
+    }
+  },
+  "cleanup": {
+    "owned_text_sessions_all_closed": true,
+    "owned_probe_login_logged_out": true,
+    "real_rtc_tasks_created": 3,
+    "preexisting_user_services_stopped": false,
+    "local_product_preview_left_running": true,
+    "preview_bind": "127.0.0.1:3101",
+    "deployment_or_legacy_retirement_performed": false,
+    "real_rtc_tasks_all_stopped": true,
+    "all_runtime_sessions_closed": true,
+    "browser_test_login_revoked_after_user_closed_page": true,
+    "other_account_logins_untouched": true,
+    "public_callback_tunnel_left_running": true,
+    "public_browser_login_not_enabled": true,
+    "late_callback_rejected": true,
+    "late_callback_created_no_turn": true
+  },
+  "remaining": [
+    "Deployment/HTTPS/rollback, broader release regression and old-service retirement were not performed.",
+    "Long-session/default-budget stability and physical audio quantification remain separate from this small sample; prior M2/M3 failures are preserved.",
+    "Prompt rework and deep business tests remain with later user testing; no real enrollment entry has been supplied."
+  ],
+  "development_basic_acceptance_complete": true,
+  "milestone_scope_note": "Requested product React/login/text/RTC basic development is accepted; the design milestone also contains deployment and old-service retirement, which were not performed."
+}

@@ -16,6 +16,7 @@ import {
   updateAIGCState,
   updateLocalUser,
   updateRTCConfig,
+  updateSceneConfig,
   updateFullScreen,
   RTCConfig,
 } from '@/store/slices/room';
@@ -30,6 +31,7 @@ import {
 } from '@/store/slices/device';
 import logger from '@/utils/logger';
 import Apis from '@/app/index';
+import { createRtcSession } from '@/agent/api';
 
 export const ABORT_VISIBILITY_CHANGE = 'abortVisibilityChange';
 export interface FormProps {
@@ -199,6 +201,17 @@ export const useJoin = (): [boolean, () => Promise<void | boolean>] => {
 
       // Re-fetch credentials on each join instead of reusing a token from an old page load.
       const { scenes } = await Apis.Basic.getScenes();
+      const selected = scenes.find((entry: any) => entry.scene.id === id);
+      if (selected?.scene.runtimeMode !== 'agent_loop') {
+        throw new Error('当前服务版本不兼容，请连接新的产品后端。');
+      }
+      if (selected.scene.runtimeMode === 'agent_loop') {
+        if (!selected.scene.rtcAvailable) throw new Error('语音暂不可用，请先使用文字对话。');
+        const lease = await createRtcSession(id);
+        RtcClient.setProductSession(lease.session_id);
+        selected.rtc = { AppId: lease.app_id, RoomId: lease.room_id, UserId: lease.user_id, Token: lease.token };
+        dispatch(updateSceneConfig({ ...room.sceneConfigMap, [id]: { ...selected.scene, botName: lease.agent_id } }));
+      }
       const configs = (scenes as { scene: { id: string }; rtc: RTCConfig }[]).reduce<
         Record<string, RTCConfig>
       >((all, scene) => ({ ...all, [scene.scene.id]: scene.rtc }), {});
@@ -233,7 +246,7 @@ export const useJoin = (): [boolean, () => Promise<void | boolean>] => {
       );
       return true;
     } catch (error) {
-      if (RtcClient.getAgentEnabled()) await RtcClient.stopAgent(id).catch(() => {});
+      await RtcClient.stopAgent(id).catch(() => {});
       await RtcClient.release().catch(() => {});
       dispatch(localLeaveRoom());
       dispatch(updateAIGCState({ isAIGCEnable: false }));

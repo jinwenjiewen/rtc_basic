@@ -3,13 +3,11 @@
  * SPDX-license-identifier: BSD-3-Clause
  */
 
-import { AigcAPIs, BasicAPIs } from './api';
+import { BasicAPIs } from './api';
 import { generateAPIs } from './base';
 
-const VoiceChat = generateAPIs(AigcAPIs);
 const Basic = generateAPIs(BasicAPIs);
 
 export default {
-  VoiceChat,
   Basic,
 };

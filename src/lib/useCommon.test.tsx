@@ -11,6 +11,12 @@ import RtcClient from '@/lib/RtcClient';
 import roomReducer, { updateScene, updateSceneConfig } from '@/store/slices/room';
 import deviceReducer from '@/store/slices/device';
 import { useJoin } from './useCommon';
+import { createRtcSession } from '@/agent/api';
+
+jest.mock('@/agent/api', () => {
+  const { jest: mockJest } = require('@jest/globals');
+  return { createRtcSession: mockJest.fn() };
+});
 
 jest.mock('@volcengine/rtc', () => {
   const { jest: mockJest } = require('@jest/globals');
@@ -36,6 +42,7 @@ jest.mock('@/lib/RtcClient', () => {
     __esModule: true,
     default: {
       basicInfo: {},
+      setProductSession: mockJest.fn(),
       createEngine: mockJest.fn(),
       addEventListeners: mockJest.fn(),
       joinRoom: mockJest.fn(),
@@ -71,15 +78,18 @@ beforeEach(() => {
   mockMethod(Apis.Basic.getScenes).mockResolvedValue({
     scenes: [
       {
-        scene: { id: 'Custom' },
-        rtc: { AppId: 'app', RoomId: 'ChatRoom01', UserId: 'Huoshan01', Token: 'fresh-token' },
+        scene: { id: 'Custom', runtimeMode: 'agent_loop', rtcAvailable: true },
+        rtc: { AppId: '', RoomId: '', UserId: '', Token: '' },
       },
     ],
   });
+  mockMethod(createRtcSession).mockResolvedValue({ session_id: 'owned-rtc-session', app_id: 'app', room_id: 'isolated-room',
+    user_id: 'isolated-user', agent_id: 'isolated-agent', token: 'fresh-token', profile_id: 'Custom' });
   for (const method of [
     RtcClient.createEngine,
     RtcClient.joinRoom,
     RtcClient.startAgent,
+    RtcClient.stopAgent,
     RtcClient.release,
   ]) {
     mockMethod(method).mockReset().mockResolvedValue(undefined);
@@ -152,4 +162,22 @@ test('rapid repeated starts share a single join attempt', async () => {
   });
   expect(RtcClient.joinRoom).toHaveBeenCalledTimes(1);
   expect(RtcClient.startAgent).toHaveBeenCalledTimes(1);
+  expect(createRtcSession).toHaveBeenCalledTimes(1);
+});
+
+test('retired scene response is rejected before SDK or credential creation', async () => {
+  mockMethod(Apis.Basic.getScenes).mockResolvedValueOnce({ scenes: [{ scene: { id: 'Custom' },
+    rtc: { AppId: 'old-app', RoomId: 'shared-room', UserId: 'shared-user', Token: 'old-token' } }] });
+  await act(async () => { expect(await join()).toBe(false); });
+  expect(createRtcSession).not.toHaveBeenCalled();
+  expect(RtcClient.createEngine).not.toHaveBeenCalled();
+  expect(Modal.error).toHaveBeenCalledWith(expect.objectContaining({ content: expect.stringContaining('服务版本不兼容') }));
+});
+
+test('missing product RTC capability never falls back to retired credentials', async () => {
+  mockMethod(Apis.Basic.getScenes).mockResolvedValueOnce({ scenes: [{ scene: { id: 'Custom', runtimeMode: 'agent_loop', rtcAvailable: false },
+    rtc: { AppId: '', RoomId: '', UserId: '', Token: '' } }] });
+  await act(async () => { expect(await join()).toBe(false); });
+  expect(createRtcSession).not.toHaveBeenCalled();
+  expect(RtcClient.joinRoom).not.toHaveBeenCalled();
 });

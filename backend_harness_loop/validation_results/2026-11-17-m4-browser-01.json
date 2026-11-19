@@ -1,0 +1,468 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "report_date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "recorded_at_utc": "2026-11-17T14:50:13.631769+00:00",
+  "evidence_type": "real_formal_react_authenticated_text_rtc_sdk_real_model_real_knowledge_and_human_audio",
+  "scope": "Basic product run-through; user logged in, agent exercised text/RTC and user tested microphone plus Pro.",
+  "first_output_deadline_ms": 9000,
+  "budgets_increased": false,
+  "production_slo_passed": false,
+  "browser_actions": {
+    "existing_account_login_user_performed": true,
+    "scene_page_loaded_after_json_fix": true,
+    "formal_text_reply_rendered": true,
+    "model_locked_during_session": true,
+    "new_conversation_cleared_view_and_closed_lease": true,
+    "rtc_sdk_join_and_start_succeeded": true,
+    "rtc_external_text_final_subtitle_visible": true,
+    "user_closed_browser_after_test": true
+  },
+  "user_confirmations": [
+    {
+      "scope": "Microphone recognition and audible answer in formal React RTC",
+      "result": "识别和声音都正常"
+    },
+    {
+      "scope": "Additional Pro RTC test",
+      "result": "deepseek pro也测试了没问题"
+    }
+  ],
+  "browser_text_rounds": [
+    {
+      "turn_sha256": "6153dca3c4092b8df7c48e3f04f4c4a2ef80d60e89dc5263ebc81b21be7babf5",
+      "profile_id": "deepseek_v4_flash",
+      "state": "generation_completed",
+      "reply_sha256": "0c44592d170745629f551c1cea3eac6388c605cac22e93ba73d8c2a12e935d9c",
+      "reply_characters": 135,
+      "no_numeric_price": true,
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 4540.881,
+          "final_call_ms": 1502.539
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 684.394,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      }
+    }
+  ],
+  "rtc_runs": [
+    {
+      "session_sha256": "375b665c772c7d0de999c244293ec587e98d6af470056d3d18b94ebc74308772",
+      "profile_id": "deepseek_v4_flash",
+      "binding_mode": "app_key",
+      "cloud_state": "stopped",
+      "runtime_state": "closed",
+      "start_attempted": true,
+      "cleanup_rounds": 1,
+      "turns": [
+        {
+          "turn_sha256": "cf01e65298d3f51462ec485787a8387b8759b8f8c4c6e7db4790b1b0303e4405",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "reply_sha256": "8c079ec5140838c8435896e2da6fceb0e315926a4f14a690b143c9a646bb27c3",
+          "reply_characters": 59,
+          "no_numeric_price": true,
+          "cancel_reasons": [],
+          "failure_codes": [],
+          "observations": {
+            "tools": [
+              {
+                "name": "knowledge_search",
+                "status": "success",
+                "code": null,
+                "hit_count": 3,
+                "truncated": false
+              },
+              {
+                "name": "prepare_response",
+                "status": "success",
+                "code": null,
+                "hit_count": 0,
+                "truncated": false
+              }
+            ],
+            "model_calls": 3,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": {
+              "deadline_ms": 9000,
+              "elapsed_ms": 3793.996,
+              "final_call_ms": 655.773
+            },
+            "knowledge_timings": [
+              {
+                "elapsed_ms": 901.255,
+                "name": "knowledge_search",
+                "status": "success"
+              }
+            ],
+            "final_phase": {
+              "decision_phase_closed": true,
+              "cause": "model_prepared"
+            }
+          }
+        },
+        {
+          "turn_sha256": "8806f8179d820c7f26a960c7f6cf827a602bd00012de75f532e84534cdf0edb4",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "reply_sha256": "69cab2c496d735737a3989358f58555097dcc86ce93107653393a255e0688ba6",
+          "reply_characters": 65,
+          "no_numeric_price": true,
+          "cancel_reasons": [],
+          "failure_codes": [],
+          "observations": {
+            "tools": [
+              {
+                "name": "prepare_response",
+                "status": "success",
+                "code": null,
+                "hit_count": 0,
+                "truncated": false
+              }
+            ],
+            "model_calls": 2,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": {
+              "deadline_ms": 9000,
+              "elapsed_ms": 2156.049,
+              "final_call_ms": 1094.301
+            },
+            "knowledge_timings": [],
+            "final_phase": {
+              "decision_phase_closed": true,
+              "cause": "model_prepared"
+            }
+          }
+        },
+        {
+          "turn_sha256": "0ec5a11369c09348e264989e9ebf22d1b9b3d48547f45119a5bafdbb0d7c1b4c",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "reply_sha256": "5f14e1812a7aafe9e1fdb96608f016b0ca5cdcc76fe997140afd2c6b72499fe8",
+          "reply_characters": 53,
+          "no_numeric_price": true,
+          "cancel_reasons": [],
+          "failure_codes": [],
+          "observations": {
+            "tools": [
+              {
+                "name": "prepare_response",
+                "status": "success",
+                "code": null,
+                "hit_count": 0,
+                "truncated": false
+              }
+            ],
+            "model_calls": 2,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": {
+              "deadline_ms": 9000,
+              "elapsed_ms": 1587.876,
+              "final_call_ms": 692.317
+            },
+            "knowledge_timings": [],
+            "final_phase": {
+              "decision_phase_closed": true,
+              "cause": "model_prepared"
+            }
+          }
+        },
+        {
+          "turn_sha256": "5c09d1ba08a7d080598c68e8c0e78f4df6d50c79298d6f526c306395dc71b4cb",
+          "state": "cancelled",
+          "delivery_status": "interrupted",
+          "reply_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "reply_characters": 0,
+          "no_numeric_price": true,
+          "cancel_reasons": [
+            "user_interrupt"
+          ],
+          "failure_codes": [],
+          "observations": {
+            "tools": [],
+            "model_calls": 1,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": null,
+            "knowledge_timings": []
+          }
+        },
+        {
+          "turn_sha256": "f3e16494f2026ccf0d06525be6d0f2a68c249b785d83d350a0bacf5f10c5a6d6",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "reply_sha256": "a4015964fdc9bdd83cb06ff3cc3c8b51a4cab932a7d4db5892b13b7858935eaa",
+          "reply_characters": 156,
+          "no_numeric_price": true,
+          "cancel_reasons": [],
+          "failure_codes": [],
+          "observations": {
+            "tools": [
+              {
+                "name": "knowledge_search",
+                "status": "success",
+                "code": null,
+                "hit_count": 2,
+                "truncated": false
+              },
+              {
+                "name": "prepare_response",
+                "status": "success",
+                "code": null,
+                "hit_count": 0,
+                "truncated": false
+              }
+            ],
+            "model_calls": 3,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": {
+              "deadline_ms": 9000,
+              "elapsed_ms": 3578.728,
+              "final_call_ms": 725.88
+            },
+            "knowledge_timings": [
+              {
+                "elapsed_ms": 556.747,
+                "name": "knowledge_search",
+                "status": "success"
+              }
+            ],
+            "final_phase": {
+              "decision_phase_closed": true,
+              "cause": "model_prepared"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "session_sha256": "9cb7469d63efc2b9b287a137f53293cdce974efe9265c851541e61597e6e8608",
+      "profile_id": "deepseek_v4_pro",
+      "binding_mode": "app_key",
+      "cloud_state": "stopped",
+      "runtime_state": "closed",
+      "start_attempted": true,
+      "cleanup_rounds": 1,
+      "turns": []
+    },
+    {
+      "session_sha256": "4e0fcbe37eea31f44e4f10aba31321c2bb1fcb46ecc11afd390141d2e7919289",
+      "profile_id": "deepseek_v4_pro",
+      "binding_mode": "app_key",
+      "cloud_state": "stopped",
+      "runtime_state": "closed",
+      "start_attempted": true,
+      "cleanup_rounds": 1,
+      "turns": [
+        {
+          "turn_sha256": "41c2a70f2837f73204027d9292a79c31e069e3e443c09f82e914caba697ed82b",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "reply_sha256": "c878d5d3bf298b3db69b4641e75aede250e5fe6e71e581ef2de28b770103e0ee",
+          "reply_characters": 26,
+          "no_numeric_price": true,
+          "cancel_reasons": [],
+          "failure_codes": [],
+          "observations": {
+            "tools": [
+              {
+                "name": "prepare_response",
+                "status": "success",
+                "code": null,
+                "hit_count": 0,
+                "truncated": false
+              }
+            ],
+            "model_calls": 2,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": {
+              "deadline_ms": 9000,
+              "elapsed_ms": 3817.143,
+              "final_call_ms": 1067.977
+            },
+            "knowledge_timings": [],
+            "final_phase": {
+              "decision_phase_closed": true,
+              "cause": "model_prepared"
+            }
+          }
+        },
+        {
+          "turn_sha256": "02d7fc981da0b553e1b4bbe5774165aa2b28acb74ac2d764fcbbd2e56fee5adc",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "reply_sha256": "f72349f11221ceeea5c6d0108c6a8513682fffb7093846432c3cc728f120cdfe",
+          "reply_characters": 215,
+          "no_numeric_price": true,
+          "cancel_reasons": [],
+          "failure_codes": [],
+          "observations": {
+            "tools": [
+              {
+                "name": "knowledge_search",
+                "status": "success",
+                "code": null,
+                "hit_count": 3,
+                "truncated": false
+              },
+              {
+                "name": "knowledge_search",
+                "status": "success",
+                "code": null,
+                "hit_count": 3,
+                "truncated": false
+              },
+              {
+                "name": "prepare_response",
+                "status": "success",
+                "code": null,
+                "hit_count": 0,
+                "truncated": false
+              }
+            ],
+            "model_calls": 4,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": {
+              "deadline_ms": 9000,
+              "elapsed_ms": 8767.199,
+              "final_call_ms": 1131.632
+            },
+            "knowledge_timings": [
+              {
+                "elapsed_ms": 937.084,
+                "name": "knowledge_search",
+                "status": "success"
+              },
+              {
+                "elapsed_ms": 276.006,
+                "name": "knowledge_search",
+                "status": "success"
+              }
+            ],
+            "final_phase": {
+              "decision_phase_closed": true,
+              "cause": "model_prepared"
+            }
+          }
+        },
+        {
+          "turn_sha256": "73c0ff31256b412983198e5a9bcc77be899b6ed6b1e5afec56fd28c748531b98",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "reply_sha256": "860466c6ef852abfaafa7758723415c52dc3801ff50adf1ae05ffa8a65197fb9",
+          "reply_characters": 268,
+          "no_numeric_price": true,
+          "cancel_reasons": [],
+          "failure_codes": [],
+          "observations": {
+            "tools": [
+              {
+                "name": "knowledge_search",
+                "status": "success",
+                "code": null,
+                "hit_count": 3,
+                "truncated": false
+              },
+              {
+                "name": "prepare_response",
+                "status": "success",
+                "code": null,
+                "hit_count": 0,
+                "truncated": false
+              }
+            ],
+            "model_calls": 3,
+            "profile_pinned": true,
+            "native_chain_closed": true,
+            "model_first_output": {
+              "deadline_ms": 9000,
+              "elapsed_ms": 7036.184,
+              "final_call_ms": 1912.997
+            },
+            "knowledge_timings": [
+              {
+                "elapsed_ms": 581.586,
+                "name": "knowledge_search",
+                "status": "success"
+              }
+            ],
+            "final_phase": {
+              "decision_phase_closed": true,
+              "cause": "model_prepared"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "rtc_runs_started": 3,
+    "rtc_admitted_rounds": 8,
+    "rtc_completed_rounds": 7,
+    "rtc_cancelled_rounds": 1,
+    "rtc_failed_rounds": 0
+  },
+  "checks": {
+    "browser_text_completed": true,
+    "completed_rtc_rounds_within_original_budget": true,
+    "all_rtc_turns_profile_pinned": true,
+    "native_chains_closed": true,
+    "no_numeric_price_in_completed_replies": true,
+    "human_asr_and_audio_confirmed": true,
+    "pro_user_test_confirmed": true,
+    "all_test_cloud_tasks_stopped": true,
+    "all_test_runtime_sessions_closed": true,
+    "late_callback_rejected": true,
+    "late_callback_no_new_turn": true
+  },
+  "cleanup": {
+    "scoped_test_login_revocations": 1,
+    "other_existing_account_sessions_untouched": true,
+    "late_callback_http_status": 401,
+    "cloud_task_count": 3,
+    "local_preview_left_running": true,
+    "public_callback_tunnel_left_running": true,
+    "public_browser_login_not_enabled": true,
+    "password_or_existing_account_reset": false
+  },
+  "cancellation_note": "Cancelled rounds are recorded separately and excluded from completed-round first-output statistics; they are not rewritten as model successes.",
+  "performance_note": "Small interactive sample only; model first-valid text is not microphone-to-audio latency or a production/long-session SLO.",
+  "passed": true
+}

@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "recorded_at_utc": "2026-11-17T14:11:39.815174+00:00",
+  "evidence_type": "real_postgresql_login_real_model_real_knowledge_http",
+  "scope": "basic_product_text_and_auth",
+  "first_output_deadline_ms": 9000,
+  "budgets_increased": false,
+  "automatic_retries": 0,
+  "real_rtc_tested": false,
+  "production_slo_passed": false,
+  "checks": {
+    "product_identity": true,
+    "anonymous_rejected": true,
+    "existing_account_login": true,
+    "current_account": true,
+    "refresh_rotates": true,
+    "csrf_rejected": true,
+    "formal_scene_contract": true,
+    "react_chat_hosted": true,
+    "logout": true,
+    "logout_revoked": true
+  },
+  "rounds": [
+    {
+      "profile_id": "deepseek_v4_pro",
+      "purpose": "catalog",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "a2d05fd035a936c978821241cee984e23a1b751f18c5c4b3f1d57cf3d6c6b137",
+      "reply_characters": 37,
+      "http_first_text_ms": 6443.908,
+      "http_turn_ms": 6816.261,
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 6421.235,
+          "final_call_ms": 1815.478
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 544.805,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "completed": true,
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "default_deadline_in_effect": true,
+        "real_first_within_default": true,
+        "no_numeric_price": true,
+        "no_invented_link": true,
+        "real_knowledge_used": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_flash",
+      "purpose": "catalog",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "0d10e953173d5a6f770ac93e5b95ffd9190c766cd1a4cd49f3423493bb54093f",
+      "reply_characters": 85,
+      "http_first_text_ms": 3643.972,
+      "http_turn_ms": 4063.875,
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 3621.849,
+          "final_call_ms": 678.725
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 506.783,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "completed": true,
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "default_deadline_in_effect": true,
+        "real_first_within_default": true,
+        "no_numeric_price": true,
+        "no_invented_link": true,
+        "real_knowledge_used": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_flash",
+      "purpose": "no_quote_intent",
+      "state": "generation_completed",
+      "error_code": null,
+      "reply_sha256": "bb942e3ce7ddd645366ad354cc20a8727407c9c3b5c47f0382c90eab4de54db0",
+      "reply_characters": 177,
+      "http_first_text_ms": 4133.745,
+      "http_turn_ms": 5020.542,
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 2,
+            "truncated": false
+          },
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 2,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 4,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 4109.385,
+          "final_call_ms": 578.479
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 230.595,
+            "name": "knowledge_search",
+            "status": "success"
+          },
+          {
+            "elapsed_ms": 245.518,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ],
+        "final_phase": {
+          "decision_phase_closed": true,
+          "cause": "model_prepared"
+        }
+      },
+      "checks": {
+        "completed": true,
+        "nonblank_reply": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "default_deadline_in_effect": true,
+        "real_first_within_default": true,
+        "no_numeric_price": true,
+        "no_invented_link": true
+      },
+      "passed": true
+    }
+  ],
+  "cleanup": [
+    {
+      "stopped": true
+    },
+    {
+      "stopped": true
+    }
+  ],
+  "rtc_available": false,
+  "passed": true
+}

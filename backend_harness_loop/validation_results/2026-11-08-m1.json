@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-08T11:30:41.747764+00:00",
+  "milestone": "M1",
+  "configuration": {
+    "configured": {
+      "ark_api_key": true,
+      "ark_base_url": true,
+      "ark_model": true,
+      "volc_access_key": true,
+      "volc_secret_key": true,
+      "rtc_app_id": true,
+      "rtc_app_key": true,
+      "callback_secret": true,
+      "server_url": true,
+      "rtc_static_token": true,
+      "rtc_static_room_id": true,
+      "rtc_static_user_id": true
+    },
+    "rtc_api_version": "2024-12-01",
+    "legacy_voice_profile_configured": false,
+    "model_transport_https": true,
+    "ambient_proxy_enabled": false,
+    "model_thinking": "disabled"
+  },
+  "results": [
+    {
+      "name": "m1_core_code",
+      "status": "passed",
+      "summary": "Two-layer controller/model loop with one session-pinned profile, bounded tools, durable context and RTC callback SSE.",
+      "evidence": {
+        "python_tests_passed": 213,
+        "node_tests_passed": 16,
+        "node_scope": "14 pure SDK measurement-state tests and 2 JSDOM wiring tests; not real audio.",
+        "features": [
+          "priority_controller_with_control_capacity",
+          "cancellable_model_loop",
+          "two_phase_final_tools_disabled",
+          "native_tool_budget_includes_control_and_invalid_calls",
+          "SQLite_ledger_and_epoch_connection_fences",
+          "pre_admission_cancel_tombstones",
+          "atomic_notes_and_closed_tool_results",
+          "delivery_aware_history",
+          "provider_config_and_key_environment_separated"
+        ]
+      }
+    },
+    {
+      "name": "m1_model_configuration",
+      "status": "passed",
+      "summary": "Independent Pro/Flash provider endpoint and key references; default Flash, no model switching inside a session.",
+      "evidence": {
+        "default_profile": "deepseek_v4_flash",
+        "profiles": [
+          {
+            "id": "deepseek_v4_pro",
+            "provider_id": "deepseek_pro_endpoint",
+            "adapter": "openai_chat",
+            "name": "deepseek_v4_pro",
+            "base_url": "https://api.deepseek.com",
+            "model": "deepseek-v4-pro",
+            "api_key_env": "DEEPSEEK_PRO_API_KEY",
+            "configured": true,
+            "max_tokens": 1024,
+            "timeout_seconds": 15.0
+          },
+          {
+            "id": "deepseek_v4_flash",
+            "provider_id": "deepseek_flash_endpoint",
+            "adapter": "openai_chat",
+            "name": "deepseek_v4_flash",
+            "base_url": "https://api.deepseek.com",
+            "model": "deepseek-v4-flash",
+            "api_key_env": "DEEPSEEK_FLASH_API_KEY",
+            "configured": true,
+            "max_tokens": 1024,
+            "timeout_seconds": 15.0
+          }
+        ]
+      }
+    },
+    {
+      "name": "m1_real_model_calls",
+      "status": "passed",
+      "summary": "Both requested profiles accepted real API calls and completed tool-backed notes plus recall. Original Pro six-second timeout is retained.",
+      "evidence": {
+        "scope": "Synthetic dialogue, real configured DeepSeek HTTPS API; no RTC audio.",
+        "initial_6000ms_samples": [
+          {
+            "profile": "deepseek_v4_flash",
+            "configured_model": "deepseek-v4-flash",
+            "error_code": null,
+            "first_runtime_text_ms": 2864.53,
+            "output_chars": 10,
+            "notes_version": 1,
+            "fixture_name_retained": true,
+            "event_counts": {
+              "context.notes_updated": 1,
+              "delivery.completed": 1,
+              "delivery.delta": 8,
+              "message": 6,
+              "model.completed": 3,
+              "model.started": 3,
+              "session.created": 1,
+              "tool.completed": 2,
+              "tool.dispatched": 2,
+              "tools.prepared": 2,
+              "turn.admitted": 1,
+              "turn.generation_completed": 1
+            },
+            "first_text_is_infrastructure_fallback": false
+          },
+          {
+            "profile": "deepseek_v4_pro",
+            "configured_model": "deepseek-v4-pro",
+            "error_code": "first_output_or_turn_timeout",
+            "first_runtime_text_ms": 6009.1,
+            "output_chars": 17,
+            "notes_version": 1,
+            "fixture_name_retained": true,
+            "event_counts": {
+              "context.notes_updated": 1,
+              "delivery.delta": 1,
+              "delivery.interrupted": 1,
+              "message": 6,
+              "model.completed": 2,
+              "model.started": 3,
+              "runtime.error": 1,
+              "session.created": 1,
+              "tool.completed": 2,
+              "tool.dispatched": 2,
+              "tools.prepared": 2,
+              "turn.admitted": 1,
+              "turn.failed": 1
+            },
+            "first_text_is_infrastructure_fallback": true
+          }
+        ],
+        "pro_9000ms_recheck": [
+          {
+            "round": "0",
+            "profile": "deepseek_v4_pro",
+            "first_output_budget_ms": 9000,
+            "first_runtime_text_ms": 5163.56,
+            "error_code": null,
+            "output_chars": 7,
+            "fixture_name_in_reply": true,
+            "notes_version": 1
+          },
+          {
+            "round": "1",
+            "profile": "deepseek_v4_pro",
+            "first_output_budget_ms": 9000,
+            "first_runtime_text_ms": 4199.99,
+            "error_code": null,
+            "output_chars": 2,
+            "fixture_name_in_reply": true,
+            "notes_version": 1
+          }
+        ],
+        "default_serve_first_output_budget_ms": 9000,
+        "flash_alias_source": "https://api-docs.deepseek.com/quick_start/agent_integrations/"
+      }
+    },
+    {
+      "name": "m1_real_model_local_callback",
+      "status": "passed",
+      "summary": "Authenticated local ASGI callbacks invoked real DeepSeek, produced RTC SSE, recalled notes and rejected duplicates.",
+      "evidence": {
+        "cases": [
+          {
+            "profile": "deepseek_v4_flash",
+            "round": 0,
+            "http_status": 200,
+            "total_http_ms": 3106.35,
+            "runtime_error_code": null,
+            "visible_chars": 18,
+            "fixture_recalled": true,
+            "notes_version": 1,
+            "stable_external_stream_id": true,
+            "done_count": 1,
+            "internal_tool_json_visible": false,
+            "state": "generation_completed"
+          },
+          {
+            "profile": "deepseek_v4_flash",
+            "round": 1,
+            "http_status": 200,
+            "total_http_ms": 1409.91,
+            "runtime_error_code": null,
+            "visible_chars": 2,
+            "fixture_recalled": true,
+            "notes_version": 1,
+            "stable_external_stream_id": true,
+            "done_count": 1,
+            "internal_tool_json_visible": false,
+            "state": "generation_completed"
+          },
+          {
+            "profile": "deepseek_v4_flash",
+            "duplicate_http_status": 409,
+            "duplicate_did_not_append_messages": true
+          },
+          {
+            "profile": "deepseek_v4_pro",
+            "round": 0,
+            "http_status": 200,
+            "total_http_ms": 5233.43,
+            "runtime_error_code": null,
+            "visible_chars": 19,
+            "fixture_recalled": true,
+            "notes_version": 1,
+            "stable_external_stream_id": true,
+            "done_count": 1,
+            "internal_tool_json_visible": false,
+            "state": "generation_completed"
+          },
+          {
+            "profile": "deepseek_v4_pro",
+            "round": 1,
+            "http_status": 200,
+            "total_http_ms": 4179.54,
+            "runtime_error_code": null,
+            "visible_chars": 2,
+            "fixture_recalled": true,
+            "notes_version": 1,
+            "stable_external_stream_id": true,
+            "done_count": 1,
+            "internal_tool_json_visible": false,
+            "state": "generation_completed"
+          },
+          {
+            "profile": "deepseek_v4_pro",
+            "duplicate_http_status": 409,
+            "duplicate_did_not_append_messages": true
+          }
+        ],
+        "measurement_boundary": "Complete ASGI HTTP response time; not first model token, RTC first audio or an external cloud-to-server callback.",
+        "external_RTC_service_used": false
+      }
+    },
+    {
+      "name": "m1_cloud_rtc_validation",
+      "status": "blocked",
+      "summary": "Automatic approval review rejected the M1 server launch.",
+      "evidence": {
+        "rejected_action": "Launch the M1 development service configured for a public RTC callback tunnel",
+        "stated_reason": "blocked by policy; no more specific reason provided",
+        "safe_fallback": "No public service or listener: in-process ASGI validation with real models",
+        "cloud_voicechat_tasks_created": 0,
+        "temporary_tunnel_stopped": true,
+        "server_started": false
+      }
+    },
+    {
+      "name": "m1_remaining_scope",
+      "status": "not_started",
+      "summary": "This is the first M1 runtime slice, not full product replacement.",
+      "evidence": {
+        "product_login_and_existing_React_auth_adapter": "not_implemented",
+        "account_migration": "not_started",
+        "model_driven_compaction_background_maintenance": "not_implemented",
+        "physical_audio_latency_and_live_M1_barge_in": "not_verified",
+        "deployment": "single_worker_development_SQLite",
+        "legacy_backend_or_product_frontend_changed": false
+      }
+    }
+  ],
+  "m0_complete": false,
+  "completion_note": "M1 vertical-slice evidence; product authentication, migration and full audio performance are separate acceptance items.",
+  "m1_complete": false
+}

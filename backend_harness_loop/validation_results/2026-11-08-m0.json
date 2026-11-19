@@ -1,0 +1,500 @@
+{
+  "schema_version": 1,
+  "milestone": "M0",
+  "overall_status": "blocked",
+  "m0_complete": false,
+  "recorded_at_utc": "2026-11-08T08:54:34.484626+00:00",
+  "client_date": "2026-11-08",
+  "client_timezone": "Asia/Shanghai",
+  "live_experiment_runtime": {
+    "python": "3.13.0",
+    "httpx": "0.27.2",
+    "imports_legacy_backend": false
+  },
+  "offline_checks": {
+    "tests_passed": 45,
+    "environments": ["existing Python environment", "new backend locked virtualenv"]
+  },
+  "sessions": [
+    {
+      "source": "offline.json",
+      "recorded_at_utc": "2026-11-08T08:51:48.580849+00:00",
+      "configuration": {
+        "configured": {
+          "ark_api_key": false,
+          "ark_base_url": false,
+          "ark_model": false,
+          "volc_access_key": false,
+          "volc_secret_key": false,
+          "rtc_app_id": false,
+          "callback_secret": false,
+          "server_url": false
+        },
+        "rtc_api_version": "2025-06-01",
+        "model_transport_https": false,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "results": [
+        {
+          "name": "protocol",
+          "status": "passed",
+          "summary": "Offline protocol fixtures passed; cloud round association remains unverified",
+          "evidence": {
+            "synthetic": true,
+            "checks": {
+              "fragmented_utf8_sse": true,
+              "single_done_and_stream_id": true,
+              "rts_conv_tlv": true,
+              "late_interrupt_is_ignored": true,
+              "old_disconnect_is_ignored": true,
+              "same_turn_old_connection_is_ignored": true,
+              "matching_interrupt_is_idempotent": true
+            },
+            "cloud_round_association": "not_verified"
+          }
+        }
+      ]
+    },
+    {
+      "source": "model-live.json",
+      "recorded_at_utc": "2026-11-08T08:46:27.258567+00:00",
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2025-06-01",
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false
+      },
+      "results": [
+        {
+          "name": "model",
+          "status": "failed",
+          "summary": "The bounded model experiment did not pass; see the sanitized diagnostic code.",
+          "evidence": {
+            "fixture": "Synthetic local M0 data; no real course or business tool used.",
+            "request_count": 1,
+            "requested_samples": 2,
+            "requests": [],
+            "single_stage_gate": {
+              "status": "blocked",
+              "enabled": false,
+              "reason": "Observed samples cannot establish an early text/tool branch commitment contract."
+            },
+            "http_status": 400,
+            "error_code": "model_http_error"
+          }
+        }
+      ]
+    },
+    {
+      "source": "model-live-thinking-disabled.json",
+      "recorded_at_utc": "2026-11-08T08:49:03.618258+00:00",
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2025-06-01",
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "results": [
+        {
+          "name": "model",
+          "status": "passed",
+          "summary": "Bounded synthetic native-tool and two-stage streaming samples passed; single-stage and RTC first-audio gates remain unverified.",
+          "evidence": {
+            "fixture": "Synthetic local M0 data; no real course or business tool used.",
+            "request_count": 8,
+            "requested_samples": 3,
+            "requests": [
+              {
+                "label": "native_tool_decision",
+                "elapsed_ms": 802.33,
+                "first_event_ms": 187.44,
+                "first_text_ms": null,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [10],
+                "usage": {
+                  "prompt_tokens": 337,
+                  "completion_tokens": 40,
+                  "total_tokens": 377
+                }
+              },
+              {
+                "label": "native_tool_result_continuation",
+                "elapsed_ms": 465.1,
+                "first_event_ms": 240.38,
+                "first_text_ms": 392.16,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [],
+                "usage": {
+                  "prompt_tokens": 122,
+                  "completion_tokens": 6,
+                  "total_tokens": 128
+                }
+              },
+              {
+                "label": "speech_1_decision",
+                "elapsed_ms": 1300.12,
+                "first_event_ms": 127.67,
+                "first_text_ms": null,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [14],
+                "usage": {
+                  "prompt_tokens": 356,
+                  "completion_tokens": 55,
+                  "total_tokens": 411
+                }
+              },
+              {
+                "label": "speech_1_final",
+                "elapsed_ms": 753.71,
+                "first_event_ms": 148.56,
+                "first_text_ms": 669.92,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [],
+                "usage": {
+                  "prompt_tokens": 125,
+                  "completion_tokens": 6,
+                  "total_tokens": 131
+                }
+              },
+              {
+                "label": "speech_2_decision",
+                "elapsed_ms": 1489.67,
+                "first_event_ms": 443.57,
+                "first_text_ms": null,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [14],
+                "usage": {
+                  "prompt_tokens": 356,
+                  "completion_tokens": 55,
+                  "total_tokens": 411
+                }
+              },
+              {
+                "label": "speech_2_final",
+                "elapsed_ms": 714.23,
+                "first_event_ms": 112.07,
+                "first_text_ms": 612.78,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [],
+                "usage": {
+                  "prompt_tokens": 125,
+                  "completion_tokens": 12,
+                  "total_tokens": 137
+                }
+              },
+              {
+                "label": "speech_3_decision",
+                "elapsed_ms": 1035.7,
+                "first_event_ms": 357.12,
+                "first_text_ms": null,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [14],
+                "usage": {
+                  "prompt_tokens": 356,
+                  "completion_tokens": 55,
+                  "total_tokens": 411
+                }
+              },
+              {
+                "label": "speech_3_final",
+                "elapsed_ms": 904.04,
+                "first_event_ms": 146.8,
+                "first_text_ms": 797.96,
+                "mixed_text_and_tools": false,
+                "tool_argument_fragment_counts": [],
+                "usage": {
+                  "prompt_tokens": 125,
+                  "completion_tokens": 6,
+                  "total_tokens": 131
+                }
+              }
+            ],
+            "single_stage_gate": {
+              "status": "blocked",
+              "enabled": false,
+              "reason": "Observed samples cannot establish an early text/tool branch commitment contract."
+            },
+            "thinking": "disabled",
+            "native_tool_roundtrip": {
+              "passed": true,
+              "argument_fragments_observed": 10,
+              "multi_fragment_observed": true,
+              "result_token_verified": true
+            },
+            "two_stage": {
+              "passed": true,
+              "prepare_response_samples": 3,
+              "draft_fallback_samples": 0,
+              "final_tools_disabled": true,
+              "decision_text_forwarded_to_speech": false,
+              "first_text_latency": {
+                "sample_count": 3,
+                "p50_ms": 1970.69,
+                "p95_ms": 2103.05,
+                "method": "empirical_nearest_rank",
+                "interpretation": "Small synthetic sample only; not a production P95 estimate."
+              },
+              "first_output_deadline_ms": 6000.0,
+              "samples_within_deadline": 3,
+              "latency_gate_passed": true,
+              "measurement_boundary": "Backend first eligible final text; excludes RTC ASR, TTS, network playback and actual first audio."
+            },
+            "usage_total": {
+              "prompt_tokens": 1902,
+              "completion_tokens": 235,
+              "total_tokens": 2137
+            },
+            "usage_requests_reported": 8,
+            "usage_scope": "Sum of available provider usage fields; missing usage is not zero billing."
+          }
+        }
+      ]
+    },
+    {
+      "source": "rtc-stop-live.json",
+      "recorded_at_utc": "2026-11-08T08:47:19.715602+00:00",
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2025-06-01",
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false
+      },
+      "results": [
+        {
+          "name": "rtc",
+          "status": "blocked",
+          "summary": "Observed nonexistent-task Stop behavior; live Start/Stop and RTC correlation are not validated.",
+          "evidence": {
+            "api_version": "2025-06-01",
+            "scope": "fresh_m0_room_and_task_only",
+            "live_start_requested": false,
+            "query_capability": "query_unverified_no_documented_endpoint_selected",
+            "round_correlation_gate": "blocked_requires_real_RTC_client_and_callback_capture",
+            "end_to_end_interrupt_gate": "blocked_requires_real_RTC_client_and_audio_observation",
+            "probe_room_id": "m0_room_4552201032374860a93b3e380e50c1d0",
+            "probe_task_id": "m0_task_4552201032374860a93b3e380e50c1d0",
+            "observations": [
+              {
+                "http_status": 200,
+                "ok": true,
+                "response_shape": {
+                  "top_level_keys": ["ResponseMetadata", "Result"],
+                  "metadata_present": true,
+                  "request_id_present": true,
+                  "error_present": false,
+                  "result_present": true,
+                  "result_type": "str"
+                },
+                "action": "StopVoiceChat",
+                "duration_ms": 280.38
+              },
+              {
+                "http_status": 200,
+                "ok": true,
+                "response_shape": {
+                  "top_level_keys": ["ResponseMetadata", "Result"],
+                  "metadata_present": true,
+                  "request_id_present": true,
+                  "error_present": false,
+                  "result_present": true,
+                  "result_type": "str"
+                },
+                "action": "StopVoiceChat",
+                "duration_ms": 97.9
+              }
+            ],
+            "cleanup_observations": [],
+            "network_calls": 2,
+            "nonexistent_task_stop_observed": true,
+            "live_start_stop_gate": "blocked_start_not_requested"
+          }
+        }
+      ]
+    },
+    {
+      "source": "rtc-start-live.json",
+      "recorded_at_utc": "2026-11-08T08:50:29.737586+00:00",
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2025-06-01",
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "results": [
+        {
+          "name": "public_capture",
+          "status": "passed",
+          "summary": "Capture instance verified",
+          "evidence": {
+            "http_status": 200,
+            "instance_matched": true
+          }
+        },
+        {
+          "name": "rtc",
+          "status": "failed",
+          "summary": "RTC Start or cleanup failed; inspect safe error codes and cleanup identifiers.",
+          "evidence": {
+            "api_version": "2025-06-01",
+            "scope": "fresh_m0_room_and_task_only",
+            "live_start_requested": true,
+            "query_capability": "query_unverified_no_documented_endpoint_selected",
+            "round_correlation_gate": "blocked_requires_real_RTC_client_and_callback_capture",
+            "end_to_end_interrupt_gate": "blocked_requires_real_RTC_client_and_audio_observation",
+            "text_probe_requested": true,
+            "probe_room_id": "m0_room_351eb6c7c9df46e0b19baaf7083a1a1f",
+            "probe_task_id": "m0_task_351eb6c7c9df46e0b19baaf7083a1a1f",
+            "start_outcome": "rejected",
+            "observations": [
+              {
+                "http_status": 200,
+                "ok": false,
+                "response_shape": {
+                  "top_level_keys": ["ResponseMetadata"],
+                  "metadata_present": true,
+                  "request_id_present": true,
+                  "error_present": true,
+                  "result_present": false,
+                  "result_type": null
+                },
+                "error_code": "NoPermissionForApp",
+                "action": "StartVoiceChat",
+                "duration_ms": 403.91
+              }
+            ],
+            "cleanup_observations": [
+              {
+                "http_status": 200,
+                "ok": true,
+                "response_shape": {
+                  "top_level_keys": ["ResponseMetadata", "Result"],
+                  "metadata_present": true,
+                  "request_id_present": true,
+                  "error_present": false,
+                  "result_present": true,
+                  "result_type": "str"
+                },
+                "action": "StopVoiceChat",
+                "duration_ms": 168.0
+              },
+              {
+                "http_status": 200,
+                "ok": true,
+                "response_shape": {
+                  "top_level_keys": ["ResponseMetadata", "Result"],
+                  "metadata_present": true,
+                  "request_id_present": true,
+                  "error_present": false,
+                  "result_present": true,
+                  "result_type": "str"
+                },
+                "action": "StopVoiceChat",
+                "duration_ms": 146.11
+              }
+            ],
+            "network_calls": 3,
+            "cleanup_confirmed": true,
+            "cleanup_required": false,
+            "live_start_stop_gate": "failed"
+          }
+        }
+      ]
+    }
+  ],
+  "initial_failure_diagnostic": {
+    "scope": "one additional bounded manual reproduction",
+    "http_status": 400,
+    "provider_error_code": "invalid_request_error",
+    "finding": "Thinking mode does not support this tool_choice",
+    "contains_response_body": false
+  },
+  "capture_observation": {
+    "cloud_callback_records": 0,
+    "public_health_verified": true,
+    "instance_route_only_not_RTC_callback_proof": true
+  },
+  "gates": {
+    "offline_protocol": {
+      "status": "passed",
+      "scope": "synthetic fixtures only"
+    },
+    "model_native_tools_and_two_stage": {
+      "status": "passed",
+      "scope": "8 live calls, 3 two-stage greeting samples, thinking disabled"
+    },
+    "backend_first_text_budget": {
+      "status": "passed",
+      "scope": "3/3 samples within 6000 ms; excludes first audio"
+    },
+    "public_capture_routing": {
+      "status": "passed",
+      "scope": "health matched this local capture instance"
+    },
+    "rtc_start_stop": {
+      "status": "blocked",
+      "observed_error": "NoPermissionForApp",
+      "cleanup_stop_requests_succeeded": 2
+    },
+    "stable_round_correlation": {
+      "status": "blocked",
+      "reason": "Start rejected; no cloud CustomLLM/RTS samples"
+    },
+    "real_retry_and_end_to_end_interrupt": {
+      "status": "blocked",
+      "reason": "No live RTC client/audio experiment"
+    },
+    "single_stage_optimization": {
+      "status": "disabled",
+      "reason": "No reliable early branch commitment contract verified"
+    }
+  },
+  "next_step": "Match AI audio/video interaction AppId to 2025-06-01, then repeat isolated capture with real RTC client; legacy 2024 compatibility is a separate profile decision.",
+  "sources": [
+    "https://docs.volcengine.com/docs/real_time_communication/CallingtheStartVoiceChatinterfacereportsanerrorNoPermissionForApp?lang=zh",
+    "https://docs.volcengine.com/docs/real-time-communication/migrate-conversation-ai-to-new-api?lang=zh"
+  ],
+  "temporary_resources": {
+    "local_capture_stopped": true,
+    "temporary_tunnel_stopped": true,
+    "cloud_cleanup_stop_requests_succeeded": 2
+  }
+}

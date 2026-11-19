@@ -1,0 +1,57 @@
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  color: #15263b;
+  background: #f4f7fa;
+  line-height: 1.6;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 980px; padding: 36px 24px 48px; margin: auto; }
+header { margin-bottom: 24px; }
+h1 { margin: 6px 0 8px; font-size: clamp(26px, 4vw, 34px); line-height: 1.3; }
+h2 { margin: 0 0 8px; font-size: 18px; }
+p { margin: 6px 0 12px; }
+a { color: #2465a6; text-underline-offset: 3px; }
+.eyebrow { color: #42708a; font-size: 13px; letter-spacing: .05em; }
+.muted, .label { color: #586a7c; font-size: 13px; }
+.panel, .status-panel { padding: 20px; border: 1px solid #dbe4ec; border-radius: 12px; background: white; }
+.session-panel { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.model-field { flex: 1; min-width: 0; }
+.model-field p { margin-bottom: 0; }
+label { display: block; font-weight: 600; margin-bottom: 7px; }
+select, textarea { font: inherit; color: inherit; background: white; border: 1px solid #b8c8d7; border-radius: 8px; padding: 10px 12px; }
+select { width: 100%; max-width: 420px; }
+textarea { width: 100%; min-height: 112px; resize: vertical; }
+select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #91b9e3; outline-offset: 3px; }
+.status-panel { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; margin-top: 16px; }
+.label { display: block; margin-bottom: 4px; }
+.status-panel strong { font-size: 15px; overflow-wrap: anywhere; }
+.notice { padding: 13px 16px; background: #eaf2f8; border-radius: 8px; margin: 16px 0; }
+.error { padding: 13px 16px; background: #fff0ee; color: #a22c24; border: 1px solid #efc7c2; border-radius: 8px; }
+[hidden] { display: none !important; }
+.button-row { display: flex; gap: 10px; flex-wrap: wrap; }
+button { border: 1px solid #28679f; border-radius: 8px; padding: 10px 16px; font: inherit; font-weight: 600; color: white; background: #28679f; cursor: pointer; white-space: nowrap; }
+button:hover:enabled { background: #1d527f; }
+button.secondary { color: #285978; border-color: #b8c8d7; background: #f7fafc; }
+button.secondary:hover:enabled { background: #eaf2f8; }
+button:disabled, select:disabled { opacity: .55; cursor: default; }
+textarea:disabled { background: #f6f8fa; }
+.messages { display: flex; flex-direction: column; gap: 14px; min-height: 160px; max-height: 55vh; overflow-y: auto; padding: 10px 2px 20px; margin-bottom: 16px; }
+.messages:empty::before { content: '还没有消息。建立会话，开始一段对话。'; color: #66798a; padding: 36px 12px; text-align: center; }
+.message { width: 90%; padding: 14px 16px; border: 1px solid #dde6ee; border-radius: 10px; background: #f7fafc; overflow-wrap: anywhere; }
+.message.user { align-self: flex-end; background: #eaf2fa; border-color: #d4e3f2; }
+.message.assistant { align-self: flex-start; }
+.message strong { font-size: 13px; color: #42627c; }
+.message-body { white-space: pre-wrap; margin: 7px 0; }
+.message-state { display: block; color: #617587; font-size: 12px; min-height: 1em; }
+.composer-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; }
+@media (max-width: 640px) {
+  main { padding: 24px 14px 36px; }
+  .session-panel, .composer-footer { flex-direction: column; align-items: stretch; }
+  .status-panel { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .status-panel > div:first-child { grid-column: 1 / -1; }
+  .panel, .status-panel { padding: 16px; }
+  .message { width: 96%; }
+  .composer-footer .button-row { justify-content: flex-end; }
+}

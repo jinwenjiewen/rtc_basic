@@ -1,0 +1,380 @@
+{
+  "schema_version": 1,
+  "milestone": "M3",
+  "report_date": "2026-11-16",
+  "timezone": "Asia/Shanghai",
+  "recorded_at_utc": "2026-11-16T14:30:05.203171+00:00",
+  "status": "basic_functional_complete_ready_for_m4",
+  "m3_complete": true,
+  "acceptance_basis": "User requested simple run-through and preparation for M4; prompt rework and deep tests deferred.",
+  "full_business_robustness_passed": false,
+  "production_slo_passed": false,
+  "all_attempts_passed": false,
+  "m4_prepared": true,
+  "m4_product_cutover_started": false,
+  "user_business_decision": {
+    "pricing_policy": "Do not disclose course prices, ranges, discounts or post-discount quotes; guide course selection and enrollment intent.",
+    "checkout_entry": "Not provided",
+    "enrollment_contact": "Not provided",
+    "order_or_payment_write_tools": false,
+    "quote_positive_requirement": "Superseded by the user business rule, not reclassified as a passed old test."
+  },
+  "configuration": {
+    "first_output_deadline_ms": 9000,
+    "max_model_calls": 4,
+    "max_native_calls": 8,
+    "turn_wall_seconds": 30,
+    "tool_timeout_ms": 1500,
+    "context_input_cap_estimate": 24576,
+    "knowledge_limit": 3,
+    "provider_rewrite": false,
+    "provider_rerank": false,
+    "session_profile_pinned": true,
+    "final_tool_choice": "none",
+    "final_tool_schema": "empty for current Pro and Flash profiles; generic default remains omit",
+    "automatic_model_retries": 0,
+    "profile_fallback": false,
+    "budgets_increased": false
+  },
+  "changes": [
+    "Separate operator BusinessPolicy from model and knowledge provider configuration; no quote policy and no fabricated enrollment entry.",
+    "Use a separate final-stage system policy, remove stale decision budget, preserve closed native records and actual capacity accounting.",
+    "Explicitly disable tools in the configured final request; reject full and truncated reserved control prefixes without parsing or repairing them.",
+    "Add basic real text/RTC-cloud smoke and M4 frontend/auth integration handoff."
+  ],
+  "code_validation": {
+    "python_tests_passed": 451,
+    "node_tests_passed": 34,
+    "initial_regression_failures_retained": {
+      "tests_run": 451,
+      "failures": 2,
+      "errors": 1,
+      "diagnosis": "New test placement/request decoding errors plus a capacity fixture calibrated against the previous system prompt; corrected without raising runtime limits."
+    },
+    "python_log_sha256": "6a4d18562c5174ac772d7585e11dbc9728ee0048176979cc330412a65723f72e",
+    "node_log_sha256": "c3a65afc09686f5fbb3f4b580cc842f83d1f26e6c12e35eb8eb3c0ab3d7b10e3"
+  },
+  "batches": [
+    {
+      "report": "2026-11-16-m3-closure-enrollment-fixture-01.json",
+      "sha256": "2d665a3a1a2b3248a96d7e5f0d1a565c118265f8270a5a6f2f0602b497e69558",
+      "kind": "real_model_scripted_knowledge",
+      "transport": null,
+      "suite": "enrollment",
+      "attempted_cases": 12,
+      "actual_model_inputs": 12,
+      "passed_cases": 11,
+      "passed": false,
+      "first_output_max_valid_ms": 3890.351,
+      "valid_first_output_count": 11,
+      "failed_cases": [
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "enrollment_untrusted",
+          "failure": null,
+          "error_code": "model_control_text_in_final",
+          "failed_checks": [
+            "price_not_disclosed",
+            "no_order_claim",
+            "realistic_next_step",
+            "nonblank_natural_reply",
+            "completed",
+            "real_first_within_default"
+          ]
+        }
+      ],
+      "all_created_sessions_closed": true
+    },
+    {
+      "report": "2026-11-16-m3-closure-enrollment-real-01.json",
+      "sha256": "55c246dad288d60f569ff9883c3d43c2a5efae4dfb1d9d1f8073a8bcd14da9e8",
+      "kind": "real_model_real_knowledge",
+      "transport": null,
+      "suite": "enrollment",
+      "attempted_cases": 12,
+      "actual_model_inputs": 12,
+      "passed_cases": 8,
+      "passed": false,
+      "first_output_max_valid_ms": 5179.118,
+      "valid_first_output_count": 12,
+      "failed_cases": [
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": "enrollment_order",
+          "failure": null,
+          "error_code": null,
+          "failed_checks": [
+            "intent_recognized"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "enrollment_real_catalog",
+          "failure": null,
+          "error_code": null,
+          "failed_checks": [
+            "actual_course_grounded"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "enrollment_price",
+          "failure": null,
+          "error_code": null,
+          "failed_checks": [
+            "pronoun_resolved"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "enrollment_remember",
+          "failure": null,
+          "error_code": null,
+          "failed_checks": [
+            "course_retained"
+          ]
+        }
+      ],
+      "all_created_sessions_closed": true
+    },
+    {
+      "report": "2026-11-16-m3-closure-basic-text-01.json",
+      "sha256": "e62fad6af7a2330d64bac9ab9d99a82c425a72e5318ba4bd91933e3294231d17",
+      "kind": "basic_real_business_smoke",
+      "transport": "text",
+      "suite": null,
+      "attempted_cases": 6,
+      "actual_model_inputs": 6,
+      "passed_cases": 6,
+      "passed": true,
+      "first_output_max_valid_ms": 5339.341,
+      "valid_first_output_count": 6,
+      "failed_cases": [],
+      "all_created_sessions_closed": true
+    },
+    {
+      "report": "2026-11-16-m3-closure-basic-rtc-01.json",
+      "sha256": "79dac3d21d95734a929f0d66febba432ad47c3d2452f587caa825ebe13729904",
+      "kind": "basic_real_business_smoke",
+      "transport": "rtc",
+      "suite": null,
+      "attempted_cases": 2,
+      "actual_model_inputs": 0,
+      "passed_cases": 0,
+      "passed": false,
+      "first_output_max_valid_ms": null,
+      "valid_first_output_count": 0,
+      "failed_cases": [
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": null,
+          "failure": {
+            "code": "rtc_smoke_cloud_start_failed",
+            "http_status": 200
+          },
+          "error_code": null,
+          "failed_checks": []
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": null,
+          "failure": {
+            "code": "rtc_smoke_cloud_start_failed",
+            "http_status": 200
+          },
+          "error_code": null,
+          "failed_checks": []
+        }
+      ],
+      "all_created_sessions_closed": true
+    },
+    {
+      "report": "2026-11-16-m3-closure-basic-rtc-02.json",
+      "sha256": "23df0b6ab383ad6c7737a658f7cc280f367b609953d4953b005231ca838b8675",
+      "kind": "basic_real_business_smoke",
+      "transport": "rtc",
+      "suite": null,
+      "attempted_cases": 6,
+      "actual_model_inputs": 5,
+      "passed_cases": 5,
+      "passed": false,
+      "first_output_max_valid_ms": 4925.424,
+      "valid_first_output_count": 5,
+      "failed_cases": [
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": null,
+          "failure": {
+            "code": "rtc_cloud_callback_not_completed"
+          },
+          "error_code": null,
+          "failed_checks": []
+        }
+      ],
+      "all_created_sessions_closed": true
+    },
+    {
+      "report": "2026-11-16-m3-closure-basic-rtc-03.json",
+      "sha256": "c3bfac2b5331b871b8da0ebf8260f34c85bb88408c161e8ee4e33e0c4873f736",
+      "kind": "basic_real_business_smoke",
+      "transport": "rtc",
+      "suite": null,
+      "attempted_cases": 4,
+      "actual_model_inputs": 4,
+      "passed_cases": 3,
+      "passed": false,
+      "first_output_max_valid_ms": 7942.322,
+      "valid_first_output_count": 3,
+      "failed_cases": [
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "no_quote_enrollment",
+          "failure": null,
+          "error_code": null,
+          "failed_checks": [
+            "nonblank_reply",
+            "real_first_within_default",
+            "default_deadline_in_effect",
+            "enrollment_guidance",
+            "completed"
+          ]
+        }
+      ],
+      "all_created_sessions_closed": true
+    }
+  ],
+  "final_replay_diagnostic": {
+    "report": "2026-11-16-m3-closure-final-ab.json",
+    "sha256": "50b2c6babc29f0203135111809aa797f6e3b30b74e351c8bb54be018e89bfb07",
+    "requests": 8,
+    "complete_agent_loop_inputs": 0,
+    "all_replays_completed": true,
+    "not_a_proven_provider_root_cause": true
+  },
+  "basic_acceptance": {
+    "text_inputs": 6,
+    "text_passed": 6,
+    "text_first_output_max_ms": 5339.341,
+    "both_profiles_rtc_catalog_and_no_quote_paths_observed": true,
+    "rtc_primary_scenario_completions": 4,
+    "rtc_primary_first_output_max_ms": 4493.187,
+    "cloud_interrupt_acknowledged_profiles": [
+      "deepseek_v4_flash",
+      "deepseek_v4_pro"
+    ],
+    "passed": true,
+    "no_claim_that_every_rtc_attempt_passed": true
+  },
+  "rtc_observations": {
+    "actual_callback_inputs": 9,
+    "completed_and_checked": 8,
+    "all_valid_first_outputs_max_ms": 7942.322,
+    "runtime_errors_from_authoritative_ledger": [
+      {
+        "code": "first_output_or_turn_timeout",
+        "elapsed_ms": 12725.661,
+        "first_output_deadline_ms": 9000
+      }
+    ],
+    "missing_callback_cases": 1,
+    "first_probe_start_response_contract_mismatch": {
+      "cases": 2,
+      "actual_business_inputs": 0,
+      "diagnosis": "Probe checked started instead of the service running field; fixed and all created cloud tasks stopped."
+    },
+    "microphone_asr_sampled": false,
+    "fresh_human_audio_confirmation": false,
+    "sdk_audio_latency_sampled": false,
+    "cloud_tts_received_by_human_proven": false
+  },
+  "known_limits": [
+    "One Flash extra refund command did not yield an observed completed callback; no model-first sample was fabricated.",
+    "One Pro extra RTC repetition failed the original 9000ms first-output deadline; it remains failed, not waived into a passed latency sample.",
+    "A Pro control-text failure after phase separation and before explicit-empty profile configuration remains retained; current basic text/RTC window had no control-text rejection, without a claim of universal elimination.",
+    "Initial strict JSON/source-quote checks and all historical M3 failures remain recorded; natural basic smoke follows the user reduced scope.",
+    "No real enrollment entry exists yet; intent guidance is not order placement.",
+    "Prompt redesign/deep semantics, full stability, fresh microphone/audio metrics and production acceptance are deferred."
+  ],
+  "environment_diagnostics": {
+    "ngrok_initial_error": "ERR_NGROK_9009",
+    "diagnosis": "Inherited HTTP/S proxy requires a paid feature; child environment proxy cleared only.",
+    "global_proxy_settings_changed": false,
+    "request_inspection_enabled": false,
+    "alternate_tunnel_used": false
+  },
+  "cleanup": {
+    "closed_runtime_sessions": 8,
+    "active_runtime_sessions": 0,
+    "pending_native_calls": 0,
+    "created_cloud_tasks": 6,
+    "all_created_cloud_tasks_stopped": true,
+    "owned_services_and_tunnel_stopped": true,
+    "task_ports_3101_3102_3103_3104_4040_listening": 0,
+    "existing_user_services_stopped": false
+  },
+  "previous_summary": {
+    "report": "2026-11-16-m3-before-closure.json",
+    "sha256": "1aac79efa5f4507723ceea1d8990c990bb6f243ad18c2e25257e86ef5291e547"
+  },
+  "historical_reports_unchanged": [
+    {
+      "report": "2026-11-16-m3-fixture-01.json",
+      "sha256": "b123c11b29b7227846af1a6ba0b30ba47f58caad676b9c0439fcf6b71b98a73e"
+    },
+    {
+      "report": "2026-11-16-m3-fixture-02.json",
+      "sha256": "cf8f3c72739ca432ed1393e17700a9fe594654f96afdd11e6266cf5c8f23f2c9"
+    },
+    {
+      "report": "2026-11-16-m3-fixture-03.json",
+      "sha256": "fab637bc8582d64d2d69b721c0b2aa3349efcccba9d731e32903595cc09c43cf"
+    },
+    {
+      "report": "2026-11-16-m3-real-01.json",
+      "sha256": "e1206e00d1ce7d0044af7a90576f3d29802d1e7fbaace5d6e00a06ad9a47bcdf"
+    },
+    {
+      "report": "2026-11-16-m3-real-02.json",
+      "sha256": "35d984819a0dd4e87a4dce5c3df8fe29a14b0ec574a905278d35250e9383084f"
+    },
+    {
+      "report": "2026-11-16-m3-real-pricing-01.json",
+      "sha256": "af206eccc9657323db1d236433a1b39c5bcea475dc767d28426326c85929d627"
+    },
+    {
+      "report": "2026-11-16-m3-real-discount-01.json",
+      "sha256": "ca1ab8e8363af52e29b8916da6109d6956a93dd04e6c6f4dc79674f5cae768f2"
+    }
+  ],
+  "m4_handoff": "../../docs/m4-entry-plan.md",
+  "privacy": {
+    "raw_user_text": false,
+    "raw_replies": false,
+    "raw_knowledge_documents": false,
+    "real_amounts_or_course_names": false,
+    "resource_identifiers": false,
+    "credentials": false,
+    "hidden_reasoning": false
+  },
+  "source_sha256": {
+    "backend_harness_loop/business.py": "599a163da57ce1630504bbff7c5a0b771605aff2f3dbce15dd97b666f4f98f53",
+    "backend_harness_loop/business_policy.example.json": "17370cc71e0475293c82196fa06fb7bec6d6e8d6d24b7f4dbc32d50a270fbf0c",
+    "backend_harness_loop/models.py": "0dc06344c99ad36258b82f352f811fe48fd28032fb67227091780abbe388cbc4",
+    "backend_harness_loop/model_profiles.example.json": "2218052e296c8c9aaa2126829f7cc4ab6142ee0b9cfe39d10034f20181b3d01d",
+    "backend_harness_loop/runtime.py": "ba99c4a89a62c227ccc6d412df00ce47c3e1905f15a60133385d5b71945557c3",
+    "backend_harness_loop/config.py": "d697a736ae9c543f126404413a161b0a47e85d25a018ce7e369151a6d304839a",
+    "backend_harness_loop/__main__.py": "ba3ce54b25d5c5bbd50a17ecec81f7746808282f88abd9a7b5caa6f554b736c7",
+    "backend_harness_loop/reporting.py": "a7d27695d1976f774fa19980ece1da908bf82735e3e75336c8db72dae7c80438",
+    "backend_harness_loop/probes/_text_server.py": "e697312ecbf9729eadb119d3fddcffc6ad4f4e77a875ba70f1505ac879c45436",
+    "backend_harness_loop/probes/knowledge.py": "32ed9eae3a734c5e1cce0b6f296f42f32d2aeda3f962b1796a9c4a482d716b8e",
+    "backend_harness_loop/probes/enrollment.py": "9508f5ac2df88d5c343e951ed9a8cea5f01de51d794d73ea15cbe3f9cc08741d",
+    "backend_harness_loop/probes/business_smoke.py": "f2b07cdb29d6fc024f3836406136f1638c0bb60a5b54083a53d9e8f29f649682",
+    "backend_harness_loop/tests/test_models.py": "fe88c2e60a3b3940712867c79617693f9def0e5ff321c05db54f2a9eb32aaa64",
+    "backend_harness_loop/tests/test_business.py": "e816770dfe2bb1df1bda58cd7bdeb139cfcb0eb864560cdc1d9036ed737b075d",
+    "backend_harness_loop/tests/test_context_runtime.py": "cb0ecb2b3753c0021cbc572eb2df1e5d1f0ab41f414638b69cfcef02ba3a1244",
+    "backend_harness_loop/tests/test_knowledge_runtime.py": "efc3d3ac05db3f4c4c9d5d64b6c110969fdf2a62c97cac39db4cb7414c634467",
+    "backend_harness_loop/README.md": "3bea69398bc25f251185ae7235ec09092e526994dd2b12320a08b01fd42eba3a",
+    "docs/rtc-agent-backend-design.md": "ceb7751afaea7c37eb9c2a648d1a0828078a324353bc61a0abdf171dc08f8596",
+    "docs/m4-entry-plan.md": "499fece35bbf765499a3057ec2d8b71192d9a9723ac9a653ba653dcba4d1f0c0"
+  }
+}

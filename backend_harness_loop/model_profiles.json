@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "default_profile": "deepseek_v4_flash",
+  "providers": {
+    "deepseek_pro_endpoint": {
+      "adapter": "openai_chat",
+      "base_url": "https://api.deepseek.com",
+      "api_key_env": "DEEPSEEK_PRO_API_KEY"
+    },
+    "deepseek_flash_endpoint": {
+      "adapter": "openai_chat",
+      "base_url": "https://api.deepseek.com",
+      "api_key_env": "DEEPSEEK_FLASH_API_KEY"
+    }
+  },
+  "profiles": {
+    "deepseek_v4_pro": {
+      "provider": "deepseek_pro_endpoint",
+      "model": "deepseek-v4-pro",
+      "extra_body": {
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "max_tokens": 1024,
+      "timeout_seconds": 15,
+      "include_usage": true,
+      "decision_tool_choice": "required",
+      "final_tool_schema": "empty"
+    },
+    "deepseek_v4_flash": {
+      "provider": "deepseek_flash_endpoint",
+      "model": "deepseek-v4-flash",
+      "extra_body": {
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "max_tokens": 1024,
+      "timeout_seconds": 15,
+      "include_usage": true,
+      "decision_tool_choice": "required",
+      "final_tool_schema": "empty"
+    }
+  }
+}

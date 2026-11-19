@@ -68,3 +68,9 @@ log/
 
 # OS
 Thumbs.db
+
+# Retired backend stays local; 3.0 ships backend_harness_loop only.
+/rag_llm_server/
+
+# Local academic documents are not part of the application release.
+/docs/*.docx

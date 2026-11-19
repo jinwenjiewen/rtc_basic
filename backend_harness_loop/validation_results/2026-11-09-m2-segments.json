@@ -1,0 +1,1542 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-09T13:09:22.215959+00:00",
+  "report_date": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "milestone": "M2",
+  "status": "segmented_recovery_text_functional_passed_default_latency_failed",
+  "full_m2_milestone_complete": false,
+  "m3_started": false,
+  "scope": {
+    "owned_loopback_tcp_text_entry": true,
+    "existing_3101_3102_services_untouched": true,
+    "synthetic_imported_closed_turns_per_profile": 48,
+    "imported_acknowledgements_are_scripted_not_real_model_turns": true,
+    "post_import_compaction_decision_tools_and_final_use_real_session_profile": true,
+    "storage_reopened_and_context_engine_cache_cleared": true,
+    "full_runtime_reopen_covered_with_scripted_models": true,
+    "product_login_and_browser_cross_process_reconnect_not_validated": true,
+    "rtc_used": false
+  },
+  "implementation": {
+    "staging_table": "context_candidates",
+    "active_table": "context_snapshots",
+    "candidate_never_loaded_into_normal_context": true,
+    "all_uncovered_history_measured_before_deciding_compaction": true,
+    "segments_are_contiguous_closed_turns": true,
+    "parent_chain_not_max_seq_defines_coverage": true,
+    "recent_four_current_input_and_native_chain_protected": true,
+    "cumulative_summary_generated_by_same_main_profile": true,
+    "coverage_receipt_does_not_grant_unseen_raw_source_citation": true,
+    "each_segment_requires_local_meaningful_reduction": true,
+    "stage_or_snapshot_and_native_result_are_atomic": true,
+    "resume_revalidates_base_notes_configuration_prefix_and_new_owner": true,
+    "new_input_interrupt_close_cancel_inflight_work": true,
+    "late_and_over_deadline_results_cannot_stage_or_commit": true,
+    "raw_ledger_deleted": false,
+    "max_candidate_chain_stages": 128,
+    "foreground_budget_not_reset_per_segment": true,
+    "unfinished_over_budget_turn_terminal": "context_maintenance_pending"
+  },
+  "final_functional_acceptance": {
+    "passed": true,
+    "configuration": {
+      "input_cap_estimated_tokens": 24576,
+      "first_output_deadline_ms": 20000,
+      "wall_seconds": 30.0,
+      "max_model_calls_per_turn": 4,
+      "max_native_tools_per_turn": 8,
+      "keep_recent_turns": 4,
+      "background_enabled": false
+    },
+    "profiles": [
+      {
+        "profile_id": "deepseek_v4_flash",
+        "passed": true,
+        "imported_fixture_turns": 48,
+        "initial_all_uncovered_input_estimate": 97980,
+        "recovery_http_inputs": 3,
+        "verification_http_inputs": 2,
+        "staged_candidates": 7,
+        "committed_snapshots": 1,
+        "inactive_first_checkpoint": true,
+        "cross_epoch_receipt_reuse": true,
+        "notes_version": 0,
+        "semantic_checks": {
+          "valid_json_object": true,
+          "corrected_budget_retained": true,
+          "weekend_negation_retained": true,
+          "unconfirmed_action_not_promoted_to_done": true
+        },
+        "original_record_checks": {
+          "valid_json_object": true,
+          "original_budget_recovered": true,
+          "original_user_reference_matches": true
+        },
+        "actual_history_tool_return_confirmed": true,
+        "max_model_calls_per_turn": 4,
+        "compaction_metrics": [
+          {
+            "before_estimated_tokens": 99149,
+            "after_estimated_tokens": 15515,
+            "reduction_estimated_tokens": 83634,
+            "budget_tokens": 24576,
+            "pressure_before": 5.577558,
+            "pressure_after": 0.445573,
+            "target_met": true,
+            "maintenance_estimated_tokens": 21258
+          }
+        ]
+      },
+      {
+        "profile_id": "deepseek_v4_pro",
+        "passed": true,
+        "imported_fixture_turns": 48,
+        "initial_all_uncovered_input_estimate": 98016,
+        "recovery_http_inputs": 3,
+        "verification_http_inputs": 2,
+        "staged_candidates": 6,
+        "committed_snapshots": 1,
+        "inactive_first_checkpoint": true,
+        "cross_epoch_receipt_reuse": true,
+        "notes_version": 0,
+        "semantic_checks": {
+          "valid_json_object": true,
+          "corrected_budget_retained": true,
+          "weekend_negation_retained": true,
+          "unconfirmed_action_not_promoted_to_done": true
+        },
+        "original_record_checks": {
+          "valid_json_object": true,
+          "original_budget_recovered": true,
+          "original_user_reference_matches": true
+        },
+        "actual_history_tool_return_confirmed": true,
+        "max_model_calls_per_turn": 3,
+        "compaction_metrics": [
+          {
+            "before_estimated_tokens": 99186,
+            "after_estimated_tokens": 16858,
+            "reduction_estimated_tokens": 82328,
+            "budget_tokens": 24576,
+            "pressure_before": 5.579548,
+            "pressure_after": 0.527807,
+            "target_met": false,
+            "maintenance_estimated_tokens": 23585
+          }
+        ]
+      }
+    ]
+  },
+  "latency_validation": {
+    "default_first_output_deadline_ms": 9000,
+    "functional_first_output_deadline_ms": 20000,
+    "input_cap_estimated_tokens": 24576,
+    "oversized_48_turn_import_at_default_tested": true,
+    "default_9s_oversized_import_passed": false,
+    "default_9s_original_13_turn_continuous_probe_revalidated": false,
+    "production_latency_slo_passed": false,
+    "physical_audio_measured": false,
+    "fallback_deltas_are_not_model_first_output": true,
+    "profiles": [
+      {
+        "profile_id": "deepseek_v4_flash",
+        "failure": {
+          "code": "first_output_or_turn_timeout"
+        },
+        "elapsed_ms": 9030.65,
+        "completed_stages_preserved": 2,
+        "active_watermark": 0,
+        "active_snapshot_count": 0
+      },
+      {
+        "profile_id": "deepseek_v4_pro",
+        "failure": {
+          "code": "first_output_or_turn_timeout"
+        },
+        "elapsed_ms": 9024.98,
+        "completed_stages_preserved": 1,
+        "active_watermark": 0,
+        "active_snapshot_count": 0
+      }
+    ]
+  },
+  "scripted_model_validation": {
+    "source": "Real controller, ContextEngine, SQLite and text adapter with scripted models in unit tests",
+    "new_tests": 19,
+    "files": [
+      "tests/test_context_segments.py",
+      "tests/test_context_segments_runtime.py",
+      "tests/test_context_segments_probe.py"
+    ],
+    "checks": [
+      "inactive staging and full-history pressure",
+      "contiguous final activation and original ledger retention",
+      "SQLite reopen/new epoch recovery",
+      "new input, interrupt, close and late candidate fences",
+      "changed notes/policy/prefix invalidation",
+      "foreign/missing/gapped receipt rejection",
+      "unseen earlier raw citation rejection",
+      "per-segment reduction",
+      "stage/final transaction rollback and idempotency",
+      "oversized indivisible turn/current chain rejection",
+      "shared step/time/profile limits",
+      "background single request and over-deadline late result rejection",
+      "probe aggregation, source evidence and cleanup"
+    ],
+    "does_not_replace_real_model_semantics_or_performance": true
+  },
+  "code_validation": {
+    "python_tests_passed": 340,
+    "python_elapsed_seconds": 31.794,
+    "node_tests_passed": 34,
+    "node_elapsed_ms": 636.0701,
+    "new_python_tests_since_core_checkpoint": 19
+  },
+  "batches": [
+    {
+      "name": "initial_functional_probe_counter_error",
+      "category": "real_model_functional",
+      "interpretation": "Both model behavior checks passed, but final probe aggregation used an incorrect counter key. Whole batch remains failed.",
+      "observations": {
+        "schema_version": 1,
+        "probe": "m2_segmented_text_http",
+        "passed": false,
+        "created_at_utc": "2026-11-09T12:58:29.229380+00:00",
+        "scope": {
+          "synthetic_history_import": true,
+          "fixture_acknowledgements_scripted": true,
+          "post_import_models_real": true,
+          "owned_tcp_service_only": true,
+          "rtc_used": false,
+          "storage_reopen_is_not_product_reconnect": true,
+          "timings_are_not_audio_latency": true
+        },
+        "limits": {
+          "max_profiles": 2,
+          "max_recovery_turns_per_profile": 6,
+          "max_verification_turns_per_profile": 2,
+          "profile_fallback": false,
+          "automatic_retries": 0
+        },
+        "profiles": [
+          {
+            "profile_index": 0,
+            "profile_id": "deepseek_v4_flash",
+            "passed": false,
+            "rounds": [
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "677380fa546ac327b858d82c2eae5a3ff63d632cf938d8879adba6297cfdf3ee",
+                "turn_sha256": "42134543e5abd524b48aaad687309dcc477cafb8d94b9fa338cf453d2dc0064c",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 19851.33,
+                "elapsed_ms": 19852.37,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 3,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": false,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 3,
+                "resume_event_count": 2
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "c10a70caae12b3ae1b41dc9763d11d81038908159694a5c9e0c0a69be53bf0bd",
+                "turn_sha256": "e50b18223a115d3ef85a3e6f5a8a191d4a59702191844d1b74a47dd3f8cfab7a",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 9372.74,
+                "elapsed_ms": 9374.74,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 6,
+                "resume_event_count": 5
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "f2ca2c57b8ad5d21bc361ec02c51b03a0242bfdfffd16608dbfda9213e6d1ab0",
+                "turn_sha256": "2fa84784cd0e4ba948e3dd8bc7655fd838bfdf91ce34cef90b0f69329db0d7f8",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 10646.95,
+                "elapsed_ms": 10657.11,
+                "delta_count": 1,
+                "reply_characters": 2,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 2,
+                "active_compacted_through_seq": 277,
+                "active_snapshot_count": 2,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              },
+              {
+                "purpose": "semantic_after_segment_recovery",
+                "round_sha256": "12ef3a77cf3173aafe0764df5871e1f65ff4daa04305777ce25e68b7c95ce673",
+                "turn_sha256": "223172f67ad2283ee8fb10172028aeae61d4557fdf99ce7d3ed1e65d1755bda7",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 1993.62,
+                "elapsed_ms": 2230.55,
+                "delta_count": 20,
+                "reply_characters": 63,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 2,
+                "active_compacted_through_seq": 277,
+                "active_snapshot_count": 2,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              },
+              {
+                "purpose": "original_history_after_segment_recovery",
+                "round_sha256": "4d039ce11152c58c0c84be81dd7390fa59368a6587028553cabfccc200de9f6c",
+                "turn_sha256": "fc3ddedf0e02226408b94213a07274e58c3e5294d2d454ec39f871b97e146aa3",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 2769.88,
+                "elapsed_ms": 2930.38,
+                "delta_count": 15,
+                "reply_characters": 44,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 2,
+                "active_compacted_through_seq": 277,
+                "active_snapshot_count": 2,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              }
+            ],
+            "session_sha256": "cdc192b70336820b9d1a00d20fcd7c41a043861b2bdd444e599c7c26e03247bc",
+            "import": {
+              "scripted_closed_fixture_turns": 48,
+              "scripted_fixture_acknowledgements": true,
+              "filler_utf8_bytes": 1800,
+              "all_uncovered_input_tokens_estimate": 97980,
+              "input_budget_tokens": 24576,
+              "hard_limit_exceeded_before_recovery": true
+            },
+            "first_checkpoint": {
+              "candidate_count": 3,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 3,
+              "resume_event_count": 2,
+              "unfinished_receipts_remained_inactive": true,
+              "explicit_pending_terminal": true
+            },
+            "storage_reopened_and_context_cache_cleared": true,
+            "semantic_checks": {
+              "valid_json_object": true,
+              "corrected_budget_retained": true,
+              "weekend_negation_retained": true,
+              "unconfirmed_action_not_promoted_to_done": true
+            },
+            "history_checks": {
+              "valid_json_object": true,
+              "original_budget_recovered": true,
+              "original_user_reference_matches": true
+            },
+            "history_tool_evidence": {
+              "history_turn_bound_to_session": true,
+              "history_tool_calls_this_turn": 1,
+              "successful_history_tool_calls_this_turn": 1,
+              "target_user_record_return_count": 1,
+              "successful_history_tool_calls_returning_target": 1,
+              "returned_original_user_record_with_budget": true
+            },
+            "database": {
+              "session_closed": false,
+              "notes_version": 0,
+              "context_version": 2,
+              "profile_matches": true,
+              "snapshot_count": 2,
+              "compaction_event_count": 2,
+              "snapshot_event_count_matches": true,
+              "compaction_metrics": [
+                {
+                  "before_estimated_tokens": 99149,
+                  "after_estimated_tokens": 21505,
+                  "reduction_estimated_tokens": 77644,
+                  "budget_tokens": 24576,
+                  "pressure_before": 5.577558,
+                  "pressure_after": 0.811445,
+                  "target_met": false,
+                  "maintenance_estimated_tokens": 24098
+                },
+                {
+                  "before_estimated_tokens": 24206,
+                  "after_estimated_tokens": 18415,
+                  "reduction_estimated_tokens": 5791,
+                  "budget_tokens": 24576,
+                  "pressure_before": 0.972766,
+                  "pressure_after": 0.548347,
+                  "target_met": false,
+                  "maintenance_estimated_tokens": 21507
+                }
+              ],
+              "compaction_metrics_show_bounded_reduction": true,
+              "context_versions": [
+                1,
+                2
+              ],
+              "coverage_watermarks": [
+                259,
+                277
+              ],
+              "coverage_strictly_advances": true,
+              "snapshot_versions_strictly_advance": true,
+              "summary_literal_checks": {
+                "corrected_budget_text_present": true,
+                "weekend_term_present": true,
+                "negation_term_present": true,
+                "pending_actions_present": true
+              },
+              "original_first_user_record_retained": true,
+              "user_message_count": 53,
+              "source_ref_count": 92,
+              "invalid_source_ref_count": 0,
+              "model_call_count": 15,
+              "model_profile_matches": true,
+              "max_observed_model_calls_per_turn": 4,
+              "model_reported_usage_totals": {
+                "prompt_tokens": 73684,
+                "completion_tokens": 6631,
+                "total_tokens": 80315
+              },
+              "model_phase_counts": {
+                "context_compact": 8,
+                "decision": 4,
+                "final": 3
+              },
+              "history_tool_success_count": 1,
+              "runtime_error_counts": {
+                "context_maintenance_pending": 2
+              }
+            },
+            "staging": {
+              "candidate_count": 6,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": true,
+              "active_context_version": 2,
+              "active_compacted_through_seq": 277,
+              "active_snapshot_count": 2,
+              "staged_event_count": 6,
+              "resume_event_count": 6
+            },
+            "failure": {
+              "code": "text_probe_internal_error"
+            },
+            "cleanup": {
+              "stop_confirmed": true,
+              "database_closed": true,
+              "passed": true
+            }
+          },
+          {
+            "profile_index": 1,
+            "profile_id": "deepseek_v4_pro",
+            "passed": false,
+            "rounds": [
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "4ce0aaf54d41b7a0c8b11368b03f5fcfa0afa18d9063f6911f679f4bb814e8e9",
+                "turn_sha256": "9a602d8678068614217e70ff62135c5ed02c7af874cfee69dcf181124ea06134",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 14437.89,
+                "elapsed_ms": 14438.75,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 3,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": false,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 3,
+                "resume_event_count": 2
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "f16490d2957d92e07567930a143021b1fe9fa1885f01b49f888c560423653cc8",
+                "turn_sha256": "bcea566d1a2c22a31ba1943158dfdf7a165103e4fd410f944f0769499bcaed9d",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 14187.97,
+                "elapsed_ms": 14188.84,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 6,
+                "resume_event_count": 5
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "ad481690e7269b348493d0cf8b3bbefbf84db265de7eac3647cbde118bde7120",
+                "turn_sha256": "afd7dbf1690e0fb5646a7b9b05980b1af8b2967f84f2c0785725d4ae89ccf96b",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 7468.55,
+                "elapsed_ms": 7580.58,
+                "delta_count": 1,
+                "reply_characters": 2,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 726,
+                "active_snapshot_count": 1,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              },
+              {
+                "purpose": "semantic_after_segment_recovery",
+                "round_sha256": "f6516c23e72152a397eaf88256814a54df57273e0b19055f84f5e53fc6ce6bcd",
+                "turn_sha256": "f0ee67ec56f8b99578683ef5416420c898c659b71a7b5a60a520d9fc561de5ac",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 2527.74,
+                "elapsed_ms": 3296.07,
+                "delta_count": 23,
+                "reply_characters": 68,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 726,
+                "active_snapshot_count": 1,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              },
+              {
+                "purpose": "original_history_after_segment_recovery",
+                "round_sha256": "6d60968aaec88264d76c61979abeef8d2966d297cbb01c18929e5f40e764d070",
+                "turn_sha256": "4aa26dc91c5aec9ad6f62ab9f10f4c8b11b2221870e7495277a3b5ebda444463",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 3782.58,
+                "elapsed_ms": 4094.75,
+                "delta_count": 18,
+                "reply_characters": 49,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 726,
+                "active_snapshot_count": 1,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              }
+            ],
+            "session_sha256": "681bceb1633c574260ee5a4f13789c86ba247691e89998d1a470c3c1b426d39e",
+            "import": {
+              "scripted_closed_fixture_turns": 48,
+              "scripted_fixture_acknowledgements": true,
+              "filler_utf8_bytes": 1800,
+              "all_uncovered_input_tokens_estimate": 98016,
+              "input_budget_tokens": 24576,
+              "hard_limit_exceeded_before_recovery": true
+            },
+            "first_checkpoint": {
+              "candidate_count": 3,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 3,
+              "resume_event_count": 2,
+              "unfinished_receipts_remained_inactive": true,
+              "explicit_pending_terminal": true
+            },
+            "storage_reopened_and_context_cache_cleared": true,
+            "semantic_checks": {
+              "valid_json_object": true,
+              "corrected_budget_retained": true,
+              "weekend_negation_retained": true,
+              "unconfirmed_action_not_promoted_to_done": true
+            },
+            "history_checks": {
+              "valid_json_object": true,
+              "original_budget_recovered": true,
+              "original_user_reference_matches": true
+            },
+            "history_tool_evidence": {
+              "history_turn_bound_to_session": true,
+              "history_tool_calls_this_turn": 2,
+              "successful_history_tool_calls_this_turn": 2,
+              "target_user_record_return_count": 1,
+              "successful_history_tool_calls_returning_target": 1,
+              "returned_original_user_record_with_budget": true
+            },
+            "database": {
+              "session_closed": false,
+              "notes_version": 0,
+              "context_version": 1,
+              "profile_matches": true,
+              "snapshot_count": 1,
+              "compaction_event_count": 1,
+              "snapshot_event_count_matches": true,
+              "compaction_metrics": [
+                {
+                  "before_estimated_tokens": 99186,
+                  "after_estimated_tokens": 16642,
+                  "reduction_estimated_tokens": 82544,
+                  "budget_tokens": 24576,
+                  "pressure_before": 5.579548,
+                  "pressure_after": 0.514592,
+                  "target_met": false,
+                  "maintenance_estimated_tokens": 23331
+                }
+              ],
+              "compaction_metrics_show_bounded_reduction": true,
+              "context_versions": [
+                1
+              ],
+              "coverage_watermarks": [
+                726
+              ],
+              "coverage_strictly_advances": true,
+              "snapshot_versions_strictly_advance": true,
+              "summary_literal_checks": {
+                "corrected_budget_text_present": true,
+                "weekend_term_present": true,
+                "negation_term_present": true,
+                "pending_actions_present": false
+              },
+              "original_first_user_record_retained": true,
+              "user_message_count": 53,
+              "source_ref_count": 30,
+              "invalid_source_ref_count": 0,
+              "model_call_count": 14,
+              "model_profile_matches": true,
+              "max_observed_model_calls_per_turn": 3,
+              "model_reported_usage_totals": {
+                "prompt_tokens": 65950,
+                "completion_tokens": 2908,
+                "total_tokens": 68858
+              },
+              "model_phase_counts": {
+                "context_compact": 7,
+                "decision": 4,
+                "final": 3
+              },
+              "history_tool_success_count": 2,
+              "runtime_error_counts": {
+                "context_maintenance_pending": 2
+              }
+            },
+            "staging": {
+              "candidate_count": 6,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": true,
+              "active_context_version": 1,
+              "active_compacted_through_seq": 726,
+              "active_snapshot_count": 1,
+              "staged_event_count": 6,
+              "resume_event_count": 6
+            },
+            "failure": {
+              "code": "text_probe_internal_error"
+            },
+            "cleanup": {
+              "stop_confirmed": true,
+              "database_closed": true,
+              "passed": true
+            }
+          }
+        ],
+        "configuration": {
+          "input_cap_estimated_tokens": 24576,
+          "first_output_deadline_ms": 20000,
+          "wall_seconds": 30.0,
+          "max_model_calls_per_turn": 4,
+          "max_native_tools_per_turn": 8,
+          "keep_recent_turns": 4,
+          "background_enabled": false
+        },
+        "cleanup_confirmed": true,
+        "owned_service_stopped": true,
+        "elapsed_ms": 90313.63
+      }
+    },
+    {
+      "name": "same_budget_functional_rerun",
+      "category": "real_model_functional",
+      "interpretation": "Corrected probe counter key; same 24576 input cap and 20000ms deadline, new owned sessions. Both profiles passed.",
+      "observations": {
+        "schema_version": 1,
+        "probe": "m2_segmented_text_http",
+        "passed": true,
+        "created_at_utc": "2026-11-09T13:00:12.205589+00:00",
+        "scope": {
+          "synthetic_history_import": true,
+          "fixture_acknowledgements_scripted": true,
+          "post_import_models_real": true,
+          "owned_tcp_service_only": true,
+          "rtc_used": false,
+          "storage_reopen_is_not_product_reconnect": true,
+          "timings_are_not_audio_latency": true
+        },
+        "limits": {
+          "max_profiles": 2,
+          "max_recovery_turns_per_profile": 6,
+          "max_verification_turns_per_profile": 2,
+          "profile_fallback": false,
+          "automatic_retries": 0
+        },
+        "profiles": [
+          {
+            "profile_index": 0,
+            "profile_id": "deepseek_v4_flash",
+            "passed": true,
+            "rounds": [
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "84674bb111c8fe2f3eb3a1c1e306cd08f13afc921a41238ea61144005f61bb68",
+                "turn_sha256": "4a0305a759756362f0ee5aeb49fe27750efe001fc9387bccb9a1b74670707424",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 11171.24,
+                "elapsed_ms": 11172.06,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 3,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": false,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 3,
+                "resume_event_count": 2
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "bfd0f2925f7b1c8cf3c4cf7fa731ef2607b2869878ef3860896454c0c50097bc",
+                "turn_sha256": "3a0d529fea9575c82c06b836bd807caa1c164f7b95a700f05a67aae52e38fd83",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 11588.21,
+                "elapsed_ms": 11589.33,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 6,
+                "resume_event_count": 5
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "2288e461433ef91e11c8814e8b418925f36d582e070841b1b164693874055abe",
+                "turn_sha256": "45f8887070a1a10ebda9f03aa2cf0a0db374e433007c03d992ea13a305b44f72",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 11136.44,
+                "elapsed_ms": 11239.08,
+                "delta_count": 1,
+                "reply_characters": 2,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 7,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 277,
+                "active_snapshot_count": 1,
+                "staged_event_count": 7,
+                "resume_event_count": 8
+              },
+              {
+                "purpose": "semantic_after_segment_recovery",
+                "round_sha256": "2b77afed821c1b46019ee2430c5504de00224f81e65988ab792a6b888b3658c4",
+                "turn_sha256": "87181f84b4e6d0ca935f91b9c7ad6d21e96014969d261d614a56e61328811668",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 2150.99,
+                "elapsed_ms": 2292.01,
+                "delta_count": 20,
+                "reply_characters": 63,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 7,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 277,
+                "active_snapshot_count": 1,
+                "staged_event_count": 7,
+                "resume_event_count": 8
+              },
+              {
+                "purpose": "original_history_after_segment_recovery",
+                "round_sha256": "13e63af757a4639e97c2dd5206650f3166b124e4c8c1e1198ba06f750b12f2cc",
+                "turn_sha256": "f3614449e89076e7e945acf3f970453ce958bd7d226470abc0643d0dde9c3f5e",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 3547.44,
+                "elapsed_ms": 3685.85,
+                "delta_count": 15,
+                "reply_characters": 44,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 7,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 277,
+                "active_snapshot_count": 1,
+                "staged_event_count": 7,
+                "resume_event_count": 8
+              }
+            ],
+            "session_sha256": "36227e557d42c784cbf4b37df8063c15a15242529bf6d3c88884f4569c109e4c",
+            "import": {
+              "scripted_closed_fixture_turns": 48,
+              "scripted_fixture_acknowledgements": true,
+              "filler_utf8_bytes": 1800,
+              "all_uncovered_input_tokens_estimate": 97980,
+              "input_budget_tokens": 24576,
+              "hard_limit_exceeded_before_recovery": true
+            },
+            "first_checkpoint": {
+              "candidate_count": 3,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 3,
+              "resume_event_count": 2,
+              "unfinished_receipts_remained_inactive": true,
+              "explicit_pending_terminal": true
+            },
+            "storage_reopened_and_context_cache_cleared": true,
+            "semantic_checks": {
+              "valid_json_object": true,
+              "corrected_budget_retained": true,
+              "weekend_negation_retained": true,
+              "unconfirmed_action_not_promoted_to_done": true
+            },
+            "history_checks": {
+              "valid_json_object": true,
+              "original_budget_recovered": true,
+              "original_user_reference_matches": true
+            },
+            "history_tool_evidence": {
+              "history_turn_bound_to_session": true,
+              "history_tool_calls_this_turn": 1,
+              "successful_history_tool_calls_this_turn": 1,
+              "target_user_record_return_count": 1,
+              "successful_history_tool_calls_returning_target": 1,
+              "returned_original_user_record_with_budget": true
+            },
+            "database": {
+              "session_closed": false,
+              "notes_version": 0,
+              "context_version": 1,
+              "profile_matches": true,
+              "snapshot_count": 1,
+              "compaction_event_count": 1,
+              "snapshot_event_count_matches": true,
+              "compaction_metrics": [
+                {
+                  "before_estimated_tokens": 99149,
+                  "after_estimated_tokens": 15515,
+                  "reduction_estimated_tokens": 83634,
+                  "budget_tokens": 24576,
+                  "pressure_before": 5.577558,
+                  "pressure_after": 0.445573,
+                  "target_met": true,
+                  "maintenance_estimated_tokens": 21258
+                }
+              ],
+              "compaction_metrics_show_bounded_reduction": true,
+              "context_versions": [
+                1
+              ],
+              "coverage_watermarks": [
+                277
+              ],
+              "coverage_strictly_advances": true,
+              "snapshot_versions_strictly_advance": true,
+              "summary_literal_checks": {
+                "corrected_budget_text_present": true,
+                "weekend_term_present": true,
+                "negation_term_present": true,
+                "pending_actions_present": true
+              },
+              "original_first_user_record_retained": true,
+              "user_message_count": 53,
+              "source_ref_count": 29,
+              "invalid_source_ref_count": 0,
+              "model_call_count": 15,
+              "model_profile_matches": true,
+              "max_observed_model_calls_per_turn": 4,
+              "model_reported_usage_totals": {
+                "prompt_tokens": 72917,
+                "completion_tokens": 6951,
+                "total_tokens": 79868
+              },
+              "model_phase_counts": {
+                "context_compact": 9,
+                "decision": 3,
+                "final": 3
+              },
+              "history_tool_success_count": 1,
+              "runtime_error_counts": {
+                "context_maintenance_pending": 2
+              }
+            },
+            "staging": {
+              "candidate_count": 7,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": true,
+              "active_context_version": 1,
+              "active_compacted_through_seq": 277,
+              "active_snapshot_count": 1,
+              "staged_event_count": 7,
+              "resume_event_count": 8
+            },
+            "cleanup": {
+              "stop_confirmed": true,
+              "database_closed": true,
+              "passed": true
+            }
+          },
+          {
+            "profile_index": 1,
+            "profile_id": "deepseek_v4_pro",
+            "passed": true,
+            "rounds": [
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "12930807789c1e5902b99bcb69521a09733f4d4f690c29d17b1c95751b975a88",
+                "turn_sha256": "a4712d75a5b1610795587be9e4b191f1a6e84e039f230983fadabfcbfa484876",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 15174.54,
+                "elapsed_ms": 15175.46,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 3,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": false,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 3,
+                "resume_event_count": 2
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "f707c99576eb763c5554a00195b61421016ab686538eb227417a212de6c83784",
+                "turn_sha256": "4a2401b6da654c05e79b7bea4da55fd1827affbd1502542366442bc4e05d2556",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "context_maintenance_pending",
+                "http_first_delta_ms": 17270.6,
+                "elapsed_ms": 17271.63,
+                "delta_count": 1,
+                "reply_characters": 24,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 6,
+                "resume_event_count": 5
+              },
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "27d013638925be89b8d0d2acc17f42501e2e1df46673c2e3bee96c8fc8419cf2",
+                "turn_sha256": "bbc55f4ea6c803b8d8d17982eb99461dc50d3e38153d16054ae57508ca96280c",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 7808.55,
+                "elapsed_ms": 7936.29,
+                "delta_count": 1,
+                "reply_characters": 2,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 729,
+                "active_snapshot_count": 1,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              },
+              {
+                "purpose": "semantic_after_segment_recovery",
+                "round_sha256": "1e6f3f7add567d65f05b41e170b198a5b47fee9d82889950e1660d30246172a2",
+                "turn_sha256": "e3f3a3178db0d05c73d1477e17e4dac13349c69ba626279ecbec7461a4fe509c",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 3818.6,
+                "elapsed_ms": 4068.88,
+                "delta_count": 20,
+                "reply_characters": 63,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 729,
+                "active_snapshot_count": 1,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              },
+              {
+                "purpose": "original_history_after_segment_recovery",
+                "round_sha256": "f6d72881c8251390eca1c38aef3b40019be6a6e6dbf48035dca9dfd67c81ec62",
+                "turn_sha256": "06272cee4b1446b64010c85646415a25978737ad1f7204fd88bef1d157024108",
+                "state": "generation_completed",
+                "delivery_status": "completed",
+                "error_code": null,
+                "http_first_delta_ms": 3818.79,
+                "elapsed_ms": 4116.93,
+                "delta_count": 15,
+                "reply_characters": 46,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 6,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": true,
+                "active_context_version": 1,
+                "active_compacted_through_seq": 729,
+                "active_snapshot_count": 1,
+                "staged_event_count": 6,
+                "resume_event_count": 6
+              }
+            ],
+            "session_sha256": "cec974f277f084e17e55dff861dd67bd8f3f581eb69ab68b0759cf71a6fa0a59",
+            "import": {
+              "scripted_closed_fixture_turns": 48,
+              "scripted_fixture_acknowledgements": true,
+              "filler_utf8_bytes": 1800,
+              "all_uncovered_input_tokens_estimate": 98016,
+              "input_budget_tokens": 24576,
+              "hard_limit_exceeded_before_recovery": true
+            },
+            "first_checkpoint": {
+              "candidate_count": 3,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 3,
+              "resume_event_count": 2,
+              "unfinished_receipts_remained_inactive": true,
+              "explicit_pending_terminal": true
+            },
+            "storage_reopened_and_context_cache_cleared": true,
+            "semantic_checks": {
+              "valid_json_object": true,
+              "corrected_budget_retained": true,
+              "weekend_negation_retained": true,
+              "unconfirmed_action_not_promoted_to_done": true
+            },
+            "history_checks": {
+              "valid_json_object": true,
+              "original_budget_recovered": true,
+              "original_user_reference_matches": true
+            },
+            "history_tool_evidence": {
+              "history_turn_bound_to_session": true,
+              "history_tool_calls_this_turn": 1,
+              "successful_history_tool_calls_this_turn": 1,
+              "target_user_record_return_count": 1,
+              "successful_history_tool_calls_returning_target": 1,
+              "returned_original_user_record_with_budget": true
+            },
+            "database": {
+              "session_closed": false,
+              "notes_version": 0,
+              "context_version": 1,
+              "profile_matches": true,
+              "snapshot_count": 1,
+              "compaction_event_count": 1,
+              "snapshot_event_count_matches": true,
+              "compaction_metrics": [
+                {
+                  "before_estimated_tokens": 99186,
+                  "after_estimated_tokens": 16858,
+                  "reduction_estimated_tokens": 82328,
+                  "budget_tokens": 24576,
+                  "pressure_before": 5.579548,
+                  "pressure_after": 0.527807,
+                  "target_met": false,
+                  "maintenance_estimated_tokens": 23585
+                }
+              ],
+              "compaction_metrics_show_bounded_reduction": true,
+              "context_versions": [
+                1
+              ],
+              "coverage_watermarks": [
+                729
+              ],
+              "coverage_strictly_advances": true,
+              "snapshot_versions_strictly_advance": true,
+              "summary_literal_checks": {
+                "corrected_budget_text_present": true,
+                "weekend_term_present": true,
+                "negation_term_present": true,
+                "pending_actions_present": false
+              },
+              "original_first_user_record_retained": true,
+              "user_message_count": 53,
+              "source_ref_count": 32,
+              "invalid_source_ref_count": 0,
+              "model_call_count": 14,
+              "model_profile_matches": true,
+              "max_observed_model_calls_per_turn": 3,
+              "model_reported_usage_totals": {
+                "prompt_tokens": 65030,
+                "completion_tokens": 3147,
+                "total_tokens": 68177
+              },
+              "model_phase_counts": {
+                "context_compact": 7,
+                "decision": 4,
+                "final": 3
+              },
+              "history_tool_success_count": 1,
+              "runtime_error_counts": {
+                "context_maintenance_pending": 2
+              }
+            },
+            "staging": {
+              "candidate_count": 6,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": true,
+              "active_context_version": 1,
+              "active_compacted_through_seq": 729,
+              "active_snapshot_count": 1,
+              "staged_event_count": 6,
+              "resume_event_count": 6
+            },
+            "cleanup": {
+              "stop_confirmed": true,
+              "database_closed": true,
+              "passed": true
+            }
+          }
+        ],
+        "configuration": {
+          "input_cap_estimated_tokens": 24576,
+          "first_output_deadline_ms": 20000,
+          "wall_seconds": 30.0,
+          "max_model_calls_per_turn": 4,
+          "max_native_tools_per_turn": 8,
+          "keep_recent_turns": 4,
+          "background_enabled": false
+        },
+        "cleanup_confirmed": true,
+        "owned_service_stopped": true,
+        "elapsed_ms": 90147.55
+      }
+    },
+    {
+      "name": "default_9s_oversized_import",
+      "category": "real_model_performance",
+      "interpretation": "Separate unchanged-default 9000ms run. Both profiles timed out; completed receipts retained without activating coverage.",
+      "observations": {
+        "schema_version": 1,
+        "probe": "m2_segmented_text_http",
+        "passed": false,
+        "created_at_utc": "2026-11-09T13:02:29.902372+00:00",
+        "scope": {
+          "synthetic_history_import": true,
+          "fixture_acknowledgements_scripted": true,
+          "post_import_models_real": true,
+          "owned_tcp_service_only": true,
+          "rtc_used": false,
+          "storage_reopen_is_not_product_reconnect": true,
+          "timings_are_not_audio_latency": true
+        },
+        "limits": {
+          "max_profiles": 2,
+          "max_recovery_turns_per_profile": 6,
+          "max_verification_turns_per_profile": 2,
+          "profile_fallback": false,
+          "automatic_retries": 0
+        },
+        "profiles": [
+          {
+            "profile_index": 0,
+            "profile_id": "deepseek_v4_flash",
+            "passed": false,
+            "rounds": [
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "256cc158c9e8cb4e349540e3b7b66758fcf719a6c19655436bc6ccd1957a7f82",
+                "turn_sha256": "3319a7d3fb4d1b75dba4d6f541d74b59d4fcf72496f9cbf9c1aecc3eb6c2a4bd",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "first_output_or_turn_timeout",
+                "http_first_delta_ms": 9029.86,
+                "elapsed_ms": 9030.65,
+                "delta_count": 1,
+                "reply_characters": 17,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 2,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": false,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 2,
+                "resume_event_count": 2
+              }
+            ],
+            "session_sha256": "4e6949e6313e2428bd7b7e9a646f02e7e0305c0dcad09deb004904885c44bd85",
+            "import": {
+              "scripted_closed_fixture_turns": 48,
+              "scripted_fixture_acknowledgements": true,
+              "filler_utf8_bytes": 1800,
+              "all_uncovered_input_tokens_estimate": 97980,
+              "input_budget_tokens": 24576,
+              "hard_limit_exceeded_before_recovery": true
+            },
+            "first_checkpoint": {
+              "candidate_count": 2,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 2,
+              "resume_event_count": 2,
+              "unfinished_receipts_remained_inactive": true,
+              "explicit_pending_terminal": false
+            },
+            "storage_reopened_and_context_cache_cleared": true,
+            "failure": {
+              "code": "first_output_or_turn_timeout"
+            },
+            "database": {
+              "session_closed": false,
+              "notes_version": 0,
+              "context_version": 0,
+              "profile_matches": true,
+              "snapshot_count": 0,
+              "compaction_event_count": 0,
+              "snapshot_event_count_matches": true,
+              "compaction_metrics": [],
+              "compaction_metrics_show_bounded_reduction": false,
+              "context_versions": [],
+              "coverage_watermarks": [],
+              "coverage_strictly_advances": true,
+              "snapshot_versions_strictly_advance": true,
+              "summary_literal_checks": {
+                "corrected_budget_text_present": false,
+                "weekend_term_present": false,
+                "negation_term_present": false,
+                "pending_actions_present": false
+              },
+              "original_first_user_record_retained": true,
+              "user_message_count": 49,
+              "source_ref_count": 0,
+              "invalid_source_ref_count": 0,
+              "model_call_count": 3,
+              "model_profile_matches": true,
+              "max_observed_model_calls_per_turn": 3,
+              "model_reported_usage_totals": {
+                "prompt_tokens": 11772,
+                "completion_tokens": 1216,
+                "total_tokens": 12988
+              },
+              "model_phase_counts": {
+                "context_compact": 3
+              },
+              "history_tool_success_count": 0,
+              "runtime_error_counts": {
+                "first_output_or_turn_timeout": 1
+              }
+            },
+            "staging": {
+              "candidate_count": 2,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 2,
+              "resume_event_count": 2
+            },
+            "cleanup": {
+              "stop_confirmed": true,
+              "database_closed": true,
+              "passed": true
+            }
+          },
+          {
+            "profile_index": 1,
+            "profile_id": "deepseek_v4_pro",
+            "passed": false,
+            "rounds": [
+              {
+                "purpose": "recover_imported_history",
+                "round_sha256": "58ff7a17221dc3e029c6d738aace69953df5f27d757c15be66d0a871ba433135",
+                "turn_sha256": "5eb056307c20639d11a26a22d46b1234309011620a98724640861aa29a207c42",
+                "state": "failed",
+                "delivery_status": "interrupted",
+                "error_code": "first_output_or_turn_timeout",
+                "http_first_delta_ms": 9024.29,
+                "elapsed_ms": 9024.98,
+                "delta_count": 1,
+                "reply_characters": 17,
+                "turn_seen": true,
+                "terminal_seen": true,
+                "fixture_in_reply": null,
+                "candidate_count": 1,
+                "candidate_receipts_contiguous": true,
+                "completed_receipt_reused_in_new_epoch": false,
+                "active_context_version": 0,
+                "active_compacted_through_seq": 0,
+                "active_snapshot_count": 0,
+                "staged_event_count": 1,
+                "resume_event_count": 1
+              }
+            ],
+            "session_sha256": "9f16ec2ea35ad79b27898c200a0ff9cdc7a7a2b50d86d41bacde546430f00b71",
+            "import": {
+              "scripted_closed_fixture_turns": 48,
+              "scripted_fixture_acknowledgements": true,
+              "filler_utf8_bytes": 1800,
+              "all_uncovered_input_tokens_estimate": 98016,
+              "input_budget_tokens": 24576,
+              "hard_limit_exceeded_before_recovery": true
+            },
+            "first_checkpoint": {
+              "candidate_count": 1,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 1,
+              "resume_event_count": 1,
+              "unfinished_receipts_remained_inactive": true,
+              "explicit_pending_terminal": false
+            },
+            "storage_reopened_and_context_cache_cleared": true,
+            "failure": {
+              "code": "first_output_or_turn_timeout"
+            },
+            "database": {
+              "session_closed": false,
+              "notes_version": 0,
+              "context_version": 0,
+              "profile_matches": true,
+              "snapshot_count": 0,
+              "compaction_event_count": 0,
+              "snapshot_event_count_matches": true,
+              "compaction_metrics": [],
+              "compaction_metrics_show_bounded_reduction": false,
+              "context_versions": [],
+              "coverage_watermarks": [],
+              "coverage_strictly_advances": true,
+              "snapshot_versions_strictly_advance": true,
+              "summary_literal_checks": {
+                "corrected_budget_text_present": false,
+                "weekend_term_present": false,
+                "negation_term_present": false,
+                "pending_actions_present": false
+              },
+              "original_first_user_record_retained": true,
+              "user_message_count": 49,
+              "source_ref_count": 0,
+              "invalid_source_ref_count": 0,
+              "model_call_count": 2,
+              "model_profile_matches": true,
+              "max_observed_model_calls_per_turn": 2,
+              "model_reported_usage_totals": {
+                "prompt_tokens": 5790,
+                "completion_tokens": 336,
+                "total_tokens": 6126
+              },
+              "model_phase_counts": {
+                "context_compact": 2
+              },
+              "history_tool_success_count": 0,
+              "runtime_error_counts": {
+                "first_output_or_turn_timeout": 1
+              }
+            },
+            "staging": {
+              "candidate_count": 1,
+              "candidate_receipts_contiguous": true,
+              "completed_receipt_reused_in_new_epoch": false,
+              "active_context_version": 0,
+              "active_compacted_through_seq": 0,
+              "active_snapshot_count": 0,
+              "staged_event_count": 1,
+              "resume_event_count": 1
+            },
+            "cleanup": {
+              "stop_confirmed": true,
+              "database_closed": true,
+              "passed": true
+            }
+          }
+        ],
+        "configuration": {
+          "input_cap_estimated_tokens": 24576,
+          "first_output_deadline_ms": 9000,
+          "wall_seconds": 30.0,
+          "max_model_calls_per_turn": 4,
+          "max_native_tools_per_turn": 8,
+          "keep_recent_turns": 4,
+          "background_enabled": false
+        },
+        "cleanup_confirmed": true,
+        "owned_service_stopped": true,
+        "latency_observations": {
+          "default_9s_configuration": true,
+          "production_latency_slo_passed": false,
+          "fallback_deltas_are_not_model_first_output": true,
+          "all_import_recovery_turns_generated_model_replies": false
+        },
+        "elapsed_ms": 19483.44
+      }
+    }
+  ],
+  "cleanup": {
+    "self_created_session_count": 6,
+    "all_6_self_created_sessions_closed": true,
+    "every_owned_service_stopped": true,
+    "owned_port_3103_no_longer_listening": true,
+    "existing_3101_and_3102_instance_identity_unchanged": true,
+    "new_rtc_tasks_created": 0
+  },
+  "remaining": [
+    "Standalone context_update/context_select structured editing",
+    "Production storage/assembly and long-conversation latency baseline",
+    "Real cloud background maintenance performance and RTC post-compaction verification",
+    "Product authorization/frontend migration and cross-transport session merge",
+    "An individually oversized closed turn/current chain still fails explicitly; no arbitrary out-of-order segment joins"
+  ],
+  "counter_semantics": {
+    "imported_48_turns": "Synthetic fixture records and scripted acknowledgements, not 48 real-model generations.",
+    "recovery_pending": "Expected infrastructure terminal when this input exhausts bounded maintenance steps. It is not a generated model answer or a latency pass.",
+    "active_watermark": "Only committed snapshots advance it. Staged progress remains separate.",
+    "input_estimates": "Serialized UTF-8 engineering upper estimates, not provider tokenizer counts.",
+    "usage": "Provider-reported usage for recorded completed calls; cancelled calls may have unreported billed usage.",
+    "storage_reopen": "Reopens SQLite and clears context/tool cache while HTTP session ownership remains. Full RuntimeStore restart/new-owner fencing is tested with scripted models."
+  },
+  "privacy": {
+    "raw_dialogue_or_summary_in_report": false,
+    "api_keys_or_nonce_in_report": false,
+    "raw_resource_ids_in_report": false
+  },
+  "source_sha256": {
+    "context.py": "60838f76b179c5a7e76c83a01d9155a4453a635635858aec6fb720ee0deab17c",
+    "store.py": "0fd2b4639cd5fb293c2169924e67143ced1ea02f89d22cfa504e2b6aa922032d",
+    "runtime.py": "6f04b47cb27a2dea31d51ddc23b8be3e385d36e2b78e42786511c04481b5a95d",
+    "probes/segments.py": "a698028be543bc6b3148391b043196b15bbf6e5761fd39c243cd4dbeb5846bea",
+    "tests/test_context_segments.py": "75a00ce09001b93951ef08fbb07d808e4f2dfee73ccdf01e8880dc8ea3063bba",
+    "tests/test_context_segments_runtime.py": "3f1eeaa543799094cd06950e27613151ffcf3d7f2e45f94010c62c1fa9112285",
+    "tests/test_context_segments_probe.py": "3ee42c289be6bb79c756ed12d79d03e8ee17d9b5274de523ae0bcfae2b116a5f"
+  }
+}

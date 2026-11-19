@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "date": "2026-11-17",
+  "evidence_type": "real_browser_formal_scene_load",
+  "status": "failed",
+  "cause": "Existing React getScenes() omits arguments. Its generic JSON wrapper serialized undefined into an empty HTTP body, while the new product scene contract requires a JSON object. Login succeeded but the scene page showed its retry state.",
+  "resolution": "Serialize omitted JSON parameters as an empty object and add a request-wrapper regression test.",
+  "prior_http_scope_limit": "The earlier real HTTP probe explicitly sent {}, so it did not exercise the omitted-argument React wrapper.",
+  "budgets_changed": false,
+  "secrets_included": false
+}

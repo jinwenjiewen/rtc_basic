@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "milestone": "M3",
+  "kind": "basic_real_business_smoke",
+  "recorded_at_utc": "2026-11-16T14:09:26.361226+00:00",
+  "transport": "rtc",
+  "scope": "User requested basic smoke before M4; full prompt/deep testing deferred.",
+  "first_output_deadline_ms": 9000,
+  "pricing_policy": "defer_to_checkout",
+  "entry_configured": false,
+  "microphone_asr_tested": false,
+  "human_audio_confirmation": false,
+  "production_slo_claim": false,
+  "automatic_retries": 0,
+  "budgets_increased": false,
+  "rounds": [
+    {
+      "profile_id": "deepseek_v4_flash",
+      "failure": {
+        "code": "rtc_smoke_cloud_start_failed",
+        "http_status": 200
+      },
+      "passed": false
+    },
+    {
+      "profile_id": "deepseek_v4_pro",
+      "failure": {
+        "code": "rtc_smoke_cloud_start_failed",
+        "http_status": 200
+      },
+      "passed": false
+    }
+  ],
+  "cleanup": [
+    {
+      "cloud_stopped": true,
+      "passed": true
+    },
+    {
+      "cloud_stopped": true,
+      "passed": true
+    }
+  ],
+  "interrupts": [],
+  "passed": false
+}

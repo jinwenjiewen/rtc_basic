@@ -5,6 +5,7 @@
 
 import { Button, Divider, Popover } from '@arco-design/web-react';
 import { IconMenu } from '@arco-design/web-react/icon';
+import { Link } from 'react-router-dom';
 import NetworkIndicator from '@/components/NetworkIndicator';
 import { useIsMobile } from '@/utils/utils';
 import Logo from '@/assets/img/Logo.svg';
@@ -74,6 +75,7 @@ function Header(props: HeaderProps) {
       </div>
       {children}
       <div className={styles['header-right']}>
+        <Link to="/chat">文字对话</Link>
         {useIsMobile() ? null : (
           <>
             <div

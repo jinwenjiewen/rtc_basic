@@ -63,7 +63,7 @@ export const requestPostMethod = ({
         'content-type': 'application/json',
         ...headers,
       },
-      body: (isJson ? JSON.stringify(params) : params) as BodyInit,
+      body: (isJson ? JSON.stringify(params ?? {}) : params) as BodyInit,
     });
     return res;
   };

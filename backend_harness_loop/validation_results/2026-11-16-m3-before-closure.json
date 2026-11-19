@@ -1,0 +1,437 @@
+{
+  "schema_version": 1,
+  "report_date": "2026-11-16",
+  "recorded_at_utc": "2026-11-16T12:47:08.824084+00:00",
+  "timezone": "Asia/Shanghai",
+  "milestone": "M3",
+  "status": "read_only_core_implemented_text_scope_verified_broader_acceptance_open",
+  "m3_started": true,
+  "m3_complete": false,
+  "read_only_core_implemented": true,
+  "full_business_acceptance_passed": false,
+  "m2_acceptance_report": "2026-11-16-m2-acceptance.json",
+  "configuration": {
+    "first_output_deadline_ms": 9000,
+    "max_model_calls": 4,
+    "max_native_tool_calls": 8,
+    "wall_seconds": 30,
+    "tool_timeout_ms": 1500,
+    "knowledge_limit": 3,
+    "knowledge_limit_hard_max": 5,
+    "knowledge_json_result_max_bytes": 12000,
+    "knowledge_http_response_max_bytes": 262144,
+    "knowledge_excerpt_max_characters": 2000,
+    "input_cap_estimated_tokens": 24576,
+    "model_window_tokens": 32768,
+    "profile_pinned_per_session": true,
+    "model_provider_config_separate": true,
+    "knowledge_provider_config_separate": true,
+    "knowledge_secrets_separate": true,
+    "knowledge_adapter": "viking_knowledge",
+    "provider_rewrite": false,
+    "provider_instruction": false,
+    "provider_rerank": false,
+    "provider_attachment_links": false,
+    "automatic_model_retries": 0,
+    "automatic_knowledge_retries": 0,
+    "profile_fallback": false,
+    "budgets_increased": false,
+    "background_in_controlled_m3_probes": false
+  },
+  "implementation": [
+    "Stable KnowledgeBackend/KnowledgeHit port and explicit adapter factory/registration.",
+    "Independent HTTPS endpoint/resource/key-reference JSON and ignored key file, without legacy backend imports or environment mutation.",
+    "Model-selected read-only native knowledge_search, source-preserving bounded results, explicit errors/no-results/timeouts, no forced per-turn retrieval.",
+    "Prepared/dispatched/terminal native lifecycle; successful result and knowledge_refs source index commit in the same short SQLite transaction.",
+    "Same-session persisted source checks, cancellation/epoch fencing, complete native closure, remaining-budget observations and final-output guard."
+  ],
+  "code_validation": {
+    "python_tests_passed": 439,
+    "node_tests_passed": 34,
+    "new_m3_python_tests": 36,
+    "scripted_model_and_http_tests_separate_from_real_model_results": true,
+    "python_command": "python -m unittest discover -s backend_harness_loop/tests -q",
+    "node_command": "node --test backend_harness_loop/web/m0.test.cjs backend_harness_loop/web/m1.test.cjs backend_harness_loop/web/text.test.cjs backend_harness_loop/web/measurements.test.cjs"
+  },
+  "batches": [
+    {
+      "report": "2026-11-16-m3-fixture-01.json",
+      "sha256": "b123c11b29b7227846af1a6ba0b30ba47f58caad676b9c0439fcf6b71b98a73e",
+      "kind": "real_model_scripted_knowledge",
+      "scenario_version": 1,
+      "inputs": 22,
+      "passed_rounds": 16,
+      "passed": false,
+      "observed_valid_first_outputs": 22,
+      "first_output_max_ms": 6052.764,
+      "successful_knowledge_io_observations": 15,
+      "successful_knowledge_io_max_ms": 1.197,
+      "runtime_errors": [],
+      "failed_checks": [
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": "pronoun_price",
+          "failed": [
+            "object_resolved"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": "correction",
+          "failed": [
+            "latest_course"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": "dependent_search",
+          "failed": [
+            "two_prices_supported"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": "untrusted_document",
+          "failed": [
+            "business_fact_retained"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "pronoun_price",
+          "failed": [
+            "evidence_price"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "correction",
+          "failed": [
+            "evidence_price"
+          ]
+        }
+      ],
+      "all_sessions_closed": true,
+      "profile_pinned": true,
+      "all_native_chains_closed": true,
+      "max_model_calls": 4,
+      "max_native_calls": 3
+    },
+    {
+      "report": "2026-11-16-m3-fixture-02.json",
+      "sha256": "cf8f3c72739ca432ed1393e17700a9fe594654f96afdd11e6266cf5c8f23f2c9",
+      "kind": "real_model_scripted_knowledge",
+      "scenario_version": 2,
+      "inputs": 22,
+      "passed_rounds": 20,
+      "passed": false,
+      "observed_valid_first_outputs": 21,
+      "first_output_max_ms": 7896.092,
+      "successful_knowledge_io_observations": 14,
+      "successful_knowledge_io_max_ms": 0.637,
+      "runtime_errors": [
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "provider_timeout",
+          "code": "first_output_or_turn_timeout"
+        }
+      ],
+      "failed_checks": [
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "rewrite_after_no_results",
+          "failed": [
+            "evidence_price"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "provider_timeout",
+          "failed": [
+            "unknown_price",
+            "not_verified",
+            "no_order_claim",
+            "completed",
+            "real_first_within_default"
+          ]
+        }
+      ],
+      "all_sessions_closed": true,
+      "profile_pinned": true,
+      "all_native_chains_closed": true,
+      "max_model_calls": 4,
+      "max_native_calls": 3
+    },
+    {
+      "report": "2026-11-16-m3-fixture-03.json",
+      "sha256": "fab637bc8582d64d2d69b721c0b2aa3349efcccba9d731e32903595cc09c43cf",
+      "kind": "real_model_scripted_knowledge",
+      "scenario_version": 3,
+      "inputs": 22,
+      "passed_rounds": 22,
+      "passed": true,
+      "observed_valid_first_outputs": 22,
+      "first_output_max_ms": 7492.381,
+      "successful_knowledge_io_observations": 14,
+      "successful_knowledge_io_max_ms": 1.393,
+      "runtime_errors": [],
+      "failed_checks": [],
+      "all_sessions_closed": true,
+      "profile_pinned": true,
+      "all_native_chains_closed": true,
+      "max_model_calls": 4,
+      "max_native_calls": 3
+    },
+    {
+      "report": "2026-11-16-m3-real-01.json",
+      "sha256": "e1206e00d1ce7d0044af7a90576f3d29802d1e7fbaace5d6e00a06ad9a47bcdf",
+      "kind": "real_model_real_knowledge",
+      "scenario_version": 3,
+      "inputs": 2,
+      "passed_rounds": 1,
+      "passed": false,
+      "observed_valid_first_outputs": 2,
+      "first_output_max_ms": 6234.251,
+      "successful_knowledge_io_observations": 3,
+      "successful_knowledge_io_max_ms": 375.555,
+      "runtime_errors": [],
+      "failed_checks": [
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": "real_business",
+          "failed": [
+            "course_supported_by_actual_text",
+            "verification_matches_observation"
+          ]
+        }
+      ],
+      "all_sessions_closed": true,
+      "profile_pinned": true,
+      "all_native_chains_closed": true,
+      "max_model_calls": 4,
+      "max_native_calls": 3
+    },
+    {
+      "report": "2026-11-16-m3-real-02.json",
+      "sha256": "35d984819a0dd4e87a4dce5c3df8fe29a14b0ec574a905278d35250e9383084f",
+      "kind": "real_model_real_knowledge",
+      "scenario_version": 4,
+      "inputs": 6,
+      "passed_rounds": 6,
+      "passed": true,
+      "observed_valid_first_outputs": 6,
+      "first_output_max_ms": 8093.114,
+      "successful_knowledge_io_observations": 6,
+      "successful_knowledge_io_max_ms": 426.196,
+      "runtime_errors": [],
+      "failed_checks": [],
+      "all_sessions_closed": true,
+      "profile_pinned": true,
+      "all_native_chains_closed": true,
+      "max_model_calls": 4,
+      "max_native_calls": 3
+    },
+    {
+      "report": "2026-11-16-m3-real-pricing-01.json",
+      "sha256": "af206eccc9657323db1d236433a1b39c5bcea475dc767d28426326c85929d627",
+      "kind": "real_model_real_knowledge",
+      "scenario_version": 5,
+      "inputs": 2,
+      "passed_rounds": 0,
+      "passed": false,
+      "observed_valid_first_outputs": 1,
+      "first_output_max_ms": 4721.342,
+      "successful_knowledge_io_observations": 5,
+      "successful_knowledge_io_max_ms": 492.037,
+      "runtime_errors": [
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "real_pricing_policy",
+          "code": "model_control_text_in_final"
+        }
+      ],
+      "failed_checks": [
+        {
+          "profile_id": "deepseek_v4_flash",
+          "purpose": "real_pricing_policy",
+          "failed": [
+            "subject_and_price_grounded_in_actual_quote",
+            "price_verified"
+          ]
+        },
+        {
+          "profile_id": "deepseek_v4_pro",
+          "purpose": "real_pricing_policy",
+          "failed": [
+            "subject_and_price_grounded_in_actual_quote",
+            "price_verified",
+            "no_order_claim",
+            "completed",
+            "real_first_within_default"
+          ]
+        }
+      ],
+      "all_sessions_closed": true,
+      "profile_pinned": true,
+      "all_native_chains_closed": true,
+      "max_model_calls": 4,
+      "max_native_calls": 3
+    },
+    {
+      "report": "2026-11-16-m3-real-discount-01.json",
+      "sha256": "ca1ab8e8363af52e29b8916da6109d6956a93dd04e6c6f4dc79674f5cae768f2",
+      "kind": "real_model_real_knowledge",
+      "scenario_version": 5,
+      "inputs": 2,
+      "passed_rounds": 2,
+      "passed": true,
+      "observed_valid_first_outputs": 2,
+      "first_output_max_ms": 4502.298,
+      "successful_knowledge_io_observations": 2,
+      "successful_knowledge_io_max_ms": 401.343,
+      "runtime_errors": [],
+      "failed_checks": [],
+      "all_sessions_closed": true,
+      "profile_pinned": true,
+      "all_native_chains_closed": true,
+      "max_model_calls": 3,
+      "max_native_calls": 2
+    }
+  ],
+  "totals": {
+    "real_model_text_inputs": 78,
+    "strict_check_passes": 67,
+    "strict_check_failures": 11,
+    "runtime_failures": 2,
+    "historical_failures_retained": true,
+    "all_batches_claimed_passed": false
+  },
+  "latest_verified_scope": {
+    "real_model_scripted_knowledge": {
+      "report": "2026-11-16-m3-fixture-03.json",
+      "inputs": 22,
+      "passed_rounds": 22,
+      "first_output_max_ms": 7492.381
+    },
+    "real_model_real_knowledge_followup": {
+      "report": "2026-11-16-m3-real-02.json",
+      "inputs": 6,
+      "passed_rounds": 6,
+      "first_output_max_ms": 8093.114,
+      "specific_course_price_positive_proven": false,
+      "both_profiles_reported_unconfirmed_specific_course_price": true
+    },
+    "real_numeric_discount_evidence": {
+      "report": "2026-11-16-m3-real-discount-01.json",
+      "inputs": 2,
+      "passed_rounds": 2,
+      "first_output_max_ms": 4502.298,
+      "eligibility_and_numeric_discount_match_contiguous_actual_source": true,
+      "not_a_course_total_price_acceptance": true
+    }
+  },
+  "failure_interpretation": {
+    "fixture_01": "Six strict field checks failed where course names included IDs or money values included units; original results retained. Later prompts specified the intended JSON field formats.",
+    "fixture_02": "One remaining money field check plus one Pro default-budget timeout after repeated slow searches; retained. Later runtime gives remaining-budget observations without choosing the semantic action.",
+    "real_01": "One Flash source-support check failed after successful retrieval and an unconfirmed answer. The query contained an old-brand assumption; no claim that the root cause is proven resolved.",
+    "real_pricing_01": "Zero of two positive total-price checks passed. Flash abstained; Pro final stream contained internal control text and was rejected. Retrieved discount amounts cannot establish total course prices. No retry, budget increase or reinterpretation as a pass."
+  },
+  "configuration_diagnostics": [
+    {
+      "kind": "real_knowledge_adapter_smoke",
+      "status": "failed",
+      "code": "knowledge_http_error",
+      "elapsed_ms": 411.005
+    },
+    {
+      "kind": "real_knowledge_adapter_diagnostic",
+      "status": "failed",
+      "code": "knowledge_http_error",
+      "http_status": 400,
+      "elapsed_ms": 254.229
+    },
+    {
+      "kind": "real_knowledge_new_resource_smoke",
+      "status": "failed",
+      "code": "knowledge_http_error",
+      "http_status": 400,
+      "elapsed_ms": 260.039,
+      "old_key_reused": true
+    },
+    {
+      "kind": "new_resource_user_payload_diagnostic",
+      "http_status": 400,
+      "provider_code": 1000001,
+      "expired_free_version": false,
+      "hit_count": 0
+    },
+    {
+      "kind": "real_knowledge_new_key_smoke",
+      "status": "failed",
+      "code": "knowledge_http_error",
+      "http_status": 400,
+      "elapsed_ms": 379.609
+    },
+    {
+      "kind": "real_knowledge_corrected_key_smoke",
+      "status": "success",
+      "elapsed_ms": 433.268,
+      "hit_count": 3,
+      "characters": [
+        143,
+        177,
+        143
+      ],
+      "sources_present": true
+    }
+  ],
+  "diagnostic_interpretations": [
+    "Legacy resource returned free-version-expired validation error.",
+    "New resource with old key returned API-key-auth-failed.",
+    "First replacement key was rejected as invalid API key.",
+    "Current local key was then validated with real source-bearing results; values are excluded from this report."
+  ],
+  "cleanup": {
+    "all_created_sessions_closed": true,
+    "all_owned_services_stopped": true,
+    "rtc_tasks_created": 0,
+    "existing_user_services_stopped": false
+  },
+  "retained_work": [
+    "Real total-course-price positive evidence and broader forced-final protocol reliability remain open; do not substitute a discount quote for a course price.",
+    "Actual RTC business-tool loop has not been sampled in this M3 slice.",
+    "Other third-party knowledge protocols need their own adapter implementation and real validation; current alternate-adapter test is scripted.",
+    "Business writes, product authentication/frontend migration, cross-transport identity merge and production rollout remain out of this slice.",
+    "M2 historical performance limits remain retained under the user acceptance decision."
+  ],
+  "privacy": {
+    "raw_prompts": false,
+    "raw_replies": false,
+    "raw_business_documents": false,
+    "actual_business_amounts_or_course_names": false,
+    "provider_urls_or_resource_ids": false,
+    "credentials": false,
+    "hidden_reasoning": false,
+    "local_ledger_ignored": true
+  },
+  "source_sha256": {
+    "backend_harness_loop/knowledge.py": "a1cafbb5959110374c4c5dcccafd0e23212aef5a381e77234553971439b1bc7c",
+    "backend_harness_loop/tools.py": "a8a301d629e5ff40608adc0c4ba373ffbca6bfddc12e5aa87d6310786a13522b",
+    "backend_harness_loop/runtime.py": "5898914e88aad07ef83cc34be64fe38d6d29649cc2d2bd1b1db2c0dc37309fac",
+    "backend_harness_loop/store.py": "516a538e1ef2ed8f0a07e78fa8dfa5281f3a4503b0cc64e553116163a48b0384",
+    "backend_harness_loop/config.py": "9f8161faff24fc76a9459307fd92ab0e5a21a414c6f18247055e4a4f916270bb",
+    "backend_harness_loop/__main__.py": "99c24ce5c68f40fffa2bfa723866b27f34699da4942170e727d6bcb43fde812e",
+    "backend_harness_loop/text.py": "f9508cf05d0b9cea559225f161368bbc243bacf124c28af56447a1278e749779",
+    "backend_harness_loop/app.py": "462fd9a9cb2f4b777818fc4b859287794ccfe8bebca85dbb86b6b1f34f57fe28",
+    "backend_harness_loop/reporting.py": "be1c7bb9eee5f3843538d4bdb9b3051ba4ca7843650f92aeb9d7fe04b0990484",
+    "backend_harness_loop/probes/knowledge.py": "a475f93ecea2f44ebe302390fba4cd7b6a9870304dbf61e6855b158318e0015b",
+    "backend_harness_loop/probes/_text_server.py": "57ed57787fe1966813c9095e9fcc2e1422aa847481168f9d51dac2a0d55e783e",
+    "backend_harness_loop/tests/test_knowledge.py": "7f73b7b30b6cd8dc86ef5c940bc20fc2a58dae32471965ef791cff81cc71521b",
+    "backend_harness_loop/tests/test_knowledge_runtime.py": "07fa77e1018f4f8ade64836b502a288aa74aab6472f1139add7616dfad9ae766",
+    "backend_harness_loop/tests/test_knowledge_probe.py": "0f0c03e20339f903886258494e9a2281c0a343e2d42dce8fddacee281818c5e5",
+    "backend_harness_loop/knowledge_config.example.json": "481d74e17885045f0030696682c8df50737a74dada629b0a8ed6fe768d18a611",
+    "backend_harness_loop/knowledge_keys.env.example": "aa6605ecbb7ec3fb37c9948802f20b2cbc97af6516e2d131f273567f16ddcb16",
+    "backend_harness_loop/README.md": "f1230a101729c519a2988f953abfb70ef4b4e4be45d18f1e05c25864b171c3c1",
+    "docs/rtc-agent-backend-design.md": "b96688a30e005fb619f05294bf67c1d2f1e044be207e534ca814213c7a49f1fc"
+  }
+}

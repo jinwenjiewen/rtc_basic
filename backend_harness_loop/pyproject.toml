@@ -1,0 +1,23 @@
+[project]
+name = "rtc-agent-harness-loop"
+version = "3.0.0"
+description = "RTC Harness and Agent Loop, authenticated product transport and validation tools"
+requires-python = ">=3.13"
+dependencies = [
+    "anyio>=4,<5",
+    "fastapi>=0.115,<1",
+    "httpx>=0.27,<1",
+    "psycopg[binary]>=3.2,<4",
+    "pwdlib[argon2]>=0.2,<1",
+    "pyjwt>=2.10,<3",
+    "python-dotenv>=1,<2",
+    "sqlalchemy>=2.0.36,<2.1",
+    "uvicorn>=0.32,<1",
+]
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true

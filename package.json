@@ -1,6 +1,6 @@
 {
   "name": "aigc",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "license": "BSD-3-Clause",
   "private": true,
   "dependencies": {
@@ -18,7 +18,7 @@
   "scripts": {
     "dev": "npm run echo && npm run start",
     "start": "cross-env REACT_APP_LOCAL=cn  craco start --host 0.0.0.0",
-    "server:start": "cd rag_llm_server && uv run python main.py",
+    "server:start": "uv run --project backend_harness_loop python -m backend_harness_loop product --knowledge-config backend_harness_loop/.local/m3-knowledge.json --knowledge-env-file backend_harness_loop/.local/m3-knowledge.env --business-policy backend_harness_loop/.local/m3-business-policy.json",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",

@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "report_date": "2026-11-17",
+  "timezone": "Asia/Shanghai",
+  "recorded_at_utc": "2026-11-17T14:24:56.914885+00:00",
+  "status": "product_react_login_text_basic_complete_rtc_pending",
+  "current_slice_complete": true,
+  "m4_complete": false,
+  "all_attempts_passed": false,
+  "production_slo_passed": false,
+  "acceptance_basis": "User requested formal React plus login authorization, simple smoke; explicitly chose text/login acceptance while true RTC AppKey is pending.",
+  "implemented": [
+    "Same-origin React hosting and protected /chat with final-only SSE, exact-round interrupt, pinned profile, new-dialog and route-exit cleanup.",
+    "Existing PostgreSQL users, login sessions and throttles reused; no schema migrations, account resets or administrator overwrite.",
+    "Cookie/CSRF/Origin login, me, refresh rotation and logout; refresh reuse revokes login.",
+    "Persistent runtime owner mapping by account and login session; foreign account or other login denied.",
+    "Logout cancels local model/tools/maintenance before bounded cloud cleanup; callback checks server run and active owner.",
+    "Formal RTC API and SDK lifecycle wired, dynamic isolated tokens only; shared validation token excluded.",
+    "Developer nonce routes and universal proxy excluded from product app; explicit asset MIME keeps nosniff."
+  ],
+  "configuration": {
+    "first_output_deadline_ms": 9000,
+    "max_model_calls": 4,
+    "max_native_calls": 8,
+    "turn_wall_seconds": 30,
+    "tool_timeout_ms": 1500,
+    "context_input_cap_estimate": 24576,
+    "background_maintenance_seconds": 5,
+    "session_profile_pinned": true,
+    "model_retries_added": 0,
+    "profile_fallback": false,
+    "budgets_increased": false,
+    "pricing_policy": "defer_to_checkout; no prices or discount numbers; no actual checkout or contact entry",
+    "order_or_payment_tools": false,
+    "worker_count": 1,
+    "per_transport_max_active_sessions": 4,
+    "per_transport_max_sessions": 128,
+    "session_absolute_lease_seconds": 600,
+    "heartbeat_idle_seconds": 60,
+    "browser_heartbeat_seconds": 20,
+    "external_auth_recheck_interval_seconds": 2,
+    "postgres_connect_query_pool_wait_seconds": 3,
+    "postgres_lock_wait_seconds": 2
+  },
+  "code_validation": {
+    "python_full_suite": {
+      "passed": 462,
+      "failed": 0,
+      "seconds": 46.512
+    },
+    "targeted_product_after_final_asset_change": {
+      "passed": 11,
+      "failed": 0
+    },
+    "node_developer_pages": {
+      "passed": 34,
+      "failed": 0
+    },
+    "react_jest": {
+      "passed": 24,
+      "failed": 0,
+      "suites": 6
+    },
+    "typescript_no_emit": "passed",
+    "react_production_build": "passed_with_warnings",
+    "uv_lock_check": "passed",
+    "git_diff_check": "passed",
+    "build_warnings": [
+      "Large bundle includes existing RTC/UI dependencies.",
+      "Browserslist data is outdated; Node deprecation notice."
+    ],
+    "log_sha256": {
+      "python_full_suite": "b1b29251fe5fd1bd082f3313cef0c7905921e9522660f4faf2a2ab250bdba6d7",
+      "product_after_asset_fix": "022689fdba8a7e81dca52c4bc8d826b790d3827fec06553720dfbdb01b027274",
+      "react": "bbd28ae46d7755150fe7d2fe21d20dfff00eaf7d224fc6754eab8ffe2d5734c3",
+      "node": "955f8d04bbf3543d45b874c00f9b67cde96b9652aba70357cce5d58822d7315d",
+      "react_build": "46a0cb380285f479ac2075bb3401207696d1c8d227f0bb0ac13ad99ea8f73792"
+    }
+  },
+  "scripted_evidence": {
+    "backend": "Isolated SQLite test accounts, actual runtime/controller/store, scripted models; includes simulated RTC credential and callback boundary, no real cloud task.",
+    "react": "Component/SSE/ownership-lifecycle tests with mocked HTTP/model events; not real-browser authenticated E2E."
+  },
+  "real_evidence": {
+    "report": "2026-11-17-m4-real-01.json",
+    "sha256": "4348ac8bc4957082c4cf465eca21932f81749e9e6fd79f6e3929859839cc578b",
+    "account_database": "existing PostgreSQL",
+    "login_refresh_csrf_logout_checks_passed": true,
+    "text_rounds_attempted": 3,
+    "text_rounds_passed": 3,
+    "profiles": [
+      "deepseek_v4_flash",
+      "deepseek_v4_pro"
+    ],
+    "model_first_output_ms": [
+      6421.235,
+      3621.849,
+      4109.385
+    ],
+    "http_first_text_ms": [
+      6443.908,
+      3643.972,
+      4133.745
+    ],
+    "real_knowledge": true,
+    "budgets_unchanged": true,
+    "real_rtc_tested": false
+  },
+  "real_browser": {
+    "login_page_rendered": true,
+    "authenticated_text_e2e_tested": false,
+    "scope_note": "Real browser confirms login UI loads after MIME fix. Authenticated text covered separately by real HTTP and React component tests; no merged E2E claim."
+  },
+  "web_after_fix": {
+    "service_identity": true,
+    "login_html": true,
+    "js_assets": [
+      {
+        "status": 200,
+        "content_type": "application/javascript",
+        "nosniff": true,
+        "sha256": "539eb78759a9084fe300ef35e187e8c72ed6bd042d610eedb201bdadd44ef4a0"
+      }
+    ],
+    "rtc_available": false,
+    "developer_routes_not_exposed": [
+      true,
+      true,
+      true
+    ],
+    "runtime_sessions_all_closed": true
+  },
+  "secret_scan": {
+    "reports_scanned": 9,
+    "report_matches": 0,
+    "bundle_matches": 0
+  },
+  "preserved_failures": [
+    {
+      "report": "2026-11-17-m4-attempt-01.json",
+      "sha256": "a741408ce7363199f76f8874f8923fc4495834c91135f6c5a980399f51c23324",
+      "evidence_type": "scripted_model_and_isolated_sqlite_auth"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-02.json",
+      "sha256": "c747669c96e92e3bbbc011e17d1b6f95d8a4e2e0dcd0dbb48e1dc8642d669197",
+      "evidence_type": "react_jest_scripted"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-03.json",
+      "sha256": "47f9db71d5719ba9b6e7530d20eefc456b4e22102fa1cf345620e5a07a96096e",
+      "evidence_type": "react_production_build"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-04.json",
+      "sha256": "f93ea5598a85205b4249779c2d71edfad413535fea9221143141a5a027540b2a",
+      "evidence_type": "react_production_build"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-05.json",
+      "sha256": "6aa07bd66bfcb84d038f80399a54f3bbc67047848fde072edb18f8d6c2b3cfa1",
+      "evidence_type": "react_production_build_and_typescript"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-06.json",
+      "sha256": "15d2673469bc09798427c8358f9bf6c624aefbf536e1022e5e25cbcca549cef1",
+      "evidence_type": "real_browser_react_load"
+    },
+    {
+      "report": "2026-11-17-m4-attempt-07.json",
+      "sha256": "c7ad3bed145cc8a76dd6117a85f5705029f87093f77ddd9f496a6f1cca9d2789",
+      "evidence_type": "react_component_scripted"
+    }
+  ],
+  "prior_evidence_preserved": {
+    "m0_m1_m2_m3_reports": "unchanged; no failure reclassification",
+    "m3_closure": "2026-11-16-m3-closure.json"
+  },
+  "cleanup": {
+    "owned_text_sessions_all_closed": true,
+    "owned_probe_login_logged_out": true,
+    "real_rtc_tasks_created": 0,
+    "preexisting_user_services_stopped": false,
+    "local_product_preview_left_running": true,
+    "preview_bind": "127.0.0.1:3101",
+    "deployment_or_legacy_retirement_performed": false
+  },
+  "remaining": [
+    "True RTC AppKey and formal React RTC validation; user deferred this input.",
+    "Broader product regression, production HTTPS/deployment/rollback and old-backend retirement.",
+    "Long-session/default-budget stability and physical audio quantification remain unaccepted; this three-round sample is not an SLO.",
+    "Prompt rework and deep business semantics; no actual enrollment entry has been provided."
+  ]
+}

@@ -8,14 +8,14 @@ export const ReversoContext = 'https://www.volcengine.com/docs/6348/68918';
 export const UserAgreement = 'https://www.volcengine.com/docs/6348/128955';
 
 /**
- * @note Python FastAPI 后端（rag_llm_server）的请求地址。
+ * @note Harness 产品后端的请求地址；显式环境变量用于指定部署地址。
  *       动态使用当前页面的主机名，支持局域网访问
  */
 export const AIGC_PROXY_HOST = (
   process.env.REACT_APP_API_BASE_URL ||
   (process.env.NODE_ENV === 'production'
     ? window.location.origin
-    : `http://${window.location.hostname}:3001`)
+    : `http://${window.location.hostname}:3101`)
 ).replace(/\/+$/, '');
 
 export interface IScene {

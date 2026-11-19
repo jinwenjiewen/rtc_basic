@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-08T10:31:38.151350+00:00",
+  "milestone": "M0",
+  "configuration": {
+    "configured": {
+      "ark_api_key": true,
+      "ark_base_url": true,
+      "ark_model": true,
+      "volc_access_key": true,
+      "volc_secret_key": true,
+      "rtc_app_id": true,
+      "rtc_app_key": true,
+      "callback_secret": true,
+      "server_url": true,
+      "rtc_static_token": true,
+      "rtc_static_room_id": true,
+      "rtc_static_user_id": true
+    },
+    "rtc_api_version": "2024-12-01",
+    "legacy_voice_profile_configured": false,
+    "model_transport_https": true,
+    "ambient_proxy_enabled": false,
+    "model_thinking": "disabled"
+  },
+  "results": [
+    {
+      "name": "rtc_audio_functional_acceptance",
+      "status": "passed",
+      "summary": "User explicitly confirmed testing passed; real microphone start, local energy, subtitles, playback and interruption were observed.",
+      "evidence": {
+        "human_report": {
+          "source": "explicit_user_message",
+          "response": "可以了测试通过"
+        },
+        "data": {
+          "capture": {
+            "record_count": 256,
+            "source_counts": {
+              "rts_event": 206,
+              "custom_llm": 25,
+              "capture_stream": 25
+            },
+            "unique_round_counts": {
+              "custom_llm": 25,
+              "conv": 26,
+              "subv": 26
+            },
+            "custom_rounds_matched_to_state": 25,
+            "custom_rounds_matched_to_subtitle": 25,
+            "observed_custom_attempt_counts_per_round": [
+              1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+            ],
+            "stage_counts": {
+              "1": 26,
+              "2": 26,
+              "3": 22,
+              "4": 25,
+              "0": 1,
+              "5": 6
+            },
+            "machine_error_codes": {
+              "1003006": 1
+            },
+            "callback_response_status_counts": {
+              "200": 25
+            },
+            "stream_terminal_counts": {
+              "cancelled": 16,
+              "completed": 9
+            },
+            "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+          },
+          "client_event_counts": {
+            "joined": 2,
+            "agent_joined": 2,
+            "agent_audio_published": 2,
+            "player_playing": 2,
+            "remote_level_silent": 29,
+            "first_audio_decoded": 2,
+            "mic_started": 4,
+            "mic_level_active": 4,
+            "remote_level_active": 27,
+            "mic_stopped": 4,
+            "interrupt_sent": 5,
+            "heard_confirmed": 1,
+            "speech_input_confirmed": 1,
+            "stop_confirmed": 1
+          },
+          "per_session": [
+            {
+              "ordinal": 1,
+              "capture": {
+                "record_count": 21,
+                "source_counts": {
+                  "rts_event": 17,
+                  "custom_llm": 2,
+                  "capture_stream": 2
+                },
+                "unique_round_counts": {
+                  "custom_llm": 2,
+                  "conv": 2,
+                  "subv": 2
+                },
+                "custom_rounds_matched_to_state": 2,
+                "custom_rounds_matched_to_subtitle": 2,
+                "observed_custom_attempt_counts_per_round": [1, 1],
+                "stage_counts": {
+                  "1": 2,
+                  "2": 2,
+                  "3": 2,
+                  "4": 3,
+                  "5": 1
+                },
+                "machine_error_codes": {},
+                "callback_response_status_counts": {
+                  "200": 2
+                },
+                "stream_terminal_counts": {
+                  "cancelled": 2
+                },
+                "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+              },
+              "client_event_counts": {
+                "joined": 1,
+                "agent_joined": 1,
+                "agent_audio_published": 1,
+                "player_playing": 1,
+                "remote_level_silent": 4,
+                "first_audio_decoded": 1,
+                "mic_started": 1,
+                "mic_level_active": 1,
+                "remote_level_active": 3,
+                "interrupt_sent": 2,
+                "mic_stopped": 1
+              },
+              "measurements_summary": {
+                "interrupt_silence": {
+                  "count": 1,
+                  "p50_ms": 243,
+                  "p95_ms": 243,
+                  "ready": false
+                },
+                "speech_first_audio": {
+                  "count": 0,
+                  "p50_ms": null,
+                  "p95_ms": null,
+                  "ready": false
+                },
+                "invalid_count": 1,
+                "invalid_reasons": {
+                  "overlapping_rounds": 1
+                },
+                "unmatched_count": 0,
+                "duplicate_count": 0,
+                "minimum_samples": 3,
+                "ready": false,
+                "percentile_method": "nearest_rank",
+                "scope": "Browser SDK estimates from matched, unique rounds only; not physical audio output or verified acoustic speech endpoints. Small-sample empirical percentiles do not establish a production SLO.",
+                "started_count": 2,
+                "incomplete_count": 0
+              }
+            },
+            {
+              "ordinal": 2,
+              "capture": {
+                "record_count": 235,
+                "source_counts": {
+                  "rts_event": 189,
+                  "custom_llm": 23,
+                  "capture_stream": 23
+                },
+                "unique_round_counts": {
+                  "custom_llm": 23,
+                  "conv": 24,
+                  "subv": 24
+                },
+                "custom_rounds_matched_to_state": 23,
+                "custom_rounds_matched_to_subtitle": 23,
+                "observed_custom_attempt_counts_per_round": [
+                  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+                ],
+                "stage_counts": {
+                  "1": 24,
+                  "2": 24,
+                  "3": 20,
+                  "4": 22,
+                  "0": 1,
+                  "5": 5
+                },
+                "machine_error_codes": {
+                  "1003006": 1
+                },
+                "callback_response_status_counts": {
+                  "200": 23
+                },
+                "stream_terminal_counts": {
+                  "cancelled": 14,
+                  "completed": 9
+                },
+                "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+              },
+              "client_event_counts": {
+                "joined": 1,
+                "agent_joined": 1,
+                "agent_audio_published": 1,
+                "player_playing": 1,
+                "remote_level_silent": 25,
+                "first_audio_decoded": 1,
+                "mic_started": 3,
+                "mic_level_active": 3,
+                "remote_level_active": 24,
+                "mic_stopped": 3,
+                "interrupt_sent": 3,
+                "heard_confirmed": 1,
+                "speech_input_confirmed": 1,
+                "stop_confirmed": 1
+              },
+              "measurements_summary": {
+                "interrupt_silence": {
+                  "count": 2,
+                  "p50_ms": 278,
+                  "p95_ms": 311,
+                  "ready": false
+                },
+                "speech_first_audio": {
+                  "count": 0,
+                  "p50_ms": null,
+                  "p95_ms": null,
+                  "ready": false
+                },
+                "invalid_count": 1,
+                "invalid_reasons": {
+                  "old_audio": 1
+                },
+                "unmatched_count": 0,
+                "duplicate_count": 0,
+                "minimum_samples": 3,
+                "ready": false,
+                "percentile_method": "nearest_rank",
+                "scope": "Browser SDK estimates from matched, unique rounds only; not physical audio output or verified acoustic speech endpoints. Small-sample empirical percentiles do not establish a production SLO.",
+                "started_count": 3,
+                "incomplete_count": 0
+              }
+            }
+          ],
+          "pooled_interrupt_estimates_ms": [243, 278, 311],
+          "cleanup": {
+            "temporary_tunnel_stopped": true,
+            "temporary_server_stopped": true,
+            "all_session_stops_confirmed": true
+          }
+        },
+        "scope": "Functional acceptance; no claim that all quantitative M0 gates passed.",
+        "asr_event": {
+          "code": "1003006",
+          "count": 1,
+          "official_meaning": "ASR connection establishment failed",
+          "root_cause": "not_determined",
+          "source": "https://docs.volcengine.com/docs/real-time-communication/conversation-ai-events-error-codes?lang=en"
+        }
+      }
+    },
+    {
+      "name": "measurement_harness_validation",
+      "status": "passed",
+      "summary": "116 Python tests and 15 Node tests passed; syntax and formatting passed.",
+      "evidence": {
+        "python_tests": 116,
+        "node_tests": 15,
+        "node_scope": "14 pure measurement-state tests and 1 JSDOM test with mocked SDK/HTTP; not live microphone evidence.",
+        "waiting_guard": "Wait for known RTC rounds to finish plus 1 second remote quiet and 500 ms local quiet before arming; old_audio remains invalid.",
+        "live_retest_of_waiting_guard": false
+      }
+    },
+    {
+      "name": "rtc_quantitative_acceptance",
+      "status": "blocked",
+      "summary": "Speech-first-audio and per-session repeated-sample baseline remain incomplete.",
+      "evidence": {
+        "completed_speech_first_audio_samples": 0,
+        "completed_interrupt_samples_across_two_sessions": 3,
+        "pooled_interrupt_estimates_ms": [243, 278, 311],
+        "invalid_reasons": ["old_audio", "overlapping_rounds"],
+        "physical_audio_output_latency": "not_measured",
+        "scope": "Pooled interruption observations are not a completed per-session benchmark or a production P95.",
+        "single_stage_optimization": "disabled"
+      }
+    },
+    {
+      "name": "resource_cleanup",
+      "status": "passed",
+      "summary": "Both known M0 sessions stopped and temporary server/tunnel stopped.",
+      "evidence": {
+        "temporary_tunnel_stopped": true,
+        "temporary_server_stopped": true,
+        "all_session_stops_confirmed": true,
+        "known_sessions": 2,
+        "all_session_states_stopped": true
+      }
+    }
+  ],
+  "m0_complete": false,
+  "completion_note": "Individual probes do not prove live RTC round correlation, retry or end-to-end barge-in."
+}

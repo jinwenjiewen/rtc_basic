@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="m0-client-key" content="__M0_CLIENT_KEY__" />
+    <title>Agent 文字对话</title>
+    <link rel="stylesheet" href="/m1/text/assets/text.css" />
+    <script src="/m1/text/assets/text.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="eyebrow">backend_harness_loop / M1</span>
+        <h1>Agent 文字对话</h1>
+        <p>自由输入问题，查看实时回复。可以继续追问，也可以在生成过程中打断。</p>
+        <a id="rtc-link" href="/m0" hidden>打开 RTC 语音验证页 →</a>
+        <span id="rtc-unavailable" class="muted" hidden>语音验证未启动</span>
+      </header>
+
+      <section class="panel session-panel" aria-label="文字会话设置">
+        <div class="model-field">
+          <label for="model-profile">本次会话的主模型</label>
+          <select id="model-profile" disabled><option>正在加载模型…</option></select>
+          <p class="muted">默认使用 Flash；切换模型前请先结束当前会话。</p>
+        </div>
+        <div class="button-row">
+          <button id="start-session" type="button" disabled>建立文字会话</button>
+          <button id="stop-session" class="secondary" type="button" disabled>结束会话</button>
+        </div>
+      </section>
+
+      <section class="status-panel" aria-label="会话状态">
+        <div><span class="label">当前状态</span><strong id="connection-state">尚未建立会话</strong></div>
+        <div><span class="label">有效期至</span><strong id="expires-at">—</strong></div>
+        <div><span class="label">笔记版本</span><strong id="notes-version">0</strong></div>
+      </section>
+      <p id="notice" class="notice" role="status" aria-live="polite">建立会话后即可发送文字。</p>
+      <p id="error" class="error" role="alert" hidden></p>
+
+      <section class="panel conversation" aria-labelledby="conversation-title">
+        <h2 id="conversation-title">对话</h2>
+        <p class="muted">这里显示你的输入与 Agent 的回复；新建会话会清空本页对话。</p>
+        <div id="messages" class="messages" role="log" aria-label="对话记录" aria-live="polite" aria-relevant="additions text"></div>
+        <form id="composer">
+          <label for="input">想聊些什么？</label>
+          <textarea id="input" rows="4" maxlength="8192" placeholder="输入问题，或继续刚才的话题…" disabled></textarea>
+          <div class="composer-footer">
+            <span class="muted">Ctrl / ⌘ + Enter 发送，Enter 换行</span>
+            <div class="button-row">
+              <button id="interrupt" class="secondary" type="button" disabled>打断回复</button>
+              <button id="send" type="submit" disabled>发送</button>
+            </div>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

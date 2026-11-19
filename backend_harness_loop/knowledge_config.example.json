@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "adapter": "viking_knowledge",
+  "base_url": "https://api-knowledgebase.mlp.cn-beijing.volces.com",
+  "search_path": "/api/knowledge/collection/search_knowledge",
+  "api_key_env": "KNOWLEDGE_BASE_API_KEY",
+  "resource": {
+    "project": "default",
+    "collection": "your_collection"
+  },
+  "limits": {
+    "max_hits": 3,
+    "timeout_ms": 1500
+  }
+}

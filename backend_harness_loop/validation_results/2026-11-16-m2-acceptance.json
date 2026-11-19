@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "report_date": "2026-11-16",
+  "recorded_at_utc": "2026-11-16T12:36:17.904726+00:00",
+  "timezone": "Asia/Shanghai",
+  "milestone": "M2",
+  "status": "accepted_by_user_with_retained_performance_limitations",
+  "accepted": true,
+  "completion_basis": "explicit_user_acceptance",
+  "user_decision": "不需要继续补齐 M2 剩下的性能验收，直接验收并进入 M3。",
+  "m2_functional_complete": true,
+  "m2_milestone_accepted": true,
+  "all_performance_acceptance_passed": false,
+  "production_slo_claim": false,
+  "remaining_m2_performance_tests_required_to_start_m3": false,
+  "historical_results_reclassified_as_passed": false,
+  "budgets_increased": false,
+  "retained_limitations": [
+    "48-turn imported history failed the default 9000ms first-output budget; separate 20000ms functionality result remains historical.",
+    "RTC SDK first-audio and physical stop latency quantification remains incomplete.",
+    "Historical unclassified background failure and later RTC background timeout/error events remain retained, with no claim that all root causes were resolved.",
+    "Product login, official frontend migration, transport identity merge and production rollout are not accepted by this decision."
+  ],
+  "previous_index": {
+    "report": "2026-11-16-m2-before-user-acceptance.json",
+    "sha256": "691b41b04ab8d18d7f67fe183a2a07aabbdf0c6caef8f57a8e0820cea4334c32"
+  },
+  "unchanged_historical_reports": [
+    {
+      "report": "2026-11-09-m2-segments.json",
+      "sha256": "74aa593af102673d0e95a549adbec3d7883bdf809dc50cd96543359b52f52f33"
+    },
+    {
+      "report": "2026-11-09-m2-edits.json",
+      "sha256": "e210d0a07e8e582bc7b41c1de90edc73b262da98d190cdc2322428aaa267db96"
+    },
+    {
+      "report": "2026-11-10-m2-performance.json",
+      "sha256": "bf384cb296ff5708bb9223ee3f1a164b2588e3b9df42adc50d99436e28daa07a"
+    },
+    {
+      "report": "2026-11-16-m2-rtc.json",
+      "sha256": "f5f850220b7a30898b1b77f198e6e4b55791f726b38317f37fbc2bd14c690a53"
+    }
+  ],
+  "next_milestone": "M3",
+  "m3_scope": "Model-selected, read-only business knowledge tools; configurable provider boundary, complete native records, bounded loops, evidence provenance and text checks."
+}

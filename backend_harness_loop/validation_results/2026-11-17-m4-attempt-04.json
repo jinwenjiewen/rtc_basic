@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "date": "2026-11-17",
+  "evidence_type": "react_production_build",
+  "status": "failed",
+  "cause": "CRA type-checks test files; the added Jest mock used a namespace type not supplied by this repository's explicit @jest/globals imports.",
+  "resolution": "Use the existing jest-mock Mock type convention.",
+  "checks_disabled": false,
+  "budgets_changed": false,
+  "secrets_included": false
+}

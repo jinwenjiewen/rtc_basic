@@ -1,0 +1,520 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-08T14:14:05.317541+00:00",
+  "report_date": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "milestone": "M1",
+  "status": "rtc_functional_slice_passed",
+  "full_m1_milestone_complete": false,
+  "scope": "Real legacy 2024 RTC, real DeepSeek per-session pinned profile, browser SDK and human chat confirmation. Separate from historical ASGI and M0 fixed-response reports.",
+  "startup": {
+    "status": "passed",
+    "method": "Separate ordinary foreground tunnel and serve commands",
+    "security_settings_changed": false,
+    "previous_automatic_review_reason": "blocked by policy; detailed trigger unknown",
+    "health": {
+      "local_mode": "agent_loop",
+      "public_http_status": 200,
+      "public_mode": "agent_loop",
+      "same_instance": true,
+      "public_management_status": 403,
+      "tls_verification": "enabled_httpx_default"
+    }
+  },
+  "results": [
+    {
+      "name": "pro_real_rtc_text",
+      "status": "passed",
+      "scope": "One text input through real RTC; no Pro microphone or human listening claim"
+    },
+    {
+      "name": "flash_real_voice_input",
+      "status": "passed",
+      "evidence": {
+        "text_sent_count": 0,
+        "accepted_user_asr_rounds": 16,
+        "callback_rounds": 18,
+        "admitted_rounds": 16,
+        "accepted_rounds_matching_conv_subv": 16
+      }
+    },
+    {
+      "name": "flash_real_model_reply",
+      "status": "passed",
+      "evidence": {
+        "generation_completed_rounds": 7,
+        "model_completed_any_phase_rounds": 8,
+        "model_started_steps": 24,
+        "model_completed_steps": 15,
+        "session_profile_switches": 0
+      }
+    },
+    {
+      "name": "model_execution_cancellation",
+      "status": "passed_for_observed_sample",
+      "evidence": {
+        "cancelled_turns": 9,
+        "cancelled_phase_counts": {
+          "decision": 8,
+          "final": 1
+        },
+        "post_cancellation_output_or_completion_events": 0,
+        "attribution": "Other turns; not attributed to the one page click"
+      }
+    },
+    {
+      "name": "page_playback_interrupt",
+      "status": "passed_functional",
+      "evidence": {
+        "page_clicks": 1,
+        "same_round_stage4_and_playback_interrupted": 1,
+        "same_clicked_round_execution_cancelled": 0,
+        "generation_had_already_completed": true
+      }
+    },
+    {
+      "name": "human_functional_confirmation",
+      "status": "passed",
+      "source": "user_chat",
+      "evidence": {
+        "initial_feedback_no_reply": true,
+        "subsequent_reply_heard_confirmation": true,
+        "passed_reply_and_interruption_in_response_to_explicit_stop_question": true,
+        "page_confirmation_events_written": false,
+        "asr_semantic_accuracy_separately_scored": false
+      }
+    },
+    {
+      "name": "latency_baseline",
+      "status": "incomplete",
+      "evidence": {
+        "metric_source": "browser_sdk_estimate",
+        "completed_interrupt_silence_ms": [
+          295
+        ],
+        "required_distinct_rounds_per_session": 3,
+        "speech_first_audio_completed_samples": 0,
+        "physical_audio_latency_measured": false,
+        "production_percentiles_claimed": false
+      }
+    },
+    {
+      "name": "rtc_notes_and_recall",
+      "status": "not_completed",
+      "evidence": {
+        "fixture_seen_in_user_text": true,
+        "notes_version": 0,
+        "context_update_notes_calls": 0,
+        "fixture_in_notes": false
+      },
+      "scope": "Do not reuse the earlier real-model ASGI notes test as RTC evidence"
+    }
+  ],
+  "counter_semantics": {
+    "model_completed_round_count": "At least one model phase completed, not necessarily a final reply",
+    "model_phase_counts": "Number of started requests in each phase",
+    "delivery_completed": "Backend text stream delivery, not independent proof of audio playback completion"
+  },
+  "rtc_observations": {
+    "schema_version": 1,
+    "milestone": "M1",
+    "scope": "Read-only observations for RTC-ledger-bound SQLite sessions; no automatic end-to-end or latency verdict",
+    "inputs": {
+      "capture_present": true,
+      "client_events_present": true
+    },
+    "exclusions": {
+      "database_sessions_not_in_client_ledger": 0,
+      "client_ledger_sessions_not_in_database": 0,
+      "capture_records_unmatched_run": 0,
+      "client_events_unmatched_session_run": 0,
+      "invalid_capture_records": 0,
+      "invalid_client_records": 0
+    },
+    "sessions": [
+      {
+        "session_sha256": "c4861ac81cdedae3a11438a61626432afba8db31843d6dc92c50e15a68d0fc57",
+        "run_sha256": "617bbd78fa4a8f17f8eaa21ee86fbfcf85511060d50032fa49a35a9659bc4e0a",
+        "profile": "deepseek_v4_pro",
+        "backend": {
+          "state": "closed",
+          "epoch": 2,
+          "notes_version": 0,
+          "accepted_round_count": 1,
+          "turn_state_counts": {
+            "generation_completed": 1
+          },
+          "delivery_status_counts": {
+            "completed": 1
+          },
+          "ledger_event_counts": {
+            "decision.draft": 1,
+            "delivery.completed": 1,
+            "delivery.delta": 12,
+            "message": 2,
+            "model.completed": 2,
+            "model.started": 2,
+            "session.closed": 1,
+            "session.created": 1,
+            "turn.admitted": 1,
+            "turn.generation_completed": 1
+          },
+          "model_started_count": 2,
+          "model_completed_count": 2,
+          "model_completed_round_count": 1,
+          "cancellation_count": 0,
+          "model_phase_counts": {
+            "decision": 1,
+            "final": 1
+          },
+          "model_profile_counts": {
+            "deepseek_v4_pro": 2
+          },
+          "tool_name_counts": {},
+          "tool_state_counts": {},
+          "fixture_matches": {
+            "user_text": false,
+            "notes_text": false
+          }
+        },
+        "correlation": {
+          "custom_llm_round_count": 1,
+          "accepted_callback_round_count": 1,
+          "accepted_conv_round_count": 1,
+          "accepted_subv_round_count": 1,
+          "accepted_user_asr_round_count": 0,
+          "accepted_user_asr_model_round_count": 0,
+          "accepted_callback_model_round_count": 1,
+          "accepted_stage4_round_count": 0,
+          "observed_callback_attempt_counts_per_accepted_round": [
+            1
+          ],
+          "user_binding_available": true
+        },
+        "capture": {
+          "record_count": 5,
+          "source_counts": {
+            "custom_llm": 1,
+            "rts_event": 4
+          },
+          "channel_round_counts": {
+            "custom_llm": 1,
+            "conv": 1,
+            "subv": 1
+          },
+          "stage_counts": {
+            "2": 1,
+            "3": 1,
+            "5": 1
+          },
+          "callback_response_status_counts": {},
+          "scope": "Same-run callback metadata; missing M0 capture_stream or response_status is normal for M1"
+        },
+        "client": {
+          "record_count": 9,
+          "event_counts": {
+            "agent_audio_published": 1,
+            "agent_joined": 1,
+            "first_audio_decoded": 1,
+            "joined": 1,
+            "player_playing": 1,
+            "remote_level_active": 1,
+            "remote_level_silent": 2,
+            "text_sent": 1
+          },
+          "text_sent_count": 1,
+          "human_confirmations": {
+            "heard_confirmed": false,
+            "speech_input_confirmed": false,
+            "stop_confirmed": false
+          },
+          "scope_counts": {
+            "browser_sdk_observation": 9
+          },
+          "scope": "SDK observations and explicit human reports; text_sent is separate from voice and counts do not establish timing"
+        },
+        "observed_failure_codes": {},
+        "cleanup": {
+          "local_state": "stopped",
+          "local_stopped": true,
+          "start_attempted": true,
+          "cleanup_rounds": 0,
+          "provider_action_counts": {},
+          "stop_accepted": false,
+          "stop_http_status_counts": {},
+          "scope": "Local cleanup state and provider acceptance; not independent proof of remote shutdown"
+        }
+      },
+      {
+        "session_sha256": "fbb368b4157a9b274516c950e8b8b5422825032f099b8690aac139e69af474bf",
+        "run_sha256": "38b28dd57de00d484e4860bf7ad96b0085eb8fb941500f7843d784e551a1403f",
+        "profile": "deepseek_v4_flash",
+        "backend": {
+          "state": "closed",
+          "epoch": 29,
+          "notes_version": 0,
+          "accepted_round_count": 16,
+          "turn_state_counts": {
+            "cancelled": 9,
+            "generation_completed": 7
+          },
+          "delivery_status_counts": {
+            "completed": 7,
+            "interrupted": 9
+          },
+          "ledger_event_counts": {
+            "decision.draft": 7,
+            "delivery.completed": 7,
+            "delivery.delta": 126,
+            "execution.cancelled": 9,
+            "message": 25,
+            "model.completed": 15,
+            "model.started": 24,
+            "playback.interrupted": 3,
+            "round.cancelled": 14,
+            "session.closed": 1,
+            "session.created": 1,
+            "tool.completed": 1,
+            "tool.dispatched": 1,
+            "tools.prepared": 1,
+            "turn.admitted": 16,
+            "turn.cancelled": 9,
+            "turn.generation_completed": 7
+          },
+          "model_started_count": 24,
+          "model_completed_count": 15,
+          "model_completed_round_count": 8,
+          "cancellation_count": 9,
+          "model_phase_counts": {
+            "decision": 16,
+            "final": 8
+          },
+          "model_profile_counts": {
+            "deepseek_v4_flash": 24
+          },
+          "tool_name_counts": {
+            "prepare_response": 1
+          },
+          "tool_state_counts": {
+            "success": 1
+          },
+          "fixture_matches": {
+            "user_text": true,
+            "notes_text": false
+          }
+        },
+        "correlation": {
+          "custom_llm_round_count": 18,
+          "accepted_callback_round_count": 16,
+          "accepted_conv_round_count": 16,
+          "accepted_subv_round_count": 16,
+          "accepted_user_asr_round_count": 16,
+          "accepted_user_asr_model_round_count": 8,
+          "accepted_callback_model_round_count": 8,
+          "accepted_stage4_round_count": 12,
+          "observed_callback_attempt_counts_per_accepted_round": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "user_binding_available": true
+        },
+        "capture": {
+          "record_count": 110,
+          "source_counts": {
+            "custom_llm": 18,
+            "rts_event": 92
+          },
+          "channel_round_counts": {
+            "custom_llm": 18,
+            "conv": 18,
+            "subv": 18
+          },
+          "stage_counts": {
+            "1": 18,
+            "2": 18,
+            "3": 6,
+            "4": 14,
+            "5": 5
+          },
+          "callback_response_status_counts": {},
+          "scope": "Same-run callback metadata; missing M0 capture_stream or response_status is normal for M1"
+        },
+        "client": {
+          "record_count": 26,
+          "event_counts": {
+            "agent_audio_published": 1,
+            "agent_joined": 1,
+            "first_audio_decoded": 1,
+            "interrupt_sent": 1,
+            "joined": 1,
+            "mic_level_active": 1,
+            "mic_started": 1,
+            "mic_stopped": 1,
+            "player_playing": 1,
+            "remote_level_active": 8,
+            "remote_level_silent": 9
+          },
+          "text_sent_count": 0,
+          "human_confirmations": {
+            "heard_confirmed": false,
+            "speech_input_confirmed": false,
+            "stop_confirmed": false
+          },
+          "scope_counts": {
+            "browser_sdk_observation": 26
+          },
+          "scope": "SDK observations and explicit human reports; text_sent is separate from voice and counts do not establish timing"
+        },
+        "observed_failure_codes": {},
+        "cleanup": {
+          "local_state": "stopped",
+          "local_stopped": true,
+          "start_attempted": true,
+          "cleanup_rounds": 1,
+          "provider_action_counts": {
+            "StartVoiceChat": 1,
+            "StopVoiceChat": 2
+          },
+          "stop_accepted": true,
+          "stop_http_status_counts": {
+            "200": 2
+          },
+          "scope": "Local cleanup state and provider acceptance; not independent proof of remote shutdown"
+        }
+      }
+    ]
+  },
+  "flash_cancellation_audit": {
+    "schema_version": 1,
+    "session_sha256": "fbb368b4157a9b274516c950e8b8b5422825032f099b8690aac139e69af474bf",
+    "run_sha256": "38b28dd57de00d484e4860bf7ad96b0085eb8fb941500f7843d784e551a1403f",
+    "profile_sha256": "c532372bc2cc6e7ac00ab65137cffbfeea53735f2bc1e28e7732a0750b1ecd2d",
+    "callback_round_count": 18,
+    "admitted_round_count": 16,
+    "user_asr_accepted_round_count": 16,
+    "model_completed_any_phase_round_count": 8,
+    "generation_completed_round_count": 7,
+    "model_started_count": 24,
+    "model_completed_count": 15,
+    "client_text_sent_count": 0,
+    "client_interrupt_sent_count": 1,
+    "qualified_click_matched_playback_round_count": 1,
+    "click_sample_matched_execution_cancelled_round_count": 0,
+    "click_silence_sdk_completed_sample_count": 1,
+    "click_silence_sdk_duration_ms": [
+      295
+    ],
+    "click_silence_required_sample_count": 3,
+    "speech_first_audio_completed_sample_count": 0,
+    "accepted_stage4_round_count": 12,
+    "all_stage4_round_count": 14,
+    "execution_cancelled_round_count": 9,
+    "execution_cancelled_phase_counts": {
+      "decision": 8,
+      "final": 1
+    },
+    "execution_cancelled_turn_state_counts": {
+      "cancelled": 9
+    },
+    "execution_cancelled_delivery_status_counts": {
+      "interrupted": 9
+    },
+    "turn_cancellation_reason_counts": {
+      "user_interrupt": 9
+    },
+    "post_turn_cancelled_event_counts": {
+      "delivery.delta": 0,
+      "delivery.completed": 0,
+      "model.completed": 0,
+      "turn.generation_completed": 0
+    },
+    "post_execution_cancelled_event_counts": {
+      "delivery.delta": 0,
+      "delivery.completed": 0,
+      "model.completed": 0,
+      "turn.generation_completed": 0
+    },
+    "unadmitted_callback_round_count": 2,
+    "unadmitted_with_tombstone_round_count": 2,
+    "unadmitted_tombstone_before_callback_capture_count": 1,
+    "unadmitted_tombstone_not_before_callback_capture_count": 1,
+    "page_human_confirmation_event_counts": {
+      "heard_confirmed": 0,
+      "speech_input_confirmed": 0,
+      "stop_confirmed": 0
+    },
+    "observed_failure_code_count": 0,
+    "local_stopped_session_count": 1,
+    "provider_stop_http_200_count": 2,
+    "provider_stop_accepted_session_count": 1,
+    "closed_runtime_session_count": 1,
+    "notes_version": 0
+  },
+  "cleanup": {
+    "all_client_sessions_stopped": true,
+    "all_runtime_sessions_closed": true,
+    "microphone_and_rtc_connection_released": true,
+    "serve_process_exited": true,
+    "tunnel_process_exited": true,
+    "port_3101_listening": false,
+    "scope": "Local observed states and accepted provider stop requests; no independent cloud-resource audit",
+    "pro_pre_restart_observation": {
+      "source": "Observed safe tool output before server restart",
+      "start_http_status": 200,
+      "stop_http_statuses": [
+        200,
+        200
+      ],
+      "local_state": "stopped",
+      "cleanup_rounds": 1
+    },
+    "pro_recovery_metadata_loss": {
+      "observed": true,
+      "original_ledger_reconstructed": false,
+      "current_empty_provider_history_is_not_stop_failure": true,
+      "fix": "Restore provider and cleanup_rounds; covered by restart regression; not re-run in cloud"
+    },
+    "flash_persisted_stop_http_statuses": [
+      200,
+      200
+    ]
+  },
+  "code_validation": {
+    "rtc_checkpoint_python_tests_passed": 231,
+    "rtc_checkpoint_node_tests_passed": 16,
+    "scope": "Full local suites after RTC and recovery fixes, before the new direct-text feature"
+  },
+  "verification_notes": [
+    {
+      "probe": "additional_python_urllib_system_tls_health_check",
+      "error_code": "certificate_verify_failed_expired",
+      "actual_backend_httpx_tls_health_check": "passed_with_verification_enabled"
+    }
+  ],
+  "remaining": [
+    "Product React login and authorization integration",
+    "Complete model-driven context compaction",
+    "Controlled RTC persistent-notes recall test",
+    "Multi-round first-audio and physical latency baseline"
+  ],
+  "privacy": {
+    "credentials_or_callback_urls_in_report": false,
+    "original_conversation_or_notes_in_report": false,
+    "raw_identity_fields_in_report": false,
+    "private_source_data_location": ".local ignored files and SQLite"
+  }
+}

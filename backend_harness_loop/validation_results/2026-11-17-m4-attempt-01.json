@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "milestone": "M4",
+  "scope": "product login and text, first scripted integration attempt",
+  "date": "2026-11-17",
+  "evidence_type": "scripted_model_and_isolated_sqlite_auth",
+  "tests_run": 11,
+  "passed": 10,
+  "failed": 1,
+  "failures": [
+    {
+      "test": "test_model_pinned_final_only_and_browser_cannot_override_owner_or_provider",
+      "cause": "Product UI and assertion expected completed; shared runtime emits generation_completed.",
+      "observed_state": "generation_completed",
+      "resolution": "Use existing runtime terminal state in React and assertion; no runtime behavior or budgets changed."
+    }
+  ],
+  "real_model_calls": false,
+  "real_rtc_calls": false,
+  "budgets_changed": false,
+  "secrets_included": false
+}

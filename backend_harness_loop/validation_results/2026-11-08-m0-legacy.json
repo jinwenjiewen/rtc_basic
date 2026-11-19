@@ -1,0 +1,1607 @@
+{
+  "schema_version": 1,
+  "milestone": "M0",
+  "route": "2024-12-01",
+  "recorded_at_utc": "2026-11-08T09:23:50.477136+00:00",
+  "client_date": "2026-11-08",
+  "client_timezone": "Asia/Shanghai",
+  "overall_status": "blocked",
+  "m0_complete": false,
+  "server_text_compatibility": "passed_in_observed_samples",
+  "offline_tests_passed": 67,
+  "cases": [
+    {
+      "name": "initial_legacy",
+      "recorded_at_utc": "2026-11-08T09:12:29.984094+00:00",
+      "legacy_template_unknown_fields_removed": false,
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2024-12-01",
+        "legacy_voice_profile_configured": true,
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "openapi": {
+        "api_version": "2024-12-01",
+        "scope": "fresh_m0_room_and_task_only",
+        "live_start_requested": true,
+        "query_capability": "query_unverified_no_documented_endpoint_selected",
+        "round_correlation_gate": "blocked_requires_real_RTC_client_and_callback_capture",
+        "end_to_end_interrupt_gate": "blocked_requires_real_RTC_client_and_audio_observation",
+        "text_probe_requested": true,
+        "voice_profile": "legacy_custom_resources",
+        "probe_room_id": "m0_room_c51009df0acc49d9b3e76f9a61a39314",
+        "probe_task_id": "m0_task_c51009df0acc49d9b3e76f9a61a39314",
+        "probe_agent_id": "m0_agent_c51009df0acc49d9b3e76f9a61a39314",
+        "probe_user_id": "m0_user_c51009df0acc49d9b3e76f9a61a39314",
+        "start_outcome": "accepted",
+        "command_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 372.21,
+            "command": "ExternalTextToLLM",
+            "occurrence": 1
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 210.67,
+            "command": "ExternalTextToLLM",
+            "occurrence": 2
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 218.1,
+            "command": "interrupt"
+          }
+        ],
+        "text_probe_same_input_occurrences": 2,
+        "configured_wait_budget_seconds": 10.25,
+        "text_probe_gate": "commands_accepted_callback_correlation_pending",
+        "observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StartVoiceChat",
+            "duration_ms": 413.79
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 166.47
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 157.36
+          }
+        ],
+        "network_calls": 6,
+        "cleanup_confirmed": true,
+        "cleanup_required": false,
+        "live_start_stop_gate": "passed"
+      },
+      "capture_summary": {
+        "record_count": 12,
+        "source_counts": {
+          "custom_llm": 2,
+          "rts_event": 10
+        },
+        "unique_round_counts": {
+          "custom_llm": 2,
+          "conv": 3,
+          "subv": 2
+        },
+        "custom_rounds_matched_to_state": 2,
+        "custom_rounds_matched_to_subtitle": 2,
+        "observed_custom_attempt_counts_per_round": [1, 1],
+        "stage_counts": {
+          "2": 2,
+          "0": 1,
+          "3": 2,
+          "5": 2,
+          "4": 1
+        },
+        "machine_error_codes": {},
+        "callback_response_status_counts": {},
+        "stream_terminal_counts": {},
+        "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+      }
+    },
+    {
+      "name": "injected_503",
+      "recorded_at_utc": "2026-11-08T09:18:19.265880+00:00",
+      "legacy_template_unknown_fields_removed": false,
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2024-12-01",
+        "legacy_voice_profile_configured": true,
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "openapi": {
+        "api_version": "2024-12-01",
+        "scope": "fresh_m0_room_and_task_only",
+        "live_start_requested": true,
+        "query_capability": "query_unverified_no_documented_endpoint_selected",
+        "round_correlation_gate": "blocked_requires_real_RTC_client_and_callback_capture",
+        "end_to_end_interrupt_gate": "blocked_requires_real_RTC_client_and_audio_observation",
+        "text_probe_requested": true,
+        "interrupt_only_probe_requested": false,
+        "voice_profile": "legacy_custom_resources",
+        "probe_room_id": "m0_room_faba7c0ba2dc49a38ab413da5f966a9c",
+        "probe_task_id": "m0_task_faba7c0ba2dc49a38ab413da5f966a9c",
+        "probe_agent_id": "m0_agent_faba7c0ba2dc49a38ab413da5f966a9c",
+        "probe_user_id": "m0_user_faba7c0ba2dc49a38ab413da5f966a9c",
+        "start_outcome": "accepted",
+        "command_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 299.94,
+            "command": "ExternalTextToLLM",
+            "occurrence": 1
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 134.62,
+            "command": "ExternalTextToLLM",
+            "occurrence": 2
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 111.41,
+            "command": "interrupt"
+          }
+        ],
+        "text_probe_same_input_occurrences": 2,
+        "configured_wait_budget_seconds": 12.25,
+        "text_probe_gate": "commands_accepted_callback_correlation_pending",
+        "observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StartVoiceChat",
+            "duration_ms": 358.8
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 106.18
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 167.38
+          }
+        ],
+        "network_calls": 6,
+        "cleanup_confirmed": true,
+        "cleanup_required": false,
+        "live_start_stop_gate": "passed"
+      },
+      "capture_summary": {
+        "record_count": 10,
+        "source_counts": {
+          "custom_llm": 2,
+          "rts_event": 7,
+          "capture_stream": 1
+        },
+        "unique_round_counts": {
+          "custom_llm": 2,
+          "conv": 3,
+          "subv": 1
+        },
+        "custom_rounds_matched_to_state": 2,
+        "custom_rounds_matched_to_subtitle": 1,
+        "observed_custom_attempt_counts_per_round": [1, 1],
+        "stage_counts": {
+          "0": 2,
+          "2": 1,
+          "3": 1,
+          "5": 1,
+          "4": 1
+        },
+        "machine_error_codes": {
+          "1000002": 1,
+          "1004002": 1
+        },
+        "callback_response_status_counts": {
+          "503": 1,
+          "200": 1
+        },
+        "stream_terminal_counts": {
+          "completed": 1
+        },
+        "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+      }
+    },
+    {
+      "name": "initial_slow_interrupt",
+      "recorded_at_utc": "2026-11-08T09:19:21.625627+00:00",
+      "legacy_template_unknown_fields_removed": false,
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2024-12-01",
+        "legacy_voice_profile_configured": true,
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "openapi": {
+        "api_version": "2024-12-01",
+        "scope": "fresh_m0_room_and_task_only",
+        "live_start_requested": true,
+        "query_capability": "query_unverified_no_documented_endpoint_selected",
+        "round_correlation_gate": "blocked_requires_real_RTC_client_and_callback_capture",
+        "end_to_end_interrupt_gate": "blocked_requires_real_RTC_client_and_audio_observation",
+        "text_probe_requested": false,
+        "interrupt_only_probe_requested": true,
+        "voice_profile": "legacy_custom_resources",
+        "probe_room_id": "m0_room_0fbb79549ae849eb924ed1d9a39ecd9b",
+        "probe_task_id": "m0_task_0fbb79549ae849eb924ed1d9a39ecd9b",
+        "probe_agent_id": "m0_agent_0fbb79549ae849eb924ed1d9a39ecd9b",
+        "probe_user_id": "m0_user_0fbb79549ae849eb924ed1d9a39ecd9b",
+        "start_outcome": "accepted",
+        "command_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 355.6,
+            "command": "ExternalTextToLLM",
+            "occurrence": 1
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 158.8,
+            "command": "interrupt"
+          }
+        ],
+        "interrupt_probe_input_occurrences": 1,
+        "configured_wait_budget_seconds": 6.0,
+        "interrupt_probe_gate": "commands_accepted_cancellation_observation_pending",
+        "observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StartVoiceChat",
+            "duration_ms": 390.37
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 164.71
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 77.62
+          }
+        ],
+        "network_calls": 5,
+        "cleanup_confirmed": true,
+        "cleanup_required": false,
+        "live_start_stop_gate": "passed"
+      },
+      "capture_summary": {
+        "record_count": 7,
+        "source_counts": {
+          "custom_llm": 1,
+          "rts_event": 5,
+          "capture_stream": 1
+        },
+        "unique_round_counts": {
+          "custom_llm": 1,
+          "conv": 2,
+          "subv": 1
+        },
+        "custom_rounds_matched_to_state": 1,
+        "custom_rounds_matched_to_subtitle": 1,
+        "observed_custom_attempt_counts_per_round": [1],
+        "stage_counts": {
+          "0": 1,
+          "3": 1,
+          "5": 1,
+          "4": 1
+        },
+        "machine_error_codes": {
+          "1000002": 1
+        },
+        "callback_response_status_counts": {
+          "200": 1
+        },
+        "stream_terminal_counts": {
+          "cancelled": 1
+        },
+        "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+      }
+    },
+    {
+      "name": "clean_slow_interrupt",
+      "recorded_at_utc": "2026-11-08T09:20:46.464593+00:00",
+      "legacy_template_unknown_fields_removed": true,
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2024-12-01",
+        "legacy_voice_profile_configured": true,
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "openapi": {
+        "api_version": "2024-12-01",
+        "scope": "fresh_m0_room_and_task_only",
+        "live_start_requested": true,
+        "query_capability": "query_unverified_no_documented_endpoint_selected",
+        "round_correlation_gate": "blocked_requires_real_RTC_client_and_callback_capture",
+        "end_to_end_interrupt_gate": "blocked_requires_real_RTC_client_and_audio_observation",
+        "text_probe_requested": false,
+        "interrupt_only_probe_requested": true,
+        "voice_profile": "legacy_custom_resources",
+        "probe_room_id": "m0_room_4860332f29014c419c8716000f221e99",
+        "probe_task_id": "m0_task_4860332f29014c419c8716000f221e99",
+        "probe_agent_id": "m0_agent_4860332f29014c419c8716000f221e99",
+        "probe_user_id": "m0_user_4860332f29014c419c8716000f221e99",
+        "start_outcome": "accepted",
+        "command_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 296.2,
+            "command": "ExternalTextToLLM",
+            "occurrence": 1
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 105.88,
+            "command": "interrupt"
+          }
+        ],
+        "interrupt_probe_input_occurrences": 1,
+        "configured_wait_budget_seconds": 6.0,
+        "interrupt_probe_gate": "commands_accepted_cancellation_observation_pending",
+        "observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StartVoiceChat",
+            "duration_ms": 537.43
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 112.04
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 78.87
+          }
+        ],
+        "network_calls": 5,
+        "cleanup_confirmed": true,
+        "cleanup_required": false,
+        "live_start_stop_gate": "passed"
+      },
+      "capture_summary": {
+        "record_count": 6,
+        "source_counts": {
+          "custom_llm": 1,
+          "rts_event": 4,
+          "capture_stream": 1
+        },
+        "unique_round_counts": {
+          "custom_llm": 1,
+          "conv": 1,
+          "subv": 1
+        },
+        "custom_rounds_matched_to_state": 1,
+        "custom_rounds_matched_to_subtitle": 1,
+        "observed_custom_attempt_counts_per_round": [1],
+        "stage_counts": {
+          "3": 1,
+          "5": 1,
+          "4": 1
+        },
+        "machine_error_codes": {},
+        "callback_response_status_counts": {
+          "200": 1
+        },
+        "stream_terminal_counts": {
+          "cancelled": 1
+        },
+        "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+      },
+      "captured_metadata": [
+        {
+          "captured_at": "2026-11-08T09:20:40.925233+00:00",
+          "source": "custom_llm",
+          "schema": {
+            "$": "object",
+            "$.messages": "array",
+            "$.messages[]": "object",
+            "$.messages[].role": "string",
+            "$.messages[].content": "string",
+            "$.model": "string",
+            "$.stream": "boolean",
+            "$.temperature": "number",
+            "$.top_p": "number",
+            "$.stream_options": "object",
+            "$.stream_options.include_usage": "boolean",
+            "$.round_id": "number"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "round_id",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "49107b1114c875acca78c67b0ef545ebb6202adc064ce962f664c5fdae98ca6b"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "response_status": 200
+        },
+        {
+          "captured_at": "2026-11-08T09:20:42.109844+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "66c98acf0dedc2d789c41b114cd96221239036267c1041eab843c5cfda6deeb3"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "79fdda3fa570b9407fbed9e8dbd42eb306d231a870785ebd378f31ee7265b3fc"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "49107b1114c875acca78c67b0ef545ebb6202adc064ce962f664c5fdae98ca6b"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 3,
+            "event_time": 1794129642211
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        },
+        {
+          "captured_at": "2026-11-08T09:20:43.465773+00:00",
+          "source": "capture_stream",
+          "schema": {
+            "$": "object",
+            "$.messages": "array",
+            "$.messages[]": "object",
+            "$.messages[].role": "string",
+            "$.messages[].content": "string",
+            "$.model": "string",
+            "$.stream": "boolean",
+            "$.temperature": "number",
+            "$.top_p": "number",
+            "$.stream_options": "object",
+            "$.stream_options.include_usage": "boolean",
+            "$.round_id": "number"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "round_id",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "49107b1114c875acca78c67b0ef545ebb6202adc064ce962f664c5fdae98ca6b"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "response_status": 200,
+          "state": "cancelled",
+          "duration_ms": 2539.56,
+          "chunks_sent": 3
+        },
+        {
+          "captured_at": "2026-11-08T09:20:43.664928+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.data": "array",
+            "$.data[]": "object",
+            "$.data[].customInfo": "null",
+            "$.data[].definite": "boolean",
+            "$.data[].firstCharPos": "number",
+            "$.data[].language": "string",
+            "$.data[].lastCharPos": "number",
+            "$.data[].mode": "number",
+            "$.data[].paragraph": "boolean",
+            "$.data[].roundId": "number",
+            "$.data[].sequence": "number",
+            "$.data[].text": "string",
+            "$.data[].timestamp": "number",
+            "$.data[].userId": "string",
+            "$.type": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "data[0].roundId",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "49107b1114c875acca78c67b0ef545ebb6202adc064ce962f664c5fdae98ca6b"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "subv"
+        },
+        {
+          "captured_at": "2026-11-08T09:20:44.003526+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "66c98acf0dedc2d789c41b114cd96221239036267c1041eab843c5cfda6deeb3"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "79fdda3fa570b9407fbed9e8dbd42eb306d231a870785ebd378f31ee7265b3fc"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "49107b1114c875acca78c67b0ef545ebb6202adc064ce962f664c5fdae98ca6b"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 5,
+            "event_time": 1794129644251
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        },
+        {
+          "captured_at": "2026-11-08T09:20:44.403389+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "66c98acf0dedc2d789c41b114cd96221239036267c1041eab843c5cfda6deeb3"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "79fdda3fa570b9407fbed9e8dbd42eb306d231a870785ebd378f31ee7265b3fc"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "49107b1114c875acca78c67b0ef545ebb6202adc064ce962f664c5fdae98ca6b"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 4,
+            "event_time": 1794129644253
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        }
+      ]
+    },
+    {
+      "name": "clean_normal",
+      "recorded_at_utc": "2026-11-08T09:21:56.667347+00:00",
+      "legacy_template_unknown_fields_removed": true,
+      "configuration": {
+        "configured": {
+          "ark_api_key": true,
+          "ark_base_url": true,
+          "ark_model": true,
+          "volc_access_key": true,
+          "volc_secret_key": true,
+          "rtc_app_id": true,
+          "callback_secret": true,
+          "server_url": true
+        },
+        "rtc_api_version": "2024-12-01",
+        "legacy_voice_profile_configured": true,
+        "model_transport_https": true,
+        "ambient_proxy_enabled": false,
+        "model_thinking": "disabled"
+      },
+      "openapi": {
+        "api_version": "2024-12-01",
+        "scope": "fresh_m0_room_and_task_only",
+        "live_start_requested": true,
+        "query_capability": "query_unverified_no_documented_endpoint_selected",
+        "round_correlation_gate": "blocked_requires_real_RTC_client_and_callback_capture",
+        "end_to_end_interrupt_gate": "blocked_requires_real_RTC_client_and_audio_observation",
+        "text_probe_requested": true,
+        "interrupt_only_probe_requested": false,
+        "voice_profile": "legacy_custom_resources",
+        "probe_room_id": "m0_room_7188164dda66439cbc998921fe8cce9b",
+        "probe_task_id": "m0_task_7188164dda66439cbc998921fe8cce9b",
+        "probe_agent_id": "m0_agent_7188164dda66439cbc998921fe8cce9b",
+        "probe_user_id": "m0_user_7188164dda66439cbc998921fe8cce9b",
+        "start_outcome": "accepted",
+        "command_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 302.6,
+            "command": "ExternalTextToLLM",
+            "occurrence": 1
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 172.41,
+            "command": "ExternalTextToLLM",
+            "occurrence": 2
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "UpdateVoiceChat",
+            "duration_ms": 182.69,
+            "command": "interrupt"
+          }
+        ],
+        "text_probe_same_input_occurrences": 2,
+        "configured_wait_budget_seconds": 10.25,
+        "text_probe_gate": "commands_accepted_callback_correlation_pending",
+        "observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StartVoiceChat",
+            "duration_ms": 238.99
+          }
+        ],
+        "cleanup_observations": [
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 106.85
+          },
+          {
+            "http_status": 200,
+            "ok": true,
+            "response_shape": {
+              "top_level_keys": ["ResponseMetadata", "Result"],
+              "metadata_present": true,
+              "request_id_present": true,
+              "error_present": false,
+              "result_present": true,
+              "result_type": "str"
+            },
+            "action": "StopVoiceChat",
+            "duration_ms": 162.27
+          }
+        ],
+        "network_calls": 6,
+        "cleanup_confirmed": true,
+        "cleanup_required": false,
+        "live_start_stop_gate": "passed"
+      },
+      "capture_summary": {
+        "record_count": 12,
+        "source_counts": {
+          "custom_llm": 2,
+          "capture_stream": 2,
+          "rts_event": 8
+        },
+        "unique_round_counts": {
+          "custom_llm": 2,
+          "conv": 2,
+          "subv": 2
+        },
+        "custom_rounds_matched_to_state": 2,
+        "custom_rounds_matched_to_subtitle": 2,
+        "observed_custom_attempt_counts_per_round": [1, 1],
+        "stage_counts": {
+          "3": 2,
+          "5": 2,
+          "2": 1,
+          "4": 1
+        },
+        "machine_error_codes": {},
+        "callback_response_status_counts": {
+          "200": 2
+        },
+        "stream_terminal_counts": {
+          "completed": 2
+        },
+        "scope": "Observed callback samples only; not a universal retry guarantee or real client/audio validation"
+      },
+      "captured_metadata": [
+        {
+          "captured_at": "2026-11-08T09:21:46.558532+00:00",
+          "source": "custom_llm",
+          "schema": {
+            "$": "object",
+            "$.messages": "array",
+            "$.messages[]": "object",
+            "$.messages[].role": "string",
+            "$.messages[].content": "string",
+            "$.model": "string",
+            "$.stream": "boolean",
+            "$.temperature": "number",
+            "$.top_p": "number",
+            "$.stream_options": "object",
+            "$.stream_options.include_usage": "boolean",
+            "$.round_id": "number"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "round_id",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "response_status": 200
+        },
+        {
+          "captured_at": "2026-11-08T09:21:46.569322+00:00",
+          "source": "capture_stream",
+          "schema": {
+            "$": "object",
+            "$.messages": "array",
+            "$.messages[]": "object",
+            "$.messages[].role": "string",
+            "$.messages[].content": "string",
+            "$.model": "string",
+            "$.stream": "boolean",
+            "$.temperature": "number",
+            "$.top_p": "number",
+            "$.stream_options": "object",
+            "$.stream_options.include_usage": "boolean",
+            "$.round_id": "number"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "round_id",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "response_status": 200,
+          "state": "completed",
+          "duration_ms": 0.08,
+          "chunks_sent": 1
+        },
+        {
+          "captured_at": "2026-11-08T09:21:47.740212+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "383159893e4e1971203f7f3e622ab0eeca535799389fb7720efacf683e81634b"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "6704dbeae852eb9e62f94d22fbda758f548a6e680171fe08a492a47a582492ef"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 3,
+            "event_time": 1794129707869
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        },
+        {
+          "captured_at": "2026-11-08T09:21:49.681371+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.data": "array",
+            "$.data[]": "object",
+            "$.data[].customInfo": "null",
+            "$.data[].definite": "boolean",
+            "$.data[].firstCharPos": "number",
+            "$.data[].language": "string",
+            "$.data[].lastCharPos": "number",
+            "$.data[].mode": "number",
+            "$.data[].paragraph": "boolean",
+            "$.data[].roundId": "number",
+            "$.data[].sequence": "number",
+            "$.data[].text": "string",
+            "$.data[].timestamp": "number",
+            "$.data[].userId": "string",
+            "$.type": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "data[0].roundId",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "subv"
+        },
+        {
+          "captured_at": "2026-11-08T09:21:50.215468+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "383159893e4e1971203f7f3e622ab0eeca535799389fb7720efacf683e81634b"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "6704dbeae852eb9e62f94d22fbda758f548a6e680171fe08a492a47a582492ef"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 5,
+            "event_time": 1794129710509
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        },
+        {
+          "captured_at": "2026-11-08T09:21:51.188996+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "383159893e4e1971203f7f3e622ab0eeca535799389fb7720efacf683e81634b"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "6704dbeae852eb9e62f94d22fbda758f548a6e680171fe08a492a47a582492ef"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 2,
+            "event_time": 1794129711837
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        },
+        {
+          "captured_at": "2026-11-08T09:21:51.644523+00:00",
+          "source": "custom_llm",
+          "schema": {
+            "$": "object",
+            "$.messages": "array",
+            "$.messages[]": "object",
+            "$.messages[].role": "string",
+            "$.messages[].content": "string",
+            "$.model": "string",
+            "$.stream": "boolean",
+            "$.temperature": "number",
+            "$.top_p": "number",
+            "$.stream_options": "object",
+            "$.stream_options.include_usage": "boolean",
+            "$.round_id": "number"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "round_id",
+                "kind": "round",
+                "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "response_status": 200
+        },
+        {
+          "captured_at": "2026-11-08T09:21:51.645449+00:00",
+          "source": "capture_stream",
+          "schema": {
+            "$": "object",
+            "$.messages": "array",
+            "$.messages[]": "object",
+            "$.messages[].role": "string",
+            "$.messages[].content": "string",
+            "$.model": "string",
+            "$.stream": "boolean",
+            "$.temperature": "number",
+            "$.top_p": "number",
+            "$.stream_options": "object",
+            "$.stream_options.include_usage": "boolean",
+            "$.round_id": "number"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "round_id",
+                "kind": "round",
+                "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "response_status": 200,
+          "state": "completed",
+          "duration_ms": 0.07,
+          "chunks_sent": 1
+        },
+        {
+          "captured_at": "2026-11-08T09:21:52.220247+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "383159893e4e1971203f7f3e622ab0eeca535799389fb7720efacf683e81634b"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "6704dbeae852eb9e62f94d22fbda758f548a6e680171fe08a492a47a582492ef"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 3,
+            "event_time": 1794129712869
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        },
+        {
+          "captured_at": "2026-11-08T09:21:54.680405+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.data": "array",
+            "$.data[]": "object",
+            "$.data[].customInfo": "null",
+            "$.data[].definite": "boolean",
+            "$.data[].firstCharPos": "number",
+            "$.data[].language": "string",
+            "$.data[].lastCharPos": "number",
+            "$.data[].mode": "number",
+            "$.data[].paragraph": "boolean",
+            "$.data[].roundId": "number",
+            "$.data[].sequence": "number",
+            "$.data[].text": "string",
+            "$.data[].timestamp": "number",
+            "$.data[].userId": "string",
+            "$.type": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "data[0].roundId",
+                "kind": "round",
+                "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified"
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "subv"
+        },
+        {
+          "captured_at": "2026-11-08T09:21:55.080411+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "383159893e4e1971203f7f3e622ab0eeca535799389fb7720efacf683e81634b"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "6704dbeae852eb9e62f94d22fbda758f548a6e680171fe08a492a47a582492ef"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 5,
+            "event_time": 1794129715509
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        },
+        {
+          "captured_at": "2026-11-08T09:21:57.494950+00:00",
+          "source": "rts_event",
+          "schema": {
+            "$": "object",
+            "$.EventTime": "number",
+            "$.RoundID": "number",
+            "$.Stage": "object",
+            "$.Stage.Code": "number",
+            "$.Stage.Description": "string",
+            "$.TaskId": "string",
+            "$.UserID": "string"
+          },
+          "correlation": {
+            "identifiers": [
+              {
+                "field": "TaskId",
+                "kind": "task",
+                "sha256": "383159893e4e1971203f7f3e622ab0eeca535799389fb7720efacf683e81634b"
+              },
+              {
+                "field": "UserID",
+                "kind": "user",
+                "sha256": "6704dbeae852eb9e62f94d22fbda758f548a6e680171fe08a492a47a582492ef"
+              },
+              {
+                "field": "RoundID",
+                "kind": "round",
+                "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+              },
+              {
+                "field": "query.rtc_run_id",
+                "kind": "run",
+                "sha256": "663f884ffc4305ad61ec0c17f92f0dad5ae0fc00a8897e765a4cc66630e9fcbe"
+              }
+            ],
+            "stable_round_association": "not_verified",
+            "stage_code": 4,
+            "event_time": 1794129717018
+          },
+          "evidence_scope": "observed_metadata_only_not_end_to_end_verification",
+          "tlv_tag": "conv"
+        }
+      ]
+    }
+  ],
+  "gates": {
+    "legacy_start_commands_stop": {
+      "status": "passed",
+      "scope": "5 isolated m0 tasks; all Start/Update/Stop accepted; cleanup attempted twice per task"
+    },
+    "two_identical_inputs_are_distinct_rounds": {
+      "status": "passed",
+      "scope": "final clean sample has two distinct round_id hashes"
+    },
+    "cross_channel_round_correlation": {
+      "status": "passed",
+      "scope": "final clean sample matches 2/2 CustomLLM round_id to conv.RoundID and subv.data[].roundId within same run"
+    },
+    "503_retry_behavior": {
+      "status": "observed",
+      "scope": "one injected 503, no retry for that round in the bounded window; next input succeeded, not a universal retry guarantee"
+    },
+    "interrupt_to_upstream_stream_cancellation": {
+      "status": "passed",
+      "scope": "final slow case cancelled at 3 of 8 yielded chunks, before normal completion; not audio delivery measurement"
+    },
+    "real_client_audio_first_sound_and_barge_in": {
+      "status": "blocked",
+      "reason": "No RTC client microphone/playback experiment was performed"
+    },
+    "single_stage_optimization": {
+      "status": "disabled",
+      "reason": "No early text/tool branch commitment contract established"
+    }
+  },
+  "findings": [
+    "EnableRoundId=true exposes request round_id; use (rtc_run_id, round_id), not text hash.",
+    "Legacy Bot UserId is generated per task to avoid app-wide duplicate robot IDs.",
+    "Server subtitles may omit binary; strict Base64/TLV validation still applies.",
+    "Actual event ErrorInfo uses ErrorCode. Earlier metadata-only capture missed its value.",
+    "1000002 observed with inherited Method/ApiType; after removing both, final clean samples have no error events.",
+    "1004002 observed after the deliberate first-callback 503; no callback retry was observed in this experiment."
+  ],
+  "temporary_resources": {
+    "cleanup_requests_succeeded_for_all_probe_tasks": true,
+    "local_capture_stopped": true,
+    "temporary_tunnel_stopped": true
+  },
+  "sources": [
+    "https://docs.volcengine.com/docs/real-time-communication/start-voice-chat-ai-conversation-archived?lang=zh",
+    "https://docs.volcengine.com/docs/real-time-communication/conversation-ai-events-error-codes?lang=zh"
+  ]
+}

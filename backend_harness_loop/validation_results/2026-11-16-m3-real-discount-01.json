@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "scenario_version": 5,
+  "milestone": "M3",
+  "recorded_at_utc": "2026-11-16T12:39:08.182543+00:00",
+  "kind": "real_model_real_knowledge",
+  "mode": "real",
+  "profiles": [
+    "deepseek_v4_flash",
+    "deepseek_v4_pro"
+  ],
+  "rounds": [
+    {
+      "profile_id": "deepseek_v4_flash",
+      "purpose": "real_discount_policy",
+      "round_sha256": "024ee8552892b6314f7e75a2944936d2e309487f3da93b245ce7427ab0fe6690",
+      "turn_sha256": "909032617e4abcdda762f612e5ea0a0753466a23716c428ae74e07dfb75a3d93",
+      "state": "generation_completed",
+      "delivery_status": "completed",
+      "error_code": null,
+      "http_first_delta_ms": 2943.37,
+      "elapsed_ms": 3348.92,
+      "delta_count": 63,
+      "reply_characters": 159,
+      "turn_seen": true,
+      "terminal_seen": true,
+      "fixture_in_reply": null,
+      "reply_sha256": "632dbe33c2cfa1d6de056241ddfb8bd0534aa6d0e344ee778a5d5ff6f57f7533",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 2935.029,
+          "final_call_ms": 604.8
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 401.343,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ]
+      },
+      "checks": {
+        "real_retrieval_used": true,
+        "eligibility_and_discount_grounded_in_actual_quote": true,
+        "discount_verified": true,
+        "no_order_claim": true,
+        "completed": true,
+        "real_first_within_default": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_calls_bounded": true,
+        "tools_bounded": true
+      },
+      "passed": true
+    },
+    {
+      "profile_id": "deepseek_v4_pro",
+      "purpose": "real_discount_policy",
+      "round_sha256": "3822f7bca1e8c5bdcfaa53954e9a97f4ada9bfd7a708305569831ff21f6fe5c8",
+      "turn_sha256": "edbe596cdf9c7b11539671bf28911f027a54571c87c25577e82220d17ee4c48e",
+      "state": "generation_completed",
+      "delivery_status": "completed",
+      "error_code": null,
+      "http_first_delta_ms": 4521.27,
+      "elapsed_ms": 5404.73,
+      "delta_count": 72,
+      "reply_characters": 171,
+      "turn_seen": true,
+      "terminal_seen": true,
+      "fixture_in_reply": null,
+      "reply_sha256": "8d464aa4d6118947ae347ec36b1338765b1a405e60794145b05fbed4596891dd",
+      "observations": {
+        "tools": [
+          {
+            "name": "knowledge_search",
+            "status": "success",
+            "code": null,
+            "hit_count": 3,
+            "truncated": false
+          },
+          {
+            "name": "prepare_response",
+            "status": "success",
+            "code": null,
+            "hit_count": 0,
+            "truncated": false
+          }
+        ],
+        "model_calls": 3,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_first_output": {
+          "deadline_ms": 9000,
+          "elapsed_ms": 4502.298,
+          "final_call_ms": 814.203
+        },
+        "knowledge_timings": [
+          {
+            "elapsed_ms": 207.399,
+            "name": "knowledge_search",
+            "status": "success"
+          }
+        ]
+      },
+      "checks": {
+        "real_retrieval_used": true,
+        "eligibility_and_discount_grounded_in_actual_quote": true,
+        "discount_verified": true,
+        "no_order_claim": true,
+        "completed": true,
+        "real_first_within_default": true,
+        "profile_pinned": true,
+        "native_chain_closed": true,
+        "model_calls_bounded": true,
+        "tools_bounded": true
+      },
+      "passed": true
+    }
+  ],
+  "cleanup": [
+    {
+      "stop_confirmed": true,
+      "database_closed": true,
+      "passed": true
+    },
+    {
+      "stop_confirmed": true,
+      "database_closed": true,
+      "passed": true
+    }
+  ],
+  "configuration": {
+    "first_output_ms": 9000,
+    "tool_timeout_ms": 1500,
+    "max_model_calls": 4,
+    "max_native_calls": 8,
+    "wall_seconds": 30,
+    "input_cap_estimated_tokens": 24576,
+    "background_enabled": false,
+    "provider_rewrite": false,
+    "provider_rerank": false,
+    "automatic_retries": 0,
+    "budgets_increased": false
+  },
+  "limits": {
+    "production_slo_claim": false,
+    "rtc_tested": false,
+    "business_write_tools": false,
+    "raw_business_data_in_report": false,
+    "real_knowledge_success_proven_by_fixture": false
+  },
+  "all_sessions_closed": true,
+  "passed": true,
+  "status": "passed",
+  "real_model_turns": 2,
+  "passed_rounds": 2
+}

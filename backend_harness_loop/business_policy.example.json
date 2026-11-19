@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "pricing_mode": "defer_to_checkout",
+  "checkout_url": null,
+  "enrollment_contact": null
+}

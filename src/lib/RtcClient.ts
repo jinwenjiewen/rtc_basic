@@ -26,7 +26,7 @@ import VERTC, {
 } from '@volcengine/rtc';
 import RTCAIAnsExtension from '@volcengine/rtc/extension-ainr';
 import { Message } from '@arco-design/web-react';
-import Apis from '@/app/index';
+import { sessionAction } from '@/agent/api';
 import { string2tlv } from '@/utils/utils';
 import { COMMAND, INTERRUPT_PRIORITY } from '@/utils/handler';
 
@@ -80,6 +80,14 @@ export class RTCClient {
   audioBotEnabled = false;
 
   audioBotStartTime = 0;
+
+  private productSession?: string;
+
+  private productHeartbeat?: ReturnType<typeof setInterval>;
+
+  setProductSession = (id: string) => {
+    this.productSession = id;
+  };
 
   createEngine = async () => {
     this.engine = VERTC.createEngine(this.basicInfo.app_id);
@@ -171,6 +179,7 @@ export class RTCClient {
   };
 
   release = async () => {
+    if (this.productSession) await this.stopAgent('').catch(() => {});
     if (!this.engineActive) return;
     const engine = this.engine;
     await Promise.allSettled([
@@ -389,27 +398,40 @@ export class RTCClient {
    * @brief 启用 AIGC
    */
   startAgent = async (scene: string) => {
-    if (this.audioBotEnabled) {
-      await this.stopAgent(scene);
+    if (this.productSession) {
+      const id = this.productSession;
+      const result = await sessionAction('rtc', id, 'start');
+      if (this.productSession !== id || !result.running) throw new Error('语音会话未能启动，请重新连接。');
+      this.audioBotEnabled = true;
+      this.audioBotStartTime = Date.now();
+      if (this.productHeartbeat) clearInterval(this.productHeartbeat);
+      this.productHeartbeat = setInterval(() => {
+        sessionAction('rtc', id, 'heartbeat').catch(() => {
+          if (this.productSession === id) this.release().catch(() => {});
+        });
+      }, 20_000);
+      return;
     }
-    await Apis.VoiceChat.StartVoiceChat({
-      SceneID: scene,
-    });
-    this.audioBotEnabled = true;
-    this.audioBotStartTime = Date.now();
+    throw new Error('请先创建新的产品语音会话。');
   };
 
   /**
    * @brief 关闭 AIGC
    */
   stopAgent = async (scene: string) => {
-    if (this.audioBotEnabled || sessionStorage.getItem('audioBotEnabled')) {
-      await Apis.VoiceChat.StopVoiceChat({
-        SceneID: scene,
-      });
+    if (this.productSession) {
+      const id = this.productSession;
+      if (this.productHeartbeat) clearInterval(this.productHeartbeat);
+      this.productHeartbeat = undefined;
+      this.audioBotEnabled = false;
+      const result = await sessionAction('rtc', id, 'stop');
+      if (!result.stopped) throw new Error('语音任务正在回收，请稍后重试。');
+      if (this.productSession === id) this.productSession = undefined;
       this.audioBotStartTime = 0;
-      sessionStorage.removeItem('audioBotEnabled');
+      return;
     }
+    this.audioBotStartTime = 0;
+    sessionStorage.removeItem('audioBotEnabled');
     this.audioBotEnabled = false;
   };
 
@@ -447,12 +469,7 @@ export class RTCClient {
    * @brief 更新 AIGC 配置
    */
   updateAgent = async (scene: string) => {
-    if (this.audioBotEnabled) {
-      await this.stopAgent(scene);
-      await this.startAgent(scene);
-    } else {
-      await this.startAgent(scene);
-    }
+    throw new Error('请结束当前对话后重新选择模型。');
   };
 
   /**

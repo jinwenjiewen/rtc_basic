@@ -1,0 +1,364 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-11-08T14:29:09.436687+00:00",
+  "report_date": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "milestone": "M1",
+  "status": "text_functional_slice_passed",
+  "scope": "Real loopback HTTP, real configured DeepSeek profiles, the shared AgentRuntime and native context tools. No RTC, microphone, tunnel or old backend required.",
+  "full_m1_milestone_complete": false,
+  "startup": {
+    "command": "python -m backend_harness_loop text",
+    "model_credentials_configured": true,
+    "rtc_credentials_required": false,
+    "old_backend_source_required": false,
+    "microphone_used": false,
+    "public_tunnel_created": false
+  },
+  "code_validation": {
+    "python_tests_passed": 247,
+    "node_tests_passed": 34,
+    "node_scope": "16 existing M0/M1 tests plus 18 text console tests; mocks do not replace the separately recorded real HTTP/browser checks",
+    "live_probe_executions": 1,
+    "live_probe_automatic_retries": 0
+  },
+  "profile_order": [
+    {
+      "profile_index": 0,
+      "profile_id": "deepseek_v4_flash"
+    },
+    {
+      "profile_index": 1,
+      "profile_id": "deepseek_v4_pro"
+    }
+  ],
+  "browser_ui": {
+    "profile": "deepseek_v4_flash",
+    "session_sha256": "7b52cf6904c5fdccfdb006a8537d7914b23e03fa95fd31714c128b8ec6d20ff0",
+    "source": "Browser UI and matching SQLite metadata for first three synthetic turns only; subsequent user messages excluded",
+    "verified_ui_turn_count": 3,
+    "turns": [
+      {
+        "state": "generation_completed",
+        "delivery_status": "completed",
+        "fixture_in_reply": true
+      },
+      {
+        "state": "generation_completed",
+        "delivery_status": "completed",
+        "fixture_in_reply": true
+      },
+      {
+        "state": "generation_completed",
+        "delivery_status": "completed",
+        "fixture_in_reply": true
+      }
+    ],
+    "notes_version_after_demo": 1,
+    "fixture_in_notes": true,
+    "tool_counts": [
+      {
+        "name": "context_search_history",
+        "state": "success",
+        "n": 1
+      },
+      {
+        "name": "context_update_notes",
+        "state": "success",
+        "n": 1
+      },
+      {
+        "name": "prepare_response",
+        "state": "success",
+        "n": 2
+      }
+    ],
+    "screenshot_private_path": ".local/m1-text-preview.png",
+    "session_left_available_for_user": true,
+    "requires_microphone_or_rtc": false
+  },
+  "real_http": {
+    "schema_version": 1,
+    "probe": "m1_text_http",
+    "passed": true,
+    "created_at_utc": "2026-11-08T14:27:00.157022+00:00",
+    "limits": {
+      "round_seconds": 45,
+      "request_seconds": 15,
+      "max_profiles": 2,
+      "max_turns": 8,
+      "model_budget_owner": "runtime",
+      "automatic_retries": 0,
+      "profile_fallback": false,
+      "planned_turns": 7
+    },
+    "scope": {
+      "synthetic_fixtures_only": true,
+      "sqlite_read_only": true,
+      "first_delta_is_http_text_not_audio": true,
+      "rtc_used": false
+    },
+    "profiles": [
+      {
+        "profile_index": 0,
+        "profile_sha256": "c532372bc2cc6e7ac00ab65137cffbfeea53735f2bc1e28e7732a0750b1ecd2d",
+        "fixture_sha256": "0a81bbaa724f3819d0f32a9be2ac498d3fd3e0186b9b5ff931bf9c7d5cad9836",
+        "passed": true,
+        "rounds": [
+          {
+            "purpose": "write_notes",
+            "round_sha256": "80701bfbe2808ab9f37b01053159e3163a64bc1ac0012dad34a1f3d0f02cfd76",
+            "turn_sha256": "b2a52041535f53095d06ee9e64c6887c30fb855c8fd203917b50bec2bb3e0ce2",
+            "state": "generation_completed",
+            "delivery_status": "completed",
+            "error_code": null,
+            "http_first_delta_ms": 2968.68,
+            "elapsed_ms": 3203.32,
+            "delta_count": 24,
+            "reply_characters": 39,
+            "turn_seen": true,
+            "terminal_seen": true,
+            "fixture_in_reply": null
+          },
+          {
+            "purpose": "recall_notes",
+            "round_sha256": "3c4438b58ff2f5f63881a66756e9453dac282e17f3400803f5ef811d686b6841",
+            "turn_sha256": "ae1d31ed46561185962ba0477732148889ec66668267ef1b249cb0c9002b118e",
+            "state": "generation_completed",
+            "delivery_status": "completed",
+            "error_code": null,
+            "http_first_delta_ms": 1691.37,
+            "elapsed_ms": 1791.86,
+            "delta_count": 11,
+            "reply_characters": 21,
+            "turn_seen": true,
+            "terminal_seen": true,
+            "fixture_in_reply": true
+          },
+          {
+            "purpose": "verify_history_tool",
+            "round_sha256": "d04bd0130f6bbc066960ad49a22485e8c445f2f4b559428ff46748c9935238c8",
+            "turn_sha256": "70fa0cc004aa733d7fe172ca0b5ed85dbf9a096873e583c6a82c1e2738464993",
+            "state": "generation_completed",
+            "delivery_status": "completed",
+            "error_code": null,
+            "http_first_delta_ms": 2086.74,
+            "elapsed_ms": 2271.43,
+            "delta_count": 11,
+            "reply_characters": 21,
+            "turn_seen": true,
+            "terminal_seen": true,
+            "fixture_in_reply": true
+          }
+        ],
+        "session_sha256": "e3f186d41bd92742fd9474a5b7006bc496a7a8b94cd91a1bc5b0adaf2f0c3569",
+        "history_tool_check_required": true,
+        "history_tool_success_count_added": 1,
+        "database": {
+          "session_closed": false,
+          "profile_matches": true,
+          "notes_version": 1,
+          "fixture_in_notes": true,
+          "foreign_fixture_in_notes": false,
+          "tool_counts": {
+            "context_search_history": {
+              "success": 1
+            },
+            "context_update_notes": {
+              "success": 1
+            },
+            "prepare_response": {
+              "success": 2
+            }
+          },
+          "turn_state_counts": {
+            "generation_completed": 3
+          },
+          "message_count": 14,
+          "model_call_count": 8,
+          "model_profile_matches": true,
+          "max_observed_model_calls_per_turn": 3
+        },
+        "cleanup": {
+          "stop_confirmed": true,
+          "database_closed": true,
+          "passed": true
+        }
+      },
+      {
+        "profile_index": 1,
+        "profile_sha256": "e7ddcd6858bdb2f0516e9c627a998face708748aae39029e6b30dde28a72b54c",
+        "fixture_sha256": "e177264585b7f6a80c67da271afc578eb5d797d73974ebf284aa2c7f77ca133a",
+        "passed": true,
+        "rounds": [
+          {
+            "purpose": "write_notes",
+            "round_sha256": "4d7146b1c2e80e609a75e2678ce50c376c10d88b64ab60c5480c8d66a30356b5",
+            "turn_sha256": "58e0ae5d2f6dd2fd4fc15c006b5338dc47935df6fe3af0380005c365b7e003b4",
+            "state": "generation_completed",
+            "delivery_status": "completed",
+            "error_code": null,
+            "http_first_delta_ms": 3851.61,
+            "elapsed_ms": 4107.33,
+            "delta_count": 3,
+            "reply_characters": 4,
+            "turn_seen": true,
+            "terminal_seen": true,
+            "fixture_in_reply": null
+          },
+          {
+            "purpose": "recall_notes",
+            "round_sha256": "5d5659898452960593ad0aefcef55834cbf3d0c9dfcc8ef26e9e923b244a505f",
+            "turn_sha256": "b1c75f0e760dbd36ffb5babf00bcf1eab22176006e822a32ba19a3c74e678966",
+            "state": "generation_completed",
+            "delivery_status": "completed",
+            "error_code": null,
+            "http_first_delta_ms": 2181.66,
+            "elapsed_ms": 2438.74,
+            "delta_count": 12,
+            "reply_characters": 21,
+            "turn_seen": true,
+            "terminal_seen": true,
+            "fixture_in_reply": true
+          }
+        ],
+        "session_sha256": "247e06c673f11fbf575757ea6c0485ce2351cce67df3f337fedcf8e802038391",
+        "history_tool_check_required": false,
+        "database": {
+          "session_closed": false,
+          "profile_matches": true,
+          "notes_version": 1,
+          "fixture_in_notes": true,
+          "foreign_fixture_in_notes": false,
+          "tool_counts": {
+            "context_update_notes": {
+              "success": 1
+            },
+            "prepare_response": {
+              "success": 1
+            }
+          },
+          "turn_state_counts": {
+            "generation_completed": 2
+          },
+          "message_count": 8,
+          "model_call_count": 5,
+          "model_profile_matches": true,
+          "max_observed_model_calls_per_turn": 3
+        },
+        "cleanup": {
+          "stop_confirmed": true,
+          "database_closed": true,
+          "passed": true
+        }
+      }
+    ],
+    "loopback_origin_sha256": "3b98b477bc36bf22012ed1c7bc3d563bc0898c1697d0d8727f23acff12d32e60",
+    "control": {
+      "profile_sha256": "c532372bc2cc6e7ac00ab65137cffbfeea53735f2bc1e28e7732a0750b1ecd2d",
+      "passed": true,
+      "rounds": [
+        {
+          "purpose": "early_interrupt",
+          "round_sha256": "e1de7bccd6d89d78dc4afd7cbfac86d5b1722db8ae2b3a794aff9f7a91cc905c",
+          "turn_sha256": "3a787cc4f6eeebcc1f1d3de233bd78ee25d2b5c5e385bb86f0b5a1e032a6da7f",
+          "state": "cancelled",
+          "delivery_status": "interrupted",
+          "error_code": null,
+          "http_first_delta_ms": null,
+          "elapsed_ms": 138.99,
+          "delta_count": 0,
+          "reply_characters": 0,
+          "turn_seen": true,
+          "terminal_seen": true,
+          "fixture_in_reply": null
+        },
+        {
+          "purpose": "new_round_survives_old_interrupt",
+          "round_sha256": "ca1ed359a533d372a610b531e2f451e1009debac875c0fafb87f4a74c7ae2140",
+          "turn_sha256": "14a36e762b4b30ad0f4f6c387c37ae14f044ac13899833d398086fd6f35bb10a",
+          "state": "generation_completed",
+          "delivery_status": "completed",
+          "error_code": null,
+          "http_first_delta_ms": 1546.03,
+          "elapsed_ms": 2197.91,
+          "delta_count": 53,
+          "reply_characters": 85,
+          "turn_seen": true,
+          "terminal_seen": true,
+          "fixture_in_reply": null
+        }
+      ],
+      "session_sha256": "037b7ef8edae3e10ff8eec65acd79a5a55305bb7b406996e2c30607ef1a56062",
+      "early_interrupt_acknowledged": true,
+      "old_interrupt_reported_unchanged": true,
+      "duplicate_http_status": 409,
+      "duplicate_error_code": "duplicate_round",
+      "duplicate_message_count_unchanged": true,
+      "duplicate_model_call_count_unchanged": true,
+      "database": {
+        "session_closed": false,
+        "profile_matches": true,
+        "notes_version": 0,
+        "fixture_in_notes": null,
+        "foreign_fixture_in_notes": null,
+        "tool_counts": {
+          "prepare_response": {
+            "success": 1
+          }
+        },
+        "turn_state_counts": {
+          "cancelled": 1,
+          "generation_completed": 1
+        },
+        "message_count": 5,
+        "model_call_count": 3,
+        "model_profile_matches": true,
+        "max_observed_model_calls_per_turn": 2
+      },
+      "cleanup": {
+        "stop_confirmed": true,
+        "database_closed": true,
+        "passed": true
+      }
+    },
+    "cleanup_confirmed": true,
+    "elapsed_ms": 16368.07
+  },
+  "results": {
+    "notes_update_and_recall_flash": "passed",
+    "notes_update_and_recall_pro": "passed",
+    "flash_native_history_tool": "passed",
+    "profiles_remain_pinned": "passed",
+    "notes_session_isolation": "passed",
+    "early_cancel_without_visible_delta": "passed",
+    "old_round_interrupt_isolation": "passed",
+    "duplicate_409_without_extra_message_or_model_call": "passed",
+    "self_created_probe_sessions_cleanup": "passed"
+  },
+  "counter_semantics": {
+    "http_first_delta_ms": "Request to first final-text delta at the HTTP client; excludes RTC/ASR/TTS/physical audio",
+    "early_cancel_elapsed_ms": "One HTTP/control sample, not a production cancellation percentile",
+    "database_session_closed_before_cleanup": "False in pre-cleanup snapshot is expected; cleanup.database_closed records the final closed state"
+  },
+  "availability": {
+    "local_text_server_left_running_for_user": true,
+    "self_test_stops_only_its_own_sessions": true,
+    "rtc_validation_resources_already_released": true,
+    "browser_demo_session_left_for_user": true,
+    "session_lease_seconds": 600
+  },
+  "remaining": [
+    "No automatic merge of RTC and standalone text session histories",
+    "No product account authorization or legacy-login migration",
+    "No complete model-driven context compaction",
+    "Simultaneous RTC and direct text on serve not newly exercised against cloud in this extension",
+    "Controlled RTC notes recall and physical audio timing remain separate"
+  ],
+  "privacy": {
+    "report_contains_credentials": false,
+    "report_contains_raw_dialogue_or_notes": false,
+    "report_contains_raw_resource_identifiers": false,
+    "subsequent_user_messages_included_in_ui_demo_metrics": false
+  }
+}

@@ -13,19 +13,3 @@ export const BasicAPIs = [
     method: 'post',
   },
 ] as const;
-
-/**
- * @brief Basic APIs
- */
-export const AigcAPIs = [
-  {
-    action: 'StartVoiceChat',
-    apiPath: '/proxy',
-    method: 'post',
-  },
-  {
-    action: 'StopVoiceChat',
-    apiPath: '/proxy',
-    method: 'post',
-  },
-] as const;
